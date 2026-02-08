@@ -1,12 +1,20 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes";
+
 function App() {
+  const queryClient = new QueryClient();
+
   return (
-    <div className="min-h-screen  flex justify-center">
-      <main className="w-full max-w-106.25 min-h-screen shadow-2xl drop-shadow-2xl shadow-intidinamis-4b0082">
-        <h1 className="text-3xl font-bold underline text-center mt-10">
-          KELAZZZZ
-        </h1>
-      </main>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <div className="min-h-screen  flex justify-center">
+          <main className="w-full max-w-360 min-h-screen shadow-2xl drop-shadow-2xl">
+            <AppRoutes />
+          </main>
+        </div>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
