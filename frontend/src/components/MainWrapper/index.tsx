@@ -9,9 +9,9 @@ export const MainWrapper: React.FC<MainWrapperProps> = ({
   ...props
 }) => {
   return (
-    <div className="flex flex-col min-h-screen bg-white" {...props}>
+    <div className="flex flex-col items-center w-full min-h-screen " {...props}>
       {/* Header */}
-      <header className="border-b border-gray-200 bg-linear-to-r from-slate-50 to-gray-50 shadow-sm">
+      <header className="w-full border-b border-gray-200 bg-linear-to-r from-slate-50 to-gray-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -56,7 +56,7 @@ export const MainWrapper: React.FC<MainWrapperProps> = ({
       {children}
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 mt-auto">
+      <footer className="w-full border-t border-gray-200 mt-auto ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <p className="text-sm text-gray-600">
             © {new Date().getFullYear()} Mnemosyne. All rights reserved.

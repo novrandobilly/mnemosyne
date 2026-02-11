@@ -8,8 +8,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <div className="min-h-screen bg-intidinamis-e0e0e0 flex justify-center">
-          <main className="w-full max-w-360 min-h-screen shadow drop-shadow-2xl">
+        <div className="min-h-screen  flex justify-center">
+          <main className="w-full max-w-360 min-h-screen">
             <AppRoutes />
           </main>
         </div>

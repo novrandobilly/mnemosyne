@@ -1,6 +1,8 @@
 import { useRoutes, type RouteObject } from "react-router-dom";
 import HomePage from "../features/HomePage";
 import Login from "../features/Login";
+import { participantRoutes } from "./participant";
+import { adminRoutes } from "./admin";
 
 const routes: RouteObject[] = [
   {
@@ -11,6 +13,8 @@ const routes: RouteObject[] = [
     path: "/login",
     element: <Login />,
   },
+  ...participantRoutes,
+  ...adminRoutes,
 ];
 
 const AppRoutes = () => {
