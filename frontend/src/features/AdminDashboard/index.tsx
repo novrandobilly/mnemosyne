@@ -173,6 +173,34 @@ const AdminDashboard = () => {
               Admin Dashboard
             </div>
           </div>
+          <nav className="order-3 flex flex-wrap items-center gap-2 text-xs md:order-0">
+            <div className="inline-flex flex-wrap items-center gap-1 rounded-full border border-neutral-200 bg-white p-1 shadow-sm">
+              <a
+                href="#"
+                className="rounded-full bg-neutral-900 px-3 py-1.5 font-semibold text-white"
+              >
+                Dashboard
+              </a>
+              <a
+                href="#"
+                className="rounded-full px-3 py-1.5 font-semibold text-neutral-600 transition hover:bg-neutral-100"
+              >
+                Participants
+              </a>
+              <a
+                href="#"
+                className="rounded-full px-3 py-1.5 font-semibold text-neutral-600 transition hover:bg-neutral-100"
+              >
+                Assessments
+              </a>
+              <a
+                href="#"
+                className="rounded-full px-3 py-1.5 font-semibold text-neutral-600 transition hover:bg-neutral-100"
+              >
+                Settings
+              </a>
+            </div>
+          </nav>
           <div className="flex flex-wrap items-center gap-3">
             <div className="rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs text-neutral-600 shadow-sm">
               Feb 11, 2026
