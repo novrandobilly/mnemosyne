@@ -1,3 +1,5 @@
+import AdminWrapper from "../../components/MainWrapper/features/admin-wrapper";
+
 type GeneratedAccount = {
   id: string;
   name: string;
@@ -56,39 +58,7 @@ const ParticipantGenerator = () => {
         <div className="absolute bottom-12 right-1/3 h-40 w-40 rounded-full bg-amber-100/70 blur-[80px]" />
       </div>
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 pb-16 pt-10 md:px-10">
-        <header className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-900 text-lg font-bold text-white">
-              P
-            </div>
-            <div className="flex items-center gap-3 rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs uppercase tracking-[0.3em] text-neutral-600 shadow-sm">
-              <span className="h-2 w-2 rounded-full bg-neutral-500" />
-              Participant Generator
-            </div>
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs text-neutral-600 shadow-sm">
-              Feb 11, 2026
-            </div>
-            <button
-              type="button"
-              onClick={() => window.location.reload()}
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-4 py-2 text-xs font-semibold text-neutral-700 shadow-sm transition hover:border-neutral-400 hover:bg-neutral-50"
-            >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 20 20"
-                className="h-4 w-4"
-                fill="currentColor"
-              >
-                <path d="M10 3a7 7 0 0 1 6.93 6H19l-3 3-3-3h2.07A5 5 0 1 0 15 13h2a7 7 0 1 1-7-10z" />
-              </svg>
-              Refresh Page
-            </button>
-          </div>
-        </header>
-
+      <AdminWrapper>
         <section className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
             <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">
@@ -337,7 +307,7 @@ const ParticipantGenerator = () => {
             </div>
           </div>
         </section>
-      </div>
+      </AdminWrapper>
     </div>
   );
 };

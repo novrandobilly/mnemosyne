@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AdminWrapper from "../../components/MainWrapper/features/admin-wrapper";
 
 interface Test {
   id: string;
@@ -92,96 +93,62 @@ const AssessmentPanel = () => {
         <div className="pointer-events-none absolute -left-40 top-1/3 h-64 w-64 rounded-full bg-neutral-200/70 blur-[140px]" />
       </div>
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 pb-16 pt-10 md:px-10">
-        <header className="flex flex-col gap-6">
-          <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-            <div className="flex items-center gap-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-900 text-lg font-bold text-white">
-                A
-              </div>
-              <div className="flex items-center gap-3 rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs uppercase tracking-[0.3em] text-neutral-600 shadow-sm">
-                <span className="h-2 w-2 rounded-full bg-amber-500" />
-                Admin Panel
-              </div>
+      <AdminWrapper>
+        <div className="grid gap-3 md:grid-cols-4">
+          <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
+            <div className="text-xs uppercase tracking-[0.25em] text-neutral-500">
+              Total Tests
             </div>
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs text-neutral-600 shadow-sm">
-                Feb 11, 2026
-              </div>
+            <div className="mt-1.5 text-2xl font-semibold text-neutral-900">
+              {tests.length}
+            </div>
+          </div>
+          <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
+            <div className="text-xs uppercase tracking-[0.25em] text-neutral-500">
+              Enabled
+            </div>
+            <div className="mt-1.5 text-2xl font-semibold text-green-700">
+              {enabledCount}
+            </div>
+          </div>
+          <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
+            <div className="text-xs uppercase tracking-[0.25em] text-neutral-500">
+              Disabled
+            </div>
+            <div className="mt-1.5 text-2xl font-semibold text-neutral-400">
+              {disabledCount}
+            </div>
+          </div>
+          <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
+            <div className="text-xs uppercase tracking-[0.25em] text-neutral-500">
+              Bulk Actions
+            </div>
+            <div className="mt-2 flex flex-col gap-2">
               <button
                 type="button"
-                onClick={() => window.location.reload()}
-                className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-4 py-2 text-xs font-semibold text-neutral-700 shadow-sm transition hover:border-neutral-400 hover:bg-neutral-50"
+                onClick={() =>
+                  setTests((prev) =>
+                    prev.map((test) => ({ ...test, enabled: true })),
+                  )
+                }
+                className="rounded-lg border border-neutral-300 bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700 transition hover:border-neutral-400 hover:bg-neutral-50"
               >
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 20 20"
-                  className="h-4 w-4"
-                  fill="currentColor"
-                >
-                  <path d="M10 3a7 7 0 0 1 6.93 6H19l-3 3-3-3h2.07A5 5 0 1 0 15 13h2a7 7 0 1 1-7-10z" />
-                </svg>
-                Refresh Page
+                Enable All
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setTests((prev) =>
+                    prev.map((test) => ({ ...test, enabled: false })),
+                  )
+                }
+                className="rounded-lg border border-neutral-300 bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700 transition hover:border-neutral-400 hover:bg-neutral-50"
+              >
+                Disable All
               </button>
             </div>
           </div>
-
-          <div className="grid gap-3 md:grid-cols-4">
-            <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
-              <div className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-                Total Tests
-              </div>
-              <div className="mt-1.5 text-2xl font-semibold text-neutral-900">
-                {tests.length}
-              </div>
-            </div>
-            <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
-              <div className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-                Enabled
-              </div>
-              <div className="mt-1.5 text-2xl font-semibold text-green-700">
-                {enabledCount}
-              </div>
-            </div>
-            <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
-              <div className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-                Disabled
-              </div>
-              <div className="mt-1.5 text-2xl font-semibold text-neutral-400">
-                {disabledCount}
-              </div>
-            </div>
-            <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
-              <div className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-                Bulk Actions
-              </div>
-              <div className="mt-2 flex flex-col gap-2">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setTests((prev) =>
-                      prev.map((test) => ({ ...test, enabled: true })),
-                    )
-                  }
-                  className="rounded-lg border border-neutral-300 bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700 transition hover:border-neutral-400 hover:bg-neutral-50"
-                >
-                  Enable All
-                </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setTests((prev) =>
-                      prev.map((test) => ({ ...test, enabled: false })),
-                    )
-                  }
-                  className="rounded-lg border border-neutral-300 bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700 transition hover:border-neutral-400 hover:bg-neutral-50"
-                >
-                  Disable All
-                </button>
-              </div>
-            </div>
-          </div>
-        </header>
+        </div>
 
         <section className="flex flex-col gap-6">
           <div className="flex flex-col gap-3">
@@ -248,7 +215,7 @@ const AssessmentPanel = () => {
             </div>
           </div>
         </section>
-      </div>
+      </AdminWrapper>
     </div>
   );
 };
