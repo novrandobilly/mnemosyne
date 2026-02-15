@@ -9,6 +9,7 @@ interface NavButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const NavButton: FC<NavButtonProps> = ({
   isActive,
   children,
+  className,
   ...props
 }) => {
   const baseStyles = "rounded-full px-3 py-1.5 font-semibold";
@@ -17,7 +18,11 @@ export const NavButton: FC<NavButtonProps> = ({
 
   return (
     <button
-      className={cn(baseStyles, isActive ? activeStyles : inactiveStyles)}
+      className={cn(
+        baseStyles,
+        isActive ? activeStyles : inactiveStyles,
+        className,
+      )}
       {...props}
     >
       {children}

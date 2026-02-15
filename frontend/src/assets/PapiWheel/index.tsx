@@ -1,5 +1,3 @@
-import React from "react";
-
 // Define the interface for the scores data
 export interface PapiScores {
   [key: string]: number;
@@ -147,7 +145,7 @@ const PapiWheel = ({ data }: { data: PapiScores }) => {
                     stroke="none" // Keep it invisible or use group.color for a line
                   />
 
-                  <text className="text-[10px] font-bold uppercase tracking-widest fill-gray-500">
+                  <text className="text-xxs font-bold uppercase tracking-widest fill-gray-500">
                     <textPath
                       href={`#${pathId}`}
                       startOffset="50%"

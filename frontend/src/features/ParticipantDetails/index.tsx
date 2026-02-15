@@ -1,5 +1,5 @@
+import PapiWheel from "@/assets/PapiWheel";
 import AdminWrapper from "../../components/MainWrapper/features/admin-wrapper";
-import PapiWheel from "../../components/PapiWheel";
 
 type ResultLink = {
   id: string;

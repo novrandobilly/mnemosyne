@@ -158,11 +158,11 @@ const participants: Participant[] = [
 const AdminDashboard = () => {
   return (
     <div className="relative min-h-screen bg-[#f8f7f4] text-neutral-900">
-      <div className="pointer-events-none absolute inset-0">
+      {/* <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-emerald-200/40 blur-[110px]" />
         <div className="absolute right-10 top-10 h-48 w-48 rounded-full bg-neutral-200/70 blur-[90px]" />
         <div className="absolute bottom-12 right-1/3 h-40 w-40 rounded-full bg-amber-100/70 blur-[80px]" />
-      </div>
+      </div> */}
 
       <AdminWrapper>
         <section className="flex flex-col gap-4">

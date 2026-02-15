@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NavButton } from "../../../components/nav-button";
 import NavigationContainer from "../../../components/nav-container";
+import { useLogout } from "@/tanstack/auth/logout";
 
 const AdminNavbar: FC = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const AdminNavbar: FC = () => {
     { label: "Panel", path: "/admin/panel" },
     { label: "Account Generator", path: "/admin/id-generator" },
   ];
+  const logout = useLogout();
 
   return (
     <NavigationContainer>
@@ -29,6 +31,9 @@ const AdminNavbar: FC = () => {
           </NavButton>
         );
       })}
+      <NavButton className="text-intidinamis-ff3b30" onClick={logout}>
+        Logout
+      </NavButton>
     </NavigationContainer>
   );
 };

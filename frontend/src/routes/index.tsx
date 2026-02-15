@@ -3,6 +3,8 @@ import HomePage from "../features/HomePage";
 import Login from "../features/Login";
 import { participantRoutes } from "./participant";
 import { adminRoutes } from "./admin";
+import { AuthGuard } from "./guard/auth-guard";
+import { AdminGuard } from "./guard/admin-guard";
 
 const routes: RouteObject[] = [
   {
@@ -13,8 +15,16 @@ const routes: RouteObject[] = [
     path: "/login",
     element: <Login />,
   },
-  ...participantRoutes,
-  ...adminRoutes,
+  {
+    element: <AuthGuard />,
+    children: [
+      ...participantRoutes,
+      {
+        element: <AdminGuard />,
+        children: [...adminRoutes],
+      },
+    ],
+  },
 ];
 
 const AppRoutes = () => {
