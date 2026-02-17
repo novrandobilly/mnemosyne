@@ -25,7 +25,6 @@ export const useTProfile = () => {
     queryKey: ["auth"],
     queryFn: async () => {
       const authData = await pb.collection("users").authRefresh<User>();
-      console.log("authData:", authData);
       return authData.record;
     },
     // 1. Disable retries for auth errors
