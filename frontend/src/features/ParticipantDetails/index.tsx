@@ -75,7 +75,7 @@ const ParticipantDetails = () => {
     : "-";
 
   return (
-    <div className="relative min-h-screen bg-[#f8f7f4] text-neutral-900">
+    <div className="relative min-h-screen text-neutral-900">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-emerald-200/40 blur-[110px]" />
         <div className="absolute right-10 top-10 h-48 w-48 rounded-full bg-neutral-200/70 blur-[90px]" />

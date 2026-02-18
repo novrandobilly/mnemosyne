@@ -1,6 +1,20 @@
 @import "tailwindcss";
 
 @theme {
+  --animate-toast-in: slide-in 0.3s ease-out;
+  --animate-toast-out: fade-out 0.3s ease-in forwards;
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* Fonts */
   --font-intidinamis: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --text-xxs: 0.625rem;

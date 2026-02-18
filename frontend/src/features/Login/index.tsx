@@ -3,7 +3,7 @@ import SideCaption from "./features/SideCaption";
 
 const Login = () => {
   return (
-    <div className="relative flex min-h-screen flex-1 items-stretch bg-[#f8f7f4]">
+    <div className="relative flex min-h-screen flex-1 items-stretch ">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-emerald-200/40 blur-[110px]" />
         <div className="absolute right-10 top-10 h-48 w-48 rounded-full bg-neutral-200/70 blur-[90px]" />

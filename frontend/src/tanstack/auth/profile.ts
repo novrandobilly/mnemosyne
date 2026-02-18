@@ -18,13 +18,17 @@ interface User extends Record<string, any> {
   first_name: string;
   last_name: string;
   role: "super_admin" | "admin" | "participant" | string; // Literal types for better DX
+  company: string;
+  department: string;
 }
 
 export const useTProfile = () => {
   const queryResponse = useQuery({
     queryKey: ["auth"],
     queryFn: async () => {
-      const authData = await pb.collection("users").authRefresh<User>();
+      const authData: { record: User } = await pb
+        .collection("users")
+        .authRefresh();
       return authData.record;
     },
     // 1. Disable retries for auth errors

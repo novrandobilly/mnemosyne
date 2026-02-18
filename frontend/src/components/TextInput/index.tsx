@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { cn } from "../../lib/utils";
+import { cn } from "../../lib/tailwind-merge";
 import type { TextInputProps } from "./types";
 
 export const TextInput: FC<TextInputProps> = ({

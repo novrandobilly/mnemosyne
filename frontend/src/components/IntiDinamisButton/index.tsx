@@ -1,5 +1,5 @@
 import { forwardRef, type ButtonHTMLAttributes } from "react";
-import { cn } from "../../lib/utils";
+import { cn } from "../../lib/tailwind-merge";
 import { IntiDinamisText } from "../IntiDinamisText";
 import { Spinner } from "./spinner";
 
@@ -27,7 +27,7 @@ const IntiDinamisButton = forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const baseStyles =
-      "relative inline-flex py-2.5 px-4 min-w-[100px] items-center justify-center px-[10px] rounded-[12px] text-sm font-medium transition-all duration-200 focus:outline-none active:scale-[0.98] cursor-pointer";
+      "relative inline-flex py-2.5 px-4 min-w-[100px] items-center justify-center px-[10px] rounded-[8px] text-sm font-medium transition-all duration-200 focus:outline-none active:scale-[0.98] cursor-pointer";
 
     const disabledStyles =
       "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#E6E6E8] disabled:text-[#BBBBC0] disabled:ring-0 disabled:ring-[#E6E6E8] disabled:border-transparent";

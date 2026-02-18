@@ -1,4 +1,4 @@
-import { StatusCapsule } from "./features/status-capsule";
+import { StatusCapsule } from "../../../../../components/StatusCapsule";
 import { SwitchButton } from "./features/switch";
 
 interface TestItemProps {
@@ -25,7 +25,9 @@ export const TestItem = ({
         <h3 className="font-semibold text-neutral-900">{title}</h3>
         <div className="mt-1 text-sm text-neutral-500">{tag}</div>
       </div>
-      <StatusCapsule enabled={enabled} />
+      <StatusCapsule enabled={enabled}>
+        {enabled ? "Enabled" : "Disabled"}
+      </StatusCapsule>
       <SwitchButton enabled={enabled} onToggle={onToggle} />
     </div>
   );

@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes, FC, ReactNode } from "react";
-import { cn } from "../../../../lib/utils";
+import { cn } from "../../../../lib/tailwind-merge";
 
 interface NavButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isActive?: boolean;
