@@ -1,11 +1,13 @@
 import EyeOff from "@/assets/eye-off.svg";
 import EyeOn from "@/assets/eye-on.svg";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
-import { useState, type FC } from "react";
+import { useState, type FC, type InputHTMLAttributes } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { TextInput } from "../../../../../components/TextInput";
 
-export const PasswordInput: FC = () => {
+interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {}
+
+export const PasswordInput: FC<PasswordInputProps> = (props) => {
   const [isVisible, setIsVisible] = useState(false);
   const { control } = useFormContext();
 
@@ -42,6 +44,7 @@ export const PasswordInput: FC = () => {
               onChange={onChange}
               onBlur={onBlur}
               value={value}
+              {...props}
             />
             {error && (
               <IntiDinamisText
