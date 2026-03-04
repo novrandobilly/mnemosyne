@@ -1,4 +1,5 @@
 import IntiDinamisButton from "@/components/IntiDinamisButton";
+import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { StatusCapsule } from "@/components/StatusCapsule";
 import type { FC } from "react";
 
@@ -28,12 +29,22 @@ export const TestItem: FC<TestItemProps> = ({
       </div>
 
       <div className="mb-4">
-        <h3 className="mb-1.5 text-lg font-semibold text-neutral-900">
+        <IntiDinamisText
+          as="h3"
+          size="20"
+          weight="semibold"
+          className="mb-1.5 text-neutral-900"
+        >
           {title}
-        </h3>
-        <div className="inline-block rounded-md bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-600">
+        </IntiDinamisText>
+        <IntiDinamisText
+          as="span"
+          size="12"
+          weight="medium"
+          className="inline-block rounded-md bg-neutral-100 px-2 py-0.5 text-neutral-600"
+        >
           {tag}
-        </div>
+        </IntiDinamisText>
       </div>
 
       <IntiDinamisButton

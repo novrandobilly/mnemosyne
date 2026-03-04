@@ -1,4 +1,6 @@
 import AdminWrapper from "../../components/MainWrapper/features/admin-wrapper";
+import { IntiDinamisText } from "@/components/IntiDinamisText";
+import IntiDinamisButton from "@/components/IntiDinamisButton";
 
 type Participant = {
   id: string;
@@ -167,16 +169,24 @@ const AdminDashboard = () => {
       <AdminWrapper>
         <section className="flex flex-col gap-4">
           <div>
-            <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">
+            <IntiDinamisText
+              size="12"
+              className="uppercase tracking-[0.3em] text-neutral-500"
+            >
               Participant Overview
-            </div>
-            <h1 className="mt-2 text-2xl font-semibold text-neutral-900">
+            </IntiDinamisText>
+            <IntiDinamisText
+              as="h1"
+              size="24"
+              weight="semibold"
+              className="mt-2 text-neutral-900"
+            >
               Test completion status by participant
-            </h1>
-            <p className="mt-2 text-sm text-neutral-600">
+            </IntiDinamisText>
+            <IntiDinamisText size="14" className="mt-2 text-neutral-600">
               Monitor test completion across all participants. Use the flag
               columns to quickly see which tests are done.
-            </p>
+            </IntiDinamisText>
           </div>
 
           <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
@@ -233,12 +243,13 @@ const AdminDashboard = () => {
                         </div>
                       </td>
                       <td className="px-5 py-4 text-right">
-                        <button
+                        <IntiDinamisButton
                           type="button"
-                          className="rounded-full border border-neutral-300 bg-white px-3 py-1.5 text-xs font-semibold text-neutral-700 transition hover:border-neutral-400 hover:bg-neutral-50"
+                          variant="secondary"
+                          className="min-w-0 rounded-full px-3 py-1.5 text-xs"
                         >
                           Delete
-                        </button>
+                        </IntiDinamisButton>
                       </td>
                     </tr>
                   ))}

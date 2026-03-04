@@ -5,10 +5,12 @@ import { Spinner } from "./spinner";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary";
+  size?: "md" | "sm" | "xs" | "icon";
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
   isLoading?: boolean;
-  onClick: () => void;
+  wrapChildrenWithText?: boolean;
+  onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
 }
 
 const IntiDinamisButton = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -17,9 +19,11 @@ const IntiDinamisButton = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       children,
       variant = "primary",
+      size = "md",
       iconLeft,
       iconRight,
       isLoading = false,
+      wrapChildrenWithText = true,
       disabled,
       onClick,
       ...props
@@ -27,7 +31,14 @@ const IntiDinamisButton = forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const baseStyles =
-      "relative inline-flex py-2.5 px-4 min-w-[100px] items-center justify-center px-[10px] rounded-[8px] text-sm font-medium transition-all duration-200 focus:outline-none active:scale-[0.98] cursor-pointer";
+      "relative inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none active:scale-[0.98] cursor-pointer";
+
+    const sizeStyles = {
+      md: "min-w-[100px] rounded-[8px] px-4 py-2.5",
+      sm: "min-w-[88px] rounded-[8px] px-3 py-2",
+      xs: "min-w-0 rounded-md px-2 py-1 text-xs",
+      icon: "h-8 w-8 min-w-0 rounded-lg p-0 text-xs sm:h-9 sm:w-9 sm:text-sm",
+    };
 
     const disabledStyles =
       "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#E6E6E8] disabled:text-[#BBBBC0] disabled:ring-0 disabled:ring-[#E6E6E8] disabled:border-transparent";
@@ -46,12 +57,16 @@ const IntiDinamisButton = forwardRef<HTMLButtonElement, ButtonProps>(
         "bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900/10",
     };
 
+    const contentWidth = size === "md" || size === "sm" ? "w-full" : "w-auto";
+    const textSize = size === "md" || size === "sm" ? "14" : "12";
+
     return (
       <button
         ref={ref}
         disabled={isLoading || disabled}
         className={cn(
           baseStyles,
+          sizeStyles[size],
           variants[variant],
           disabledStyles,
           isLoading && loadingStyles[variant],
@@ -72,14 +87,23 @@ const IntiDinamisButton = forwardRef<HTMLButtonElement, ButtonProps>(
 
         <span
           className={cn(
-            "flex items-center gap-2 w-full",
+            "flex items-center gap-2",
+            contentWidth,
             isLoading ? "invisible opacity-0" : "visible opacity-100",
           )}
         >
           {iconLeft && <span>{iconLeft}</span>}
-          <IntiDinamisText weight="semibold" className="w-full">
-            {children}
-          </IntiDinamisText>
+          {wrapChildrenWithText ? (
+            <IntiDinamisText
+              size={textSize}
+              weight="semibold"
+              className={cn(size === "md" || size === "sm" ? "w-full" : "")}
+            >
+              {children}
+            </IntiDinamisText>
+          ) : (
+            children
+          )}
           {iconRight && <span>{iconRight}</span>}
         </span>
       </button>

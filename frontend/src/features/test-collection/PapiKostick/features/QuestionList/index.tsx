@@ -3,6 +3,7 @@ import {
   type PapiAnswer,
   type PapiAnswerRecord,
 } from "../../hooks/usePapiKostick";
+import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { QuestionCard } from "../QuestionCard";
 import type { PAPI_QUESTIONS } from "@/data/papikostick";
 
@@ -25,15 +26,27 @@ export const QuestionList = ({
   return (
     <section className="flex flex-col gap-3 sm:gap-4">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-medium text-neutral-500 sm:text-sm">
+        <IntiDinamisText
+          size="12"
+          weight="medium"
+          className="text-neutral-500 sm:text-sm"
+        >
           Pertanyaan{" "}
-          <span className="font-semibold text-neutral-900">
+          <IntiDinamisText
+            as="span"
+            size="12"
+            weight="semibold"
+            className="text-neutral-900 sm:text-sm"
+          >
             {pageStart}–{pageEnd}
-          </span>
-        </p>
-        <p className="text-xxs text-neutral-400 uppercase tracking-widest sm:text-xs">
+          </IntiDinamisText>
+        </IntiDinamisText>
+        <IntiDinamisText
+          size="10"
+          className="text-neutral-400 uppercase tracking-widest sm:text-xs"
+        >
           Halaman {currentPage + 1}
-        </p>
+        </IntiDinamisText>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">

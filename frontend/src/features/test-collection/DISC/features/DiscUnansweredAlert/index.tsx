@@ -1,21 +1,20 @@
-import { getPageForQuestion } from "../../hooks/usePapiKostick";
+import { getPageForDiscQuestion } from "../../hooks/useDisc";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 
-interface UnansweredAlertProps {
-  unansweredIds: number[];
+interface DiscUnansweredAlertProps {
+  incompleteIds: number[];
   onJumpToPage: (page: number) => void;
 }
 
-export const UnansweredAlert = ({
-  unansweredIds,
+export const DiscUnansweredAlert = ({
+  incompleteIds,
   onJumpToPage,
-}: UnansweredAlertProps) => {
-  if (unansweredIds.length === 0) return null;
+}: DiscUnansweredAlertProps) => {
+  if (incompleteIds.length === 0) return null;
 
-  // Group unanswered IDs by page number
-  const byPage = unansweredIds.reduce<Record<number, number[]>>((acc, id) => {
-    const page = getPageForQuestion(id);
+  const byPage = incompleteIds.reduce<Record<number, number[]>>((acc, id) => {
+    const page = getPageForDiscQuestion(id);
     if (!acc[page]) acc[page] = [];
     acc[page].push(id);
     return acc;
@@ -31,9 +30,12 @@ export const UnansweredAlert = ({
             weight="semibold"
             className="text-amber-900"
           >
-            {unansweredIds.length} pertanyaan belum dijawab
+            {incompleteIds.length} pertanyaan belum lengkap
           </IntiDinamisText>
-
+          <IntiDinamisText size="12" className="text-amber-700">
+            Setiap pertanyaan harus dipilih satu <strong>Paling</strong> dan
+            satu <strong>Kurang</strong>.
+          </IntiDinamisText>
           <div className="flex flex-col gap-2">
             {Object.entries(byPage)
               .sort(([a], [b]) => Number(a) - Number(b))

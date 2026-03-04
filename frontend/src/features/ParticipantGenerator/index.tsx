@@ -1,4 +1,6 @@
 import AdminWrapper from "../../components/MainWrapper/features/admin-wrapper";
+import { IntiDinamisText } from "@/components/IntiDinamisText";
+import IntiDinamisButton from "@/components/IntiDinamisButton";
 
 type GeneratedAccount = {
   id: string;
@@ -61,16 +63,24 @@ const ParticipantGenerator = () => {
       <AdminWrapper>
         <section className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-            <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">
+            <IntiDinamisText
+              size="12"
+              className="uppercase tracking-[0.3em] text-neutral-500"
+            >
               Generate Accounts
-            </div>
-            <h1 className="mt-3 text-2xl font-semibold text-neutral-900">
+            </IntiDinamisText>
+            <IntiDinamisText
+              as="h1"
+              size="24"
+              weight="semibold"
+              className="mt-3 text-neutral-900"
+            >
               Create participant credentials
-            </h1>
-            <p className="mt-2 text-sm text-neutral-600">
+            </IntiDinamisText>
+            <IntiDinamisText size="14" className="mt-2 text-neutral-600">
               Generate usernames and temporary passwords. Share credentials with
               participants through your internal channel.
-            </p>
+            </IntiDinamisText>
 
             <form className="mt-6 grid gap-4">
               <div className="grid gap-4 sm:grid-cols-2">
@@ -143,33 +153,42 @@ const ParticipantGenerator = () => {
               </div>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
-                <button
+                <IntiDinamisButton
                   type="button"
-                  className="rounded-full border border-neutral-300 bg-white px-4 py-2 text-xs font-semibold text-neutral-700 shadow-sm transition hover:border-neutral-400 hover:bg-neutral-50"
+                  variant="secondary"
+                  className="min-w-0 rounded-full px-4 py-2 text-xs"
                 >
                   Generate Password
-                </button>
-                <button
+                </IntiDinamisButton>
+                <IntiDinamisButton
                   type="submit"
-                  className="rounded-full bg-neutral-900 px-5 py-2 text-xs font-semibold text-white transition hover:bg-neutral-800"
+                  className="min-w-0 rounded-full px-5 py-2 text-xs"
                 >
                   Create Account
-                </button>
+                </IntiDinamisButton>
               </div>
             </form>
           </div>
 
           <div className="flex flex-col gap-4">
             <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-              <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">
+              <IntiDinamisText
+                size="12"
+                className="uppercase tracking-[0.3em] text-neutral-500"
+              >
                 Quick Actions
-              </div>
-              <h2 className="mt-3 text-xl font-semibold text-neutral-900">
+              </IntiDinamisText>
+              <IntiDinamisText
+                as="h2"
+                size="20"
+                weight="semibold"
+                className="mt-3 text-neutral-900"
+              >
                 Bulk generation
-              </h2>
-              <p className="mt-2 text-sm text-neutral-600">
+              </IntiDinamisText>
+              <IntiDinamisText size="14" className="mt-2 text-neutral-600">
                 Enter how many participant accounts to create in this batch.
-              </p>
+              </IntiDinamisText>
               <div className="mt-5 flex flex-col gap-3">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-neutral-700">
@@ -182,22 +201,30 @@ const ParticipantGenerator = () => {
                     className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-800 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-200"
                   />
                 </div>
-                <button
+                <IntiDinamisButton
                   type="button"
-                  className="w-full rounded-xl bg-neutral-900 px-4 py-3 text-xs font-semibold text-white transition hover:bg-neutral-800"
+                  className="w-full rounded-xl px-4 py-3 text-xs"
                 >
                   Generate Accounts
-                </button>
+                </IntiDinamisButton>
               </div>
             </div>
 
             <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-              <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">
+              <IntiDinamisText
+                size="12"
+                className="uppercase tracking-[0.3em] text-neutral-500"
+              >
                 Activity
-              </div>
-              <h2 className="mt-3 text-xl font-semibold text-neutral-900">
+              </IntiDinamisText>
+              <IntiDinamisText
+                as="h2"
+                size="20"
+                weight="semibold"
+                className="mt-3 text-neutral-900"
+              >
                 Latest generated accounts
-              </h2>
+              </IntiDinamisText>
               <div className="mt-4 space-y-3 text-sm text-neutral-600">
                 <div className="flex items-center justify-between rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3">
                   <div>
@@ -233,22 +260,31 @@ const ParticipantGenerator = () => {
         <section className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">
+              <IntiDinamisText
+                size="12"
+                className="uppercase tracking-[0.3em] text-neutral-500"
+              >
                 Generated Accounts
-              </div>
-              <h2 className="mt-2 text-xl font-semibold text-neutral-900">
+              </IntiDinamisText>
+              <IntiDinamisText
+                as="h2"
+                size="20"
+                weight="semibold"
+                className="mt-2 text-neutral-900"
+              >
                 Share credentials securely
-              </h2>
-              <p className="mt-2 text-sm text-neutral-600">
+              </IntiDinamisText>
+              <IntiDinamisText size="14" className="mt-2 text-neutral-600">
                 Copy and deliver credentials through approved internal channels.
-              </p>
+              </IntiDinamisText>
             </div>
-            <button
+            <IntiDinamisButton
               type="button"
-              className="rounded-full border border-neutral-300 bg-white px-4 py-2 text-xs font-semibold text-neutral-700 shadow-sm transition hover:border-neutral-400 hover:bg-neutral-50"
+              variant="secondary"
+              className="min-w-0 rounded-full px-4 py-2 text-xs"
             >
               Export List
-            </button>
+            </IntiDinamisButton>
           </div>
 
           <div className="mt-6 overflow-hidden rounded-2xl border border-neutral-200">

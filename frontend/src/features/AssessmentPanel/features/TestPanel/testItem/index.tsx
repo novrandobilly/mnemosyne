@@ -1,4 +1,5 @@
 import { StatusCapsule } from "../../../../../components/StatusCapsule";
+import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { SwitchButton } from "./features/switch";
 
 interface TestItemProps {
@@ -22,8 +23,17 @@ export const TestItem = ({
         {number}
       </div>
       <div className="min-w-0 flex-1">
-        <h3 className="font-semibold text-neutral-900">{title}</h3>
-        <div className="mt-1 text-sm text-neutral-500">{tag}</div>
+        <IntiDinamisText
+          as="h3"
+          size="14"
+          weight="semibold"
+          className="text-neutral-900"
+        >
+          {title}
+        </IntiDinamisText>
+        <IntiDinamisText size="14" className="mt-1 text-neutral-500">
+          {tag}
+        </IntiDinamisText>
       </div>
       <StatusCapsule enabled={enabled}>
         {enabled ? "Enabled" : "Disabled"}

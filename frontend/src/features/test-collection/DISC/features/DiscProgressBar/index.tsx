@@ -2,13 +2,13 @@ import { IntiDinamisText } from "@/components/IntiDinamisText";
 
 interface ProgressBarProps {
   progress: number;
-  answeredCount: number;
+  completedCount: number;
   totalCount: number;
 }
 
-export const ProgressBar = ({
+export const DiscProgressBar = ({
   progress,
-  answeredCount,
+  completedCount,
   totalCount,
 }: ProgressBarProps) => {
   return (
@@ -18,7 +18,7 @@ export const ProgressBar = ({
           Progress
         </IntiDinamisText>
         <IntiDinamisText size="14" weight="medium" className="text-neutral-900">
-          {answeredCount} / {totalCount} dijawab
+          {completedCount} / {totalCount} selesai
         </IntiDinamisText>
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200">

@@ -1,5 +1,7 @@
 import PapiWheel from "@/assets/PapiWheel";
 import AdminWrapper from "../../components/MainWrapper/features/admin-wrapper";
+import { IntiDinamisText } from "@/components/IntiDinamisText";
+import IntiDinamisButton from "@/components/IntiDinamisButton";
 
 type ResultLink = {
   id: string;
@@ -87,15 +89,23 @@ const ParticipantDetails = () => {
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">
+                <IntiDinamisText
+                  size="12"
+                  className="uppercase tracking-[0.3em] text-neutral-500"
+                >
                   Participant
-                </div>
-                <h1 className="mt-2 text-2xl font-semibold text-neutral-900">
+                </IntiDinamisText>
+                <IntiDinamisText
+                  as="h1"
+                  size="24"
+                  weight="semibold"
+                  className="mt-2 text-neutral-900"
+                >
                   Alea Thorne
-                </h1>
-                <p className="mt-2 text-sm text-neutral-600">
+                </IntiDinamisText>
+                <IntiDinamisText size="14" className="mt-2 text-neutral-600">
                   Candidate ID: P-001 · Role Track: Analyst
-                </p>
+                </IntiDinamisText>
               </div>
               <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-semibold text-neutral-600">
                 Active
@@ -140,12 +150,20 @@ const ParticipantDetails = () => {
 
           <div className="flex flex-col gap-4">
             <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-              <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">
+              <IntiDinamisText
+                size="12"
+                className="uppercase tracking-[0.3em] text-neutral-500"
+              >
                 Employment
-              </div>
-              <h2 className="mt-3 text-xl font-semibold text-neutral-900">
+              </IntiDinamisText>
+              <IntiDinamisText
+                as="h2"
+                size="20"
+                weight="semibold"
+                className="mt-3 text-neutral-900"
+              >
                 Company details
-              </h2>
+              </IntiDinamisText>
               <div className="mt-4 grid gap-3 text-sm">
                 <div className="flex items-center justify-between rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3">
                   <span className="text-neutral-600">Company</span>
@@ -167,23 +185,32 @@ const ParticipantDetails = () => {
         <section className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <div className="text-xs uppercase tracking-[0.3em] text-neutral-500">
+              <IntiDinamisText
+                size="12"
+                className="uppercase tracking-[0.3em] text-neutral-500"
+              >
                 Test Results
-              </div>
-              <h2 className="mt-2 text-xl font-semibold text-neutral-900">
+              </IntiDinamisText>
+              <IntiDinamisText
+                as="h2"
+                size="20"
+                weight="semibold"
+                className="mt-2 text-neutral-900"
+              >
                 Reports and scoring overview
-              </h2>
-              <p className="mt-2 text-sm text-neutral-600">
+              </IntiDinamisText>
+              <IntiDinamisText size="14" className="mt-2 text-neutral-600">
                 Detailed reports are available for core tests. Single-score
                 assessments are listed in the scoring table.
-              </p>
+              </IntiDinamisText>
             </div>
-            <button
+            <IntiDinamisButton
               type="button"
-              className="rounded-full border border-neutral-300 bg-white px-4 py-2 text-xs font-semibold text-neutral-700 shadow-sm transition hover:border-neutral-400 hover:bg-neutral-50"
+              variant="secondary"
+              className="min-w-0 rounded-full px-4 py-2 text-xs"
             >
               Export Summary
-            </button>
+            </IntiDinamisButton>
           </div>
 
           <div className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">

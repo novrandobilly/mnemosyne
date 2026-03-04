@@ -1,7 +1,7 @@
 import { cn } from "@/lib/tailwind-merge";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 
-interface NavigationControlsProps {
+interface DiscNavigationControlsProps {
   currentPage: number;
   totalPages: number;
   isFirstPage: boolean;
@@ -13,7 +13,7 @@ interface NavigationControlsProps {
   onSubmit: () => void;
 }
 
-export const NavigationControls = ({
+export const DiscNavigationControls = ({
   currentPage,
   totalPages,
   isFirstPage,
@@ -23,7 +23,7 @@ export const NavigationControls = ({
   onNext,
   onGoToPage,
   onSubmit,
-}: NavigationControlsProps) => {
+}: DiscNavigationControlsProps) => {
   return (
     <div className="flex flex-col gap-3 sm:gap-4">
       {/* Page number buttons */}
