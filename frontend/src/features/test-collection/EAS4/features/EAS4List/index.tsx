@@ -6,7 +6,7 @@ export const EAS4List = () => {
   const { answers, focusedId, selectAnswer, setFocusedId } = useEas4Context();
 
   return (
-    <div className="flex w-full flex-col max-w-sm rounded-2xl border border-neutral-200 bg-white py-1 shadow-sm">
+    <div className="flex w-full flex-col max-w-sm rounded-lg border border-neutral-200 bg-white shadow-sm">
       {eas4Data.map((item) => (
         <EAS4Row
           key={item.id}
