@@ -1,8 +1,8 @@
 import { type RouteObject } from "react-router-dom";
-import AssessmentPanel from "../../features/AssessmentPanel";
 import AdminDashboard from "../../features/AdminDashboard";
-import ParticipantGenerator from "../../features/ParticipantGenerator";
+import AssessmentPanel from "../../features/AssessmentPanel";
 import ParticipantDetails from "../../features/ParticipantDetails";
+import ParticipantGenerator from "../../features/ParticipantGenerator";
 
 export const adminRoutes: RouteObject[] = [
   {
