@@ -7,6 +7,7 @@ import { Eas4Test } from "@/features/test-collection/EAS4";
 import { Eas6Test } from "@/features/test-collection/EAS6";
 import { Eas7Test } from "@/features/test-collection/EAS7";
 import { Eas10Test } from "@/features/test-collection/EAS10";
+import { A5Test } from "@/features/test-collection/A5";
 
 export const participantRoutes: RouteObject[] = [
   {
@@ -43,6 +44,10 @@ export const participantRoutes: RouteObject[] = [
       {
         path: "eas10",
         element: <Eas10Test />,
+      },
+      {
+        path: "a5",
+        element: <A5Test />,
       },
     ],
   },
