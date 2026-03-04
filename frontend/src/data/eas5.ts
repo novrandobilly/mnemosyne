@@ -26,7 +26,7 @@ export const eas5Data: Eas5Pile[] = Array.from(
 
     return {
       pileId,
-      imageUrl: `https://placehold.co/520x520?text=EAS5+Pile+${pileId}`,
+      imageUrl: `https://placehold.co/400x400?text=EAS5+Pile+${pileId}`,
       questions,
     };
   },
