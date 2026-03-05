@@ -46,9 +46,10 @@ export const LoginBox = () => {
           <PasswordInput
             onKeyDown={(e) => {
               e.stopPropagation();
-              e.preventDefault();
+              // e.preventDefault();
               if (e.key === "Enter") {
                 handleSubmit(onSubmit)();
+                return;
               }
             }}
           />
