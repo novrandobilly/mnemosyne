@@ -1,12 +1,12 @@
 import { type RouteObject } from "react-router-dom";
-import AdminDashboard from "../../features/AdminDashboard";
-import AssessmentPanel from "../../features/AssessmentPanel";
-import ParticipantDetails from "../../features/ParticipantDetails";
-import PKResult from "../../features/PKResult";
-import DISCResult from "../../features/DISCResult";
-import Intray1Result from "../../features/Intray1Result";
-import Intray2Result from "../../features/Intray2Result";
-import ParticipantGenerator from "../../features/ParticipantGenerator";
+import AdminDashboard from "../../features/main/AdminDashboard";
+import AssessmentPanel from "../../features/main/AssessmentPanel";
+import ParticipantDetails from "../../features/main/ParticipantDetails";
+import PKResult from "../../features/main/PKResult";
+import DISCResult from "../../features/main/DISCResult";
+import Intray1Result from "../../features/main/Intray1Result";
+import Intray2Result from "../../features/main/Intray2Result";
+import ParticipantGenerator from "../../features/main/ParticipantGenerator";
 
 export const adminRoutes: RouteObject[] = [
   {

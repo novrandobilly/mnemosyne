@@ -1,6 +1,6 @@
 import { useRoutes, type RouteObject } from "react-router-dom";
-import HomePage from "../features/HomePage";
-import Login from "../features/Login";
+import HomePage from "../features/main/HomePage";
+import Login from "../features/main/Login";
 import { participantRoutes } from "./participant";
 import { adminRoutes } from "./admin";
 import { AuthGuard } from "./guard/auth-guard";

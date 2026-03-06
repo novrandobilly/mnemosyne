@@ -1,5 +1,5 @@
 import { type RouteObject } from "react-router-dom";
-import AssessmentLobby from "../../features/AssessmentLobby";
+import AssessmentLobby from "../../features/main/AssessmentLobby";
 import { PapiKostickTest } from "@/features/test-collection/PapiKostick";
 import { DiscTest } from "@/features/test-collection/DISC";
 import { Eas5Test } from "@/features/test-collection/EAS5";
