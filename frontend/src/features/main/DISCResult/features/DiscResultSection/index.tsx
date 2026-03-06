@@ -31,24 +31,25 @@ const DiscResultSection: FC<DiscResultSectionProps> = ({ scores }) => (
     </div>
 
     <div className="flex flex-col gap-6">
-      <div>
-        <IntiDinamisText
-          size="12"
-          className="mb-3 uppercase tracking-[0.3em] text-neutral-500"
-        >
-          Scoring Table
-        </IntiDinamisText>
-        <DiscScoringTable scores={scores} />
-      </div>
-
-      <div>
-        <IntiDinamisText
-          size="12"
-          className="mb-3 uppercase tracking-[0.3em] text-neutral-500"
-        >
-          Scoring Grid
-        </IntiDinamisText>
-        <DiscScoringGrid scores={scores} />
+      <div className="flex justify-start gap-6">
+        <div className="w-full max-w-lg">
+          <IntiDinamisText
+            size="12"
+            className="mb-3 uppercase tracking-[0.3em] text-neutral-500"
+          >
+            Scoring Grid
+          </IntiDinamisText>
+          <DiscScoringGrid scores={scores} />
+        </div>
+        <div className="w-full max-w-lg">
+          <IntiDinamisText
+            size="12"
+            className="mb-3 uppercase tracking-[0.3em] text-neutral-500"
+          >
+            Scoring Table
+          </IntiDinamisText>
+          <DiscScoringTable scores={scores} />
+        </div>
       </div>
       <div className="flex">
         <DiscMostGraph scores={{ d: 6, i: 1, s: 10, c: 2 }} />
