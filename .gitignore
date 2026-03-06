@@ -4,6 +4,8 @@
 .env
 .env.*
 .github/
+*.env.local
+*.env
 
 # --- Frontend (Vite + React + TS) ---
 frontend/node_modules/
