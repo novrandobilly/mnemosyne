@@ -1,7 +1,9 @@
 import { cn } from "@/lib/tailwind-merge";
 import { useIntray1Context } from "../../context/Intray1Context";
-import { Intray1WorksheetTable } from "../Intray1WorksheetTable";
+import { IntrayWorksheetTable } from "@/components/IntrayWorksheetTable";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
+
+const MAX_KK1_ROWS = 30;
 
 const TABS = [
   {
@@ -68,10 +70,11 @@ export function Intray1Workspace() {
             className="overflow-x-auto overflow-y-auto"
             style={{ maxHeight: "calc(100vh - 310px)" }}
           >
-            <Intray1WorksheetTable
+            <IntrayWorksheetTable
               rows={kk1Rows}
               onUpdate={updateKk1Row}
               onAddRow={addKk1Row}
+              maxRows={MAX_KK1_ROWS}
               disabled={isSubmitted}
             />
           </div>
@@ -89,7 +92,7 @@ export function Intray1Workspace() {
             className="overflow-x-auto overflow-y-auto"
             style={{ maxHeight: "calc(100vh - 310px)" }}
           >
-            <Intray1WorksheetTable
+            <IntrayWorksheetTable
               rows={kk2Rows}
               onUpdate={updateKk2Row}
               disabled={isSubmitted}
