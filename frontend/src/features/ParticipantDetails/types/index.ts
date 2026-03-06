@@ -1,5 +1,6 @@
 export type ResultLink = {
   id: string;
+  slug: string;
   label: string;
   status: "Completed" | "In Progress" | "Not Started";
   date: string;

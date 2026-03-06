@@ -18,7 +18,7 @@ const ScoringList: FC = () => {
     : "-";
 
   return (
-    <div className="min-w-[50%] max-w-fit rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
+    <div className="w-full max-w-xl rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
       <div className="text-xs uppercase tracking-[0.2em] text-neutral-500">
         Scoring List
       </div>
