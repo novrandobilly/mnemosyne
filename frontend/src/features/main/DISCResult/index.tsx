@@ -1,9 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { MainWrapper } from "@/components/MainWrapper";
-import { IntiDinamisText } from "@/components/IntiDinamisText";
-import { DUMMY_PARTICIPANTS } from "../AdminDashboard/constants/participants";
-import ParticipantBiodata from "../../global/components/ParticipantBiodata";
-import ParticipantEmployment from "../../global/components/ParticipantEmployment";
+import { DUMMY_PARTICIPANTS } from "@/features/main/AdminDashboard/constants/participants";
+import ParticipantBiodata from "@/features/global/components/ParticipantBiodata";
+import ParticipantEmployment from "@/features/global/components/ParticipantEmployment";
+import DiscResultSection from "./features/DiscResultSection";
+import { DUMMY_DISC_SCORES } from "./constants";
 
 const DISCResult = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,37 +30,7 @@ const DISCResult = () => {
           <ParticipantEmployment />
         </section>
 
-        <section className="flex flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-          <div>
-            <IntiDinamisText
-              size="12"
-              className="uppercase tracking-[0.3em] text-neutral-500"
-            >
-              Test Result
-            </IntiDinamisText>
-            <IntiDinamisText
-              as="h2"
-              size="20"
-              weight="semibold"
-              className="mt-2 text-neutral-900"
-            >
-              DISC
-            </IntiDinamisText>
-          </div>
-
-          <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 py-16 text-center">
-            <IntiDinamisText
-              size="14"
-              weight="semibold"
-              className="text-neutral-500"
-            >
-              DISC results will appear here
-            </IntiDinamisText>
-            <IntiDinamisText size="12" className="text-neutral-400">
-              Data will be loaded from PocketBase in a future update.
-            </IntiDinamisText>
-          </div>
-        </section>
+        <DiscResultSection scores={DUMMY_DISC_SCORES} />
       </div>
     </MainWrapper>
   );
