@@ -1,5 +1,5 @@
+import { MainWrapper } from "@/components/MainWrapper";
 import { IntiDinamisText } from "../../components/IntiDinamisText";
-import MainWrapper from "../../components/MainWrapper";
 
 export default function HomePage() {
   return (

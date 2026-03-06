@@ -1,4 +1,4 @@
-import AdminWrapper from "@/components/MainWrapper/features/admin-wrapper";
+import { MainWrapper } from "@/components/MainWrapper";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { cn } from "@/lib/tailwind-merge";
@@ -21,7 +21,7 @@ export const Eas5Test = () => {
   } = useEas5();
 
   return (
-    <AdminWrapper pageTitle="EAS5">
+    <MainWrapper pageTitle="EAS5">
       <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[360px_1fr]">
         <aside className="self-start lg:sticky lg:top-6">
           <div className="flex flex-col gap-4 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
@@ -96,6 +96,6 @@ export const Eas5Test = () => {
           </div>
         </section>
       </div>
-    </AdminWrapper>
+    </MainWrapper>
   );
 };

@@ -1,5 +1,5 @@
 import PapiWheel from "@/assets/PapiWheel";
-import AdminWrapper from "../../components/MainWrapper/features/admin-wrapper";
+import { MainWrapper } from "../../components/MainWrapper";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 
@@ -84,7 +84,7 @@ const ParticipantDetails = () => {
         <div className="absolute bottom-12 right-1/3 h-40 w-40 rounded-full bg-amber-100/70 blur-[80px]" />
       </div>
 
-      <AdminWrapper>
+      <MainWrapper>
         <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
             <div className="flex items-center justify-between gap-4">
@@ -292,7 +292,7 @@ const ParticipantDetails = () => {
           </div>
         </section>
         <PapiWheel data={dummyPapiData} />
-      </AdminWrapper>
+      </MainWrapper>
     </div>
   );
 };

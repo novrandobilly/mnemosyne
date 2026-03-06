@@ -1,4 +1,4 @@
-import AdminWrapper from "../../components/MainWrapper/features/admin-wrapper";
+import { MainWrapper } from "../../components/MainWrapper";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 
@@ -166,7 +166,7 @@ const AdminDashboard = () => {
         <div className="absolute bottom-12 right-1/3 h-40 w-40 rounded-full bg-amber-100/70 blur-[80px]" />
       </div> */}
 
-      <AdminWrapper>
+      <MainWrapper>
         <section className="flex flex-col gap-4">
           <div>
             <IntiDinamisText
@@ -258,7 +258,7 @@ const AdminDashboard = () => {
             </div>
           </div>
         </section>
-      </AdminWrapper>
+      </MainWrapper>
     </div>
   );
 };

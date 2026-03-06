@@ -1,4 +1,4 @@
-import AdminWrapper from "@/components/MainWrapper/features/admin-wrapper";
+import { MainWrapper } from "@/components/MainWrapper";
 import { st17Data } from "@/data/st17";
 import { St17Provider } from "./context/St17Context";
 import { St17Header } from "./features/St17Header";
@@ -7,7 +7,7 @@ import { St17PhaseSection } from "./features/St17PhaseSection";
 
 export function St17Test() {
   return (
-    <AdminWrapper pageTitle="ST17">
+    <MainWrapper pageTitle="ST17">
       <St17Provider>
         <div className="flex flex-col gap-6">
           <St17Header />
@@ -17,6 +17,6 @@ export function St17Test() {
           ))}
         </div>
       </St17Provider>
-    </AdminWrapper>
+    </MainWrapper>
   );
 }

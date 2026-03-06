@@ -1,11 +1,11 @@
-import AdminWrapper from "@/components/MainWrapper/features/admin-wrapper";
+import { MainWrapper } from "@/components/MainWrapper";
 import { Eas10Provider } from "./context/Eas10Context";
 import { EAS10Header } from "./features/EAS10Header";
 import { EAS10TimeUpBanner } from "./features/EAS10TimeUpBanner";
 import { EAS10List } from "./features/EAS10List";
 
 export const Eas10Test = () => (
-  <AdminWrapper pageTitle="EAS10">
+  <MainWrapper pageTitle="EAS10">
     <Eas10Provider>
       <div className="w-full flex justify-center">
         <div className="flex max-w-md flex-col gap-6 w-full">
@@ -15,5 +15,5 @@ export const Eas10Test = () => (
         </div>
       </div>
     </Eas10Provider>
-  </AdminWrapper>
+  </MainWrapper>
 );

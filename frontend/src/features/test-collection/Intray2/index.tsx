@@ -1,4 +1,4 @@
-import AdminWrapper from "@/components/MainWrapper/features/admin-wrapper";
+import { MainWrapper } from "@/components/MainWrapper";
 import { Intray2Provider } from "./context/Intray2Context";
 import { useIntray2Context } from "./context/Intray2Context";
 import { Intray2Header } from "./features/Intray2Header";
@@ -17,13 +17,13 @@ function Intray2Layout() {
 
 export function Intray2Test() {
   return (
-    <AdminWrapper pageTitle="Intray-2">
+    <MainWrapper pageTitle="Intray-2">
       <Intray2Provider>
         <div className="flex flex-col gap-4">
           <Intray2Header />
           <Intray2Layout />
         </div>
       </Intray2Provider>
-    </AdminWrapper>
+    </MainWrapper>
   );
 }

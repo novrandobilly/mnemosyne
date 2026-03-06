@@ -12,7 +12,7 @@ export const NavButton: FC<NavButtonProps> = ({
   className,
   ...props
 }) => {
-  const baseStyles = "rounded-full px-3 py-1.5 font-semibold";
+  const baseStyles = "cursor-pointer rounded-full px-3 py-1.5 font-semibold";
   const inactiveStyles = "text-neutral-600 transition hover:bg-neutral-100";
   const activeStyles = "bg-neutral-900 text-white";
 

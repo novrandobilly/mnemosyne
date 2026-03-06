@@ -3,13 +3,10 @@ import type { FC } from "react";
 const SideButtons: FC = () => {
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <div className="rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs text-neutral-600 shadow-sm">
-        Feb 11, 2026
-      </div>
       <button
         type="button"
         onClick={() => window.location.reload()}
-        className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-4 py-2 text-xs font-semibold text-neutral-700 shadow-sm transition hover:border-neutral-400 hover:bg-neutral-50"
+        className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-neutral-300 bg-white px-4 py-2 text-xs font-semibold text-neutral-700 shadow-sm transition hover:border-neutral-400 hover:bg-neutral-50"
       >
         <svg
           aria-hidden="true"

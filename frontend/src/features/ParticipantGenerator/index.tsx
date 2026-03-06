@@ -1,4 +1,4 @@
-import AdminWrapper from "../../components/MainWrapper/features/admin-wrapper";
+import { MainWrapper } from "../../components/MainWrapper";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 
@@ -60,7 +60,7 @@ const ParticipantGenerator = () => {
         <div className="absolute bottom-12 right-1/3 h-40 w-40 rounded-full bg-amber-100/70 blur-[80px]" />
       </div>
 
-      <AdminWrapper>
+      <MainWrapper>
         <section className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
             <IntiDinamisText
@@ -343,7 +343,7 @@ const ParticipantGenerator = () => {
             </div>
           </div>
         </section>
-      </AdminWrapper>
+      </MainWrapper>
     </div>
   );
 };

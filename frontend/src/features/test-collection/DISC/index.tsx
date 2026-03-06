@@ -1,4 +1,4 @@
-import AdminWrapper from "@/components/MainWrapper/features/admin-wrapper";
+import { MainWrapper } from "@/components/MainWrapper";
 import { DiscNavigationControls } from "./features/DiscNavigationControls";
 import { DiscProgressBar } from "./features/DiscProgressBar";
 import { DiscQuestionList } from "./features/DiscQuestionList";
@@ -31,7 +31,7 @@ export const DiscTest = () => {
   };
 
   return (
-    <AdminWrapper pageTitle="DISC Test">
+    <MainWrapper pageTitle="DISC Test">
       <div className="mx-auto flex max-w-3xl flex-col gap-4 sm:gap-6">
         <DiscProgressBar
           progress={progress}
@@ -66,6 +66,6 @@ export const DiscTest = () => {
           onSubmit={handleSubmit}
         />
       </div>
-    </AdminWrapper>
+    </MainWrapper>
   );
 };

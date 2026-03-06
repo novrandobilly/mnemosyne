@@ -1,4 +1,4 @@
-import AdminWrapper from "@/components/MainWrapper/features/admin-wrapper";
+import { MainWrapper } from "@/components/MainWrapper";
 import { NavigationControls } from "./features/NavigationControls";
 import { ProgressBar } from "./features/ProgressBar";
 import { QuestionList } from "./features/QuestionList";
@@ -30,7 +30,7 @@ export const PapiKostickTest = () => {
   };
 
   return (
-    <AdminWrapper pageTitle="Papi Kostick Test">
+    <MainWrapper pageTitle="Papi Kostick Test">
       <div className="mx-auto flex max-w-3xl flex-col gap-4 sm:gap-6">
         <ProgressBar
           progress={progress}
@@ -64,6 +64,6 @@ export const PapiKostickTest = () => {
           onSubmit={handleSubmit}
         />
       </div>
-    </AdminWrapper>
+    </MainWrapper>
   );
 };
