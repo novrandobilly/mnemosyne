@@ -36,13 +36,10 @@ const traits = [
 ];
 
 const PapiWheel = ({ data }: { data: PapiScores }) => {
-  // Using a larger internal coordinate system (500x500)
-  // but the SVG will scale to its container.
-  const size = 600;
+  const size = 700;
   const center = size / 2;
-  const gridMaxRadius = 200; // The radius for score 9
+  const gridMaxRadius = 200;
 
-  // Helper to get coordinates based on ring level
   const getCoords = (
     index: number,
     score: number,
@@ -56,7 +53,6 @@ const PapiWheel = ({ data }: { data: PapiScores }) => {
     };
   };
 
-  // Generate data points
   const points = traits
     .map((t, i) => {
       const score = data[t] ?? 0;
@@ -68,9 +64,9 @@ const PapiWheel = ({ data }: { data: PapiScores }) => {
   return (
     <svg
       viewBox={`0 0 ${size} ${size}`}
-      className="w-full aspect-square max-w-lg rounded-xl p-4"
+      className="w-full aspect-square max-w-lg rounded-xl p-4 bg-white" // Removed bg-amber if you want white
     >
-      {/* 1. Grid Rings */}
+      {/* 1. Grid Rings & 2. Data Polygon (Same as before) */}
       {[...Array(10)].map((_, i) => (
         <circle
           key={`grid-${i}`}
@@ -82,8 +78,6 @@ const PapiWheel = ({ data }: { data: PapiScores }) => {
           strokeWidth="1"
         />
       ))}
-
-      {/* 2. Data Polygon */}
       <polygon
         points={points}
         fill="rgba(59, 130, 246, 0.4)"
@@ -92,26 +86,40 @@ const PapiWheel = ({ data }: { data: PapiScores }) => {
         strokeLinejoin="round"
       />
 
-      {/* 3. Group Arcs (Moved outside the traits loop) */}
+      {/* 3. Group Arcs with Flipped Bottom Text */}
       {groups.map((group, gIdx) => {
         const indices = group.traits.map((t) => traits.indexOf(t));
-        const firstIdx = indices[0];
-        const lastIdx = indices[indices.length - 1];
+        let firstIdx = indices[0] - 0.25; // Shift slightly to center the arc between traits
+        let lastIdx = indices[indices.length - 1] + 0.25; // Shift slightly to center the arc between traits
 
-        // Radius for the colored line and the text path
+        // Logic to determine if text should be flipped
+        // Usually, groups between index 5 and 15 are "bottom heavy"
+        const isBottom = firstIdx > 4 && lastIdx < 16;
+
         const lineRadius = gridMaxRadius + 55;
-        const textRadius = gridMaxRadius + 70;
+        // If bottom, we push the text path slightly further out so the
+        // top of the letters align with the top of the normal letters
+        const textRadius = isBottom ? gridMaxRadius + 85 : gridMaxRadius + 70;
 
         const startLine = getCoords(firstIdx, 9, lineRadius);
         const endLine = getCoords(lastIdx, 9, lineRadius);
-        const startText = getCoords(firstIdx, 9, textRadius);
-        const endText = getCoords(lastIdx, 9, textRadius);
+
+        // For the text path:
+        // Top: Start -> End (Clockwise)
+        // Bottom: End -> Start (Counter-clockwise)
+        const startText = getCoords(
+          isBottom ? lastIdx : firstIdx,
+          9,
+          textRadius,
+        );
+        const endText = getCoords(isBottom ? firstIdx : lastIdx, 9, textRadius);
 
         const pathId = `arc-text-${gIdx}`;
+        // Sweep flag (the '1' or '0' after radius) controls clockwise vs counter-clockwise
+        const sweepFlag = isBottom ? 0 : 1;
 
         return (
           <g key={group.label}>
-            {/* Colored Accent Arc */}
             <path
               d={`M ${startLine.x} ${startLine.y} A ${lineRadius} ${lineRadius} 0 0 1 ${endLine.x} ${endLine.y}`}
               fill="none"
@@ -120,14 +128,13 @@ const PapiWheel = ({ data }: { data: PapiScores }) => {
               strokeLinecap="round"
             />
 
-            {/* Invisible path for Text */}
             <path
               id={pathId}
-              d={`M ${startText.x} ${startText.y} A ${textRadius} ${textRadius} 0 0 1 ${endText.x} ${endText.y}`}
+              d={`M ${startText.x} ${startText.y} A ${textRadius} ${textRadius} 0 0 ${sweepFlag} ${endText.x} ${endText.y}`}
               fill="none"
             />
 
-            <text className="text-[12px] font-bold fill-gray-500 uppercase tracking-tighter">
+            <text className="text-[14px] font-bold fill-gray-500 uppercase tracking-tight">
               <textPath
                 href={`#${pathId}`}
                 startOffset="50%"
@@ -140,13 +147,11 @@ const PapiWheel = ({ data }: { data: PapiScores }) => {
         );
       })}
 
-      {/* 4. Radial Spokes & Trait Tokens */}
+      {/* 4. Radial Spokes & Trait Tokens (Same as before) */}
       {traits.map((trait, i) => {
         const tokenPos = getCoords(i, 9, gridMaxRadius + 25);
-
         return (
           <g key={trait}>
-            {/* Numeric Scale (0-9) */}
             {[...Array(10)].map((_, scoreValue) => {
               const { x, y } = getCoords(i, scoreValue);
               return (
@@ -162,8 +167,6 @@ const PapiWheel = ({ data }: { data: PapiScores }) => {
                 </text>
               );
             })}
-
-            {/* Trait Letter Token */}
             <g className="filter drop-shadow-sm">
               <circle
                 cx={tokenPos.x}
@@ -186,11 +189,8 @@ const PapiWheel = ({ data }: { data: PapiScores }) => {
           </g>
         );
       })}
-
-      {/* Center Point */}
       <circle cx={center} cy={center} r={4} fill="#4b5563" />
     </svg>
   );
 };
-
 export default PapiWheel;
