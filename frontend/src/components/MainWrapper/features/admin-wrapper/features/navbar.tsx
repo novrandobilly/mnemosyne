@@ -10,7 +10,6 @@ const AdminNavbar: FC = () => {
   const ADMIN_NAV_ITEMS = [
     { label: "Dashboard", path: "/admin" },
     { label: "Assessment Lobby", path: "/psikotes" },
-    { label: "Participants", path: "/admin/participant-details" },
     { label: "Panel", path: "/admin/panel" },
     { label: "Account Generator", path: "/admin/id-generator" },
   ];

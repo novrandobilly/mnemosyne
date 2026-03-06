@@ -13,7 +13,7 @@ export const adminRoutes: RouteObject[] = [
         element: <AdminDashboard />,
       },
       {
-        path: "participant-details",
+        path: "participants/:id",
         element: <ParticipantDetails />,
       },
       {
