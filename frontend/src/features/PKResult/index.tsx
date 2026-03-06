@@ -4,6 +4,34 @@ import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { DUMMY_PARTICIPANTS } from "@/features/AdminDashboard/constants/participants";
 import ParticipantBiodata from "@/features/ParticipantDetails/features/ParticipantBiodata";
 import ParticipantEmployment from "@/features/ParticipantDetails/features/ParticipantEmployment";
+import ScoreSummaryCards from "./features/ScoreSummaryCards";
+import RoleScoringGrid from "./features/RoleScoringGrid";
+import NeedScoringGrid from "./features/NeedScoringGrid";
+import InterpretationReport from "./features/InterpretationReport";
+import type { PapiResults } from "./types";
+
+const DUMMY_PAPI_RESULTS: PapiResults = {
+  N: 7,
+  A: 9,
+  G: 8,
+  L: 6,
+  P: 5,
+  I: 7,
+  T: 8,
+  V: 6,
+  S: 5,
+  R: 4,
+  D: 7,
+  C: 9,
+  E: 6,
+  X: 3,
+  B: 8,
+  O: 6,
+  Z: 4,
+  K: 7,
+  F: 5,
+  W: 3,
+};
 
 const PKResult = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,7 +57,7 @@ const PKResult = () => {
           <ParticipantEmployment />
         </section>
 
-        <section className="flex flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+        <section className="flex flex-col gap-6 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
           <div>
             <IntiDinamisText
               size="12"
@@ -47,19 +75,38 @@ const PKResult = () => {
             </IntiDinamisText>
           </div>
 
-          <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 py-16 text-center">
-            <IntiDinamisText
-              size="14"
-              weight="semibold"
-              className="text-neutral-500"
-            >
-              PAPI Kostick results will appear here
-            </IntiDinamisText>
-            <IntiDinamisText size="12" className="text-neutral-400">
-              Data will be loaded from PocketBase in a future update.
-            </IntiDinamisText>
+          <ScoreSummaryCards results={DUMMY_PAPI_RESULTS} />
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div>
+              <IntiDinamisText
+                size="12"
+                className="mb-3 uppercase tracking-[0.3em] text-neutral-500"
+              >
+                Role Scoring
+              </IntiDinamisText>
+              <RoleScoringGrid results={DUMMY_PAPI_RESULTS} />
+            </div>
+            <div>
+              <IntiDinamisText
+                size="12"
+                className="mb-3 uppercase tracking-[0.3em] text-neutral-500"
+              >
+                Need Scoring
+              </IntiDinamisText>
+              <NeedScoringGrid results={DUMMY_PAPI_RESULTS} />
+            </div>
           </div>
         </section>
+
+        <InterpretationReport
+          results={DUMMY_PAPI_RESULTS}
+          participant={{
+            name: participant?.name ?? "—",
+            date: "10 Februari 2026",
+            company: "PT. Mnemosyne Indonesia",
+          }}
+        />
       </div>
     </MainWrapper>
   );
