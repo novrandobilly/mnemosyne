@@ -8,5 +8,5 @@ export type ScoreItem = {
   id: string;
   label: string;
   score: string;
-  status: "Completed" | "In Progress" | "Not Started";
+  status: "Completed" | "Not Done";
 };
