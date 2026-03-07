@@ -1,15 +1,15 @@
 import { useRoutes, type RouteObject } from "react-router-dom";
-import HomePage from "../features/main/HomePage";
 import Login from "../features/main/Login";
 import { participantRoutes } from "./participant";
 import { adminRoutes } from "./admin";
 import { AuthGuard } from "./guard/auth-guard";
 import { AdminGuard } from "./guard/admin-guard";
+import { RootRedirect } from "./guard/root-redirect";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <HomePage />,
+    element: <RootRedirect />,
   },
   {
     path: "/login",
