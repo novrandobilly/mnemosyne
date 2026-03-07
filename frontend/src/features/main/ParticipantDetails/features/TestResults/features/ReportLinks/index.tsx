@@ -12,21 +12,18 @@ const ReportLinks: FC = () => {
 
   return (
     <div>
-      <div className="mb-3 text-xs uppercase tracking-[0.2em] text-neutral-500">
-        Detailed Reports
-      </div>
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-col gap-3">
         {RESULT_LINKS.map((link) => {
           const { label, slug, value } = link;
-          const isCompleted = !!testResults.find(
-            (result) => result.test_type === value,
-          );
+          const result = testResults.find((r) => r.test_type === value);
+          const isCompleted = !!result;
 
           return (
             <ReportCard
               key={value}
               label={label}
               isCompleted={isCompleted}
+              completedAt={result?.updated}
               onClick={() =>
                 navigate(`/admin/participants/${id}/results/${slug}`)
               }

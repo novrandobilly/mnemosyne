@@ -36,9 +36,13 @@ const TestResults: FC = () => (
       </IntiDinamisButton>
     </div>
 
-    <div className="mt-6 flex flex-col gap-6">
-      <ReportLinks />
-      <ScoringList />
+    <div className="mt-6 flex flex-col gap-6 lg:flex-row">
+      <div className="lg:w-1/2">
+        <ReportLinks />
+      </div>
+      <div className="lg:w-1/2">
+        <ScoringList />
+      </div>
     </div>
   </section>
 );
