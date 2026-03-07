@@ -1,14 +1,13 @@
 import { MainWrapper } from "@/components/MainWrapper";
 import ParticipantBiodata from "../../global/components/ParticipantBiodata";
-import ParticipantEmployment from "../../global/components/ParticipantEmployment";
 import TestResults from "./features/TestResults";
 
 const ParticipantDetails = () => {
   return (
     <MainWrapper>
-      <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+      <section className="grid gap-4 lg:grid-cols-[1.5fr_0.5fr]">
         <ParticipantBiodata />
-        <ParticipantEmployment />
+        {/* <ParticipantEmployment /> */}
       </section>
       <TestResults />
     </MainWrapper>

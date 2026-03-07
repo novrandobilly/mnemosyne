@@ -1,7 +1,7 @@
 import { pb } from "@/lib/pocketbase";
 import { useQuery } from "@tanstack/react-query";
 
-export interface UserResponse<T = { [key: string]: any }> {
+export interface ParticipantsResponse<T = { [key: string]: any }> {
   id: string;
   collectionId: string;
   collectionName: string;
@@ -23,7 +23,7 @@ export const useGetParticipant = () => {
   const queryResponse = useQuery({
     queryKey: ["participants"],
     queryFn: async () => {
-      const response: UserResponse[] = await pb
+      const response: ParticipantsResponse[] = await pb
         .collection("users")
         .getFullList({
           filter: 'role="participant"',

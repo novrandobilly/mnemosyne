@@ -3,7 +3,6 @@ import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { MainWrapper } from "@/components/MainWrapper";
 import ParticipantBiodata from "@/features/global/components/ParticipantBiodata";
 import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
-import ParticipantEmployment from "@/features/global/components/ParticipantEmployment";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DUMMY_PK_DATA } from "./constants";
@@ -41,7 +40,7 @@ const PKResult = () => {
 
         <section className="grid gap-4 lg:grid-cols-[1.5fr_0.5fr]">
           <ParticipantBiodata />
-          <ParticipantEmployment />
+          {/* <ParticipantEmployment /> */}
         </section>
 
         <section className="flex flex-col gap-6 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
