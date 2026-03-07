@@ -16,11 +16,12 @@ export const getInitials = (name: string) => {
 interface FormatDateOptions {}
 
 interface FormatDateProps {
-  isoDate: string;
+  isoDate?: string;
   options?: FormatDateOptions;
 }
 
 export const formatDate = ({ isoDate }: FormatDateProps) => {
+  if (!isoDate) return null;
   const date = new Date(isoDate);
 
   // use options if needed in the future for different formatting styles

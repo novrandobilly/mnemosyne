@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { MainWrapper } from "@/components/MainWrapper";
-import { IntiDinamisText } from "@/components/IntiDinamisText";
-import { DUMMY_PARTICIPANTS } from "@/features/main/AdminDashboard/constants/participants";
-import ParticipantBiodata from "@/features/global/components/ParticipantBiodata";
-import ParticipantEmployment from "@/features/global/components/ParticipantEmployment";
 import PapiWheel from "@/assets/PapiWheel";
-import ScoreSummaryCards from "./features/ScoreSummaryCards";
-import RoleScoringGrid from "./features/RoleScoringGrid";
-import NeedScoringGrid from "./features/NeedScoringGrid";
-import InterpretationReport from "./features/InterpretationReport";
+import { IntiDinamisText } from "@/components/IntiDinamisText";
+import { MainWrapper } from "@/components/MainWrapper";
+import ParticipantBiodata from "@/features/global/components/ParticipantBiodata";
+import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
+import ParticipantEmployment from "@/features/global/components/ParticipantEmployment";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { DUMMY_PK_DATA } from "./constants";
+import InterpretationReport from "./features/InterpretationReport";
+import NeedScoringGrid from "./features/NeedScoringGrid";
+import RoleScoringGrid from "./features/RoleScoringGrid";
+import ScoreSummaryCards from "./features/ScoreSummaryCards";
 
 type Tab = "result" | "interpretation";
 
@@ -20,9 +20,9 @@ const TABS: { key: Tab; label: string }[] = [
 ];
 
 const PKResult = () => {
-  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const participant = DUMMY_PARTICIPANTS.find((p) => p.id === id);
+  const { data: participantDetails } = useGetParticipantDetails();
+  const { id, first_name, last_name } = participantDetails || {};
 
   const [activeTab, setActiveTab] = useState<Tab>("result");
 
@@ -40,10 +40,7 @@ const PKResult = () => {
         </button>
 
         <section className="grid gap-4 lg:grid-cols-[1.5fr_0.5fr]">
-          <ParticipantBiodata
-            name={participant?.name}
-            id={participant?.id ?? id}
-          />
+          <ParticipantBiodata />
           <ParticipantEmployment />
         </section>
 
@@ -126,7 +123,7 @@ const PKResult = () => {
             <InterpretationReport
               results={results}
               participant={{
-                name: participant?.name ?? dummyParticipant.name,
+                name: `${first_name} ${last_name}`.trim() || "-",
                 date: dummyParticipant.date,
                 company: dummyParticipant.company,
               }}

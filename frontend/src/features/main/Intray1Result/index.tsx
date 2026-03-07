@@ -1,15 +1,15 @@
-import { useNavigate, useParams } from "react-router-dom";
 import { MainWrapper } from "@/components/MainWrapper";
-import { DUMMY_PARTICIPANTS } from "@/features/main/AdminDashboard/constants/participants";
 import ParticipantBiodata from "@/features/global/components/ParticipantBiodata";
+import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
 import ParticipantEmployment from "@/features/global/components/ParticipantEmployment";
-import Intray1ResultSection from "./features/Intray1ResultSection";
+import { useNavigate } from "react-router-dom";
 import { DUMMY_INTRAY1_DATA } from "./constants";
+import Intray1ResultSection from "./features/Intray1ResultSection";
 
 const Intray1Result = () => {
-  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const participant = DUMMY_PARTICIPANTS.find((p) => p.id === id);
+  const { data: participantDetails } = useGetParticipantDetails();
+  const { id } = participantDetails || {};
 
   return (
     <MainWrapper>
@@ -23,10 +23,7 @@ const Intray1Result = () => {
         </button>
 
         <section className="grid gap-4 lg:grid-cols-[1.5fr_0.5fr]">
-          <ParticipantBiodata
-            name={participant?.name}
-            id={participant?.id ?? id}
-          />
+          <ParticipantBiodata />
           <ParticipantEmployment />
         </section>
 

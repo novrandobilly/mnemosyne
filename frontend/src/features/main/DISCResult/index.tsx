@@ -1,16 +1,15 @@
-import { useNavigate, useParams } from "react-router-dom";
 import { MainWrapper } from "@/components/MainWrapper";
-import { DUMMY_PARTICIPANTS } from "@/features/main/AdminDashboard/constants/participants";
 import ParticipantBiodata from "@/features/global/components/ParticipantBiodata";
+import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
 import ParticipantEmployment from "@/features/global/components/ParticipantEmployment";
-import DiscResultSection from "./features/DiscResultSection";
+import { useNavigate } from "react-router-dom";
 import { DUMMY_DISC_SCORES } from "./constants";
+import DiscResultSection from "./features/DiscResultSection";
 
 const DISCResult = () => {
-  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const participant = DUMMY_PARTICIPANTS.find((p) => p.id === id);
-
+  const { data: participantDetails } = useGetParticipantDetails();
+  const { id } = participantDetails || {};
   return (
     <MainWrapper>
       <div className="flex flex-col gap-6">
@@ -23,10 +22,7 @@ const DISCResult = () => {
         </button>
 
         <section className="grid gap-4 lg:grid-cols-[1.5fr_0.5fr]">
-          <ParticipantBiodata
-            name={participant?.name}
-            id={participant?.id ?? id}
-          />
+          <ParticipantBiodata />
           <ParticipantEmployment />
         </section>
 

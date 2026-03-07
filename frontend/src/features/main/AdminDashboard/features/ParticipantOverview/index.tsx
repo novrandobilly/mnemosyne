@@ -1,7 +1,6 @@
-import type { FC } from "react";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
+import type { FC } from "react";
 import ParticipantTable from "../ParticipantTable";
-import { DUMMY_PARTICIPANTS } from "../../constants/participants";
 
 const ParticipantOverview: FC = () => (
   <section className="flex flex-col gap-4">
@@ -26,7 +25,7 @@ const ParticipantOverview: FC = () => (
       </IntiDinamisText>
     </div>
 
-    <ParticipantTable participants={DUMMY_PARTICIPANTS} />
+    <ParticipantTable />
   </section>
 );
 
