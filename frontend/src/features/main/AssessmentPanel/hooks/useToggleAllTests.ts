@@ -4,7 +4,7 @@ import { useToast } from "@/context/ToastContext";
 
 export const useToggleAllTests = () => {
   const queryClient = useQueryClient();
-  const { showGeneralErrorToast } = useToast();
+  const { showToast, showGeneralErrorToast } = useToast();
   const mutationResponse = useMutation({
     mutationKey: ["toggle-all-tests"],
     mutationFn: async (isActive: boolean) => {
@@ -19,7 +19,10 @@ export const useToggleAllTests = () => {
 
       await batch.send();
     },
-    onSuccess: () => {
+    onSuccess: (_data, isActive) => {
+      showToast({
+        message: isActive ? "All tests activated." : "All tests deactivated.",
+      });
       queryClient.invalidateQueries({ queryKey: ["test-bank"] });
     },
     onError: () => showGeneralErrorToast(),

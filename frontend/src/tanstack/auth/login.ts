@@ -11,7 +11,7 @@ interface LoginPayload {
 export const useTLogin = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { showGeneralErrorToast } = useToast();
+  const { showToast, showGeneralErrorToast } = useToast();
 
   const mutationResponse = useMutation({
     mutationKey: ["auth"],
@@ -22,6 +22,7 @@ export const useTLogin = () => {
       return response;
     },
     onSuccess: (data) => {
+      showToast({ message: "Logged in successfully." });
       queryClient.invalidateQueries({ queryKey: ["auth"] });
 
       const role = data?.record?.role;

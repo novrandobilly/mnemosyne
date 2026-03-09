@@ -28,7 +28,7 @@ export const useTCompleteOnboarding = () => {
     throw new Error("User profile not loaded. Cannot complete onboarding.");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { showGeneralErrorToast } = useToast();
+  const { showToast, showGeneralErrorToast } = useToast();
 
   return useMutation({
     mutationFn: async ({
@@ -49,6 +49,7 @@ export const useTCompleteOnboarding = () => {
         .authWithPassword(username, new_password);
     },
     onSuccess: () => {
+      showToast({ message: "Setup complete! Welcome to Mnemosyne." });
       queryClient.invalidateQueries({ queryKey: ["auth"] });
       navigate("/psikotes", { replace: true });
     },

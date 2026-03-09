@@ -4,7 +4,7 @@ import { useToast } from "@/context/ToastContext";
 
 export const useTToggleTestStatus = () => {
   const queryClient = useQueryClient();
-  const { showGeneralErrorToast } = useToast();
+  const { showToast, showGeneralErrorToast } = useToast();
   const mutationResponse = useMutation({
     mutationKey: ["toggle-test-bank"],
     mutationFn: async (name: string) => {
@@ -14,7 +14,10 @@ export const useTToggleTestStatus = () => {
       });
       return updatedRecord;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      showToast({
+        message: `Test ${data.is_active ? "activated" : "deactivated"} successfully.`,
+      });
       queryClient.invalidateQueries({ queryKey: ["test-bank"] });
     },
     onError: () => showGeneralErrorToast(),

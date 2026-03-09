@@ -6,7 +6,7 @@ import { useToast } from "@/context/ToastContext";
 export const useToggleTest = () => {
   const { data: testBank } = useTGetTestBank();
   const queryClient = useQueryClient();
-  const { showGeneralErrorToast } = useToast();
+  const { showToast, showGeneralErrorToast } = useToast();
 
   const mutationResponse = useMutation({
     mutationKey: ["toggle-test"],
@@ -20,9 +20,10 @@ export const useToggleTest = () => {
         .update(testId, updatedData);
       return response;
     },
-    onSuccess: () => {
-      console.log("success");
-      // Invalidate and refetch test bank data after toggling
+    onSuccess: (data) => {
+      showToast({
+        message: `Test ${data.is_active ? "activated" : "deactivated"} successfully.`,
+      });
       queryClient.invalidateQueries({ queryKey: ["test-bank"] });
     },
     onError: () => showGeneralErrorToast(),

@@ -25,7 +25,7 @@ function generateRandomString(length: number): string {
 export const DEFAULT_PASSWORD = "intidinamis2005";
 
 export const useTBulkGenerateAccounts = () => {
-  const { showGeneralErrorToast } = useToast();
+  const { showToast, showGeneralErrorToast } = useToast();
 
   return useMutation({
     mutationFn: async ({
@@ -57,6 +57,11 @@ export const useTBulkGenerateAccounts = () => {
         username: credentials[i].username,
         password: credentials[i].password,
       }));
+    },
+    onSuccess: (data) => {
+      showToast({
+        message: `${data.length} account${data.length !== 1 ? "s" : ""} generated successfully.`,
+      });
     },
     onError: () => showGeneralErrorToast(),
   });
