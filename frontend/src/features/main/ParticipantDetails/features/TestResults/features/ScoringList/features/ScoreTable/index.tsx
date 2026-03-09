@@ -1,14 +1,29 @@
-import { DUMMY_SCORE_ITEMS } from "@/features/main/ParticipantDetails/constants/scoreItems";
 import type { FC } from "react";
+import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
+import { SCORE_ITEM_CONFIG } from "@/features/main/ParticipantDetails/constants/scoreItems";
+import type { ScoreItem } from "@/features/main/ParticipantDetails/types";
 import { useScoringList } from "../../context/ScoringListContext";
 import ScoreRow from "../../components/ScoreRow";
 
 const ScoreTable: FC = () => {
   const { showAll } = useScoringList();
+  const { data: participantDetails } = useGetParticipantDetails();
+  const testResults =
+    participantDetails?.expand?.test_results_via_participant ?? [];
 
-  const scoredValues = DUMMY_SCORE_ITEMS.filter(
-    (item) => item.status === "Completed",
-  )
+  const scoreItems: ScoreItem[] = SCORE_ITEM_CONFIG.map(({ id, label }) => {
+    const result = testResults.find((r) => r.test_type === id);
+    const isCompleted = result?.status === "completed";
+    return {
+      id,
+      label,
+      score: result?.data?.score != null ? String(result.data.score) : "-",
+      status: isCompleted ? "Completed" : "Not Done",
+    };
+  });
+
+  const scoredValues = scoreItems
+    .filter((item) => item.status === "Completed")
     .map((item) => Number(item.score))
     .filter((v) => !Number.isNaN(v));
 
@@ -20,7 +35,7 @@ const ScoreTable: FC = () => {
 
   return (
     <div className="mt-3 flex flex-col text-sm">
-      {DUMMY_SCORE_ITEMS.map((item) => {
+      {scoreItems.map((item) => {
         const isHidden = !showAll && item.status === "Not Done";
         return (
           <div

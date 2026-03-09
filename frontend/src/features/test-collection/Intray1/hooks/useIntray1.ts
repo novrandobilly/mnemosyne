@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { intray1Docs } from "@/data/intray1";
+import { pb } from "@/lib/pocketbase";
 
 export type WorksheetField =
   | "topikPermasalahan"
@@ -101,12 +102,23 @@ export function useIntray1() {
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isSubmitted) return;
-    setIsSubmitted(true);
     const { kk1, kk2 } = getValues();
-    console.log("Intray-1 submitted:", { kk1, kk2 });
-    // TODO: submit to PocketBase
+    const participantId = pb.authStore.model?.id;
+    if (!participantId) return;
+    try {
+      await pb.collection("test_results").create({
+        participant: participantId,
+        test_type: "intray1",
+        status: "completed",
+        data: { kk1, kk2 },
+      });
+      sessionStorage.removeItem("intray1_progress");
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error("Intray-1 submission failed:", err);
+    }
   };
 
   return {

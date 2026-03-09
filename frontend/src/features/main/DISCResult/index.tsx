@@ -2,14 +2,19 @@ import { MainWrapper } from "@/components/MainWrapper";
 import ParticipantBiodata from "@/features/global/components/ParticipantBiodata";
 import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
 import ParticipantEmployment from "@/features/global/components/ParticipantEmployment";
+import { useGetParticipantTestResult } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantTestResult";
 import { useNavigate } from "react-router-dom";
-import { DUMMY_DISC_SCORES } from "./constants";
 import DiscResultSection from "./features/DiscResultSection";
+import type { DiscScores } from "./types";
 
 const DISCResult = () => {
   const navigate = useNavigate();
   const { data: participantDetails } = useGetParticipantDetails();
   const { id } = participantDetails || {};
+  const { result: discResult } = useGetParticipantTestResult("disc");
+
+  const scores: DiscScores | null = (discResult?.data as DiscScores) ?? null;
+
   return (
     <MainWrapper>
       <div className="flex flex-col gap-6">
@@ -26,7 +31,11 @@ const DISCResult = () => {
           <ParticipantEmployment />
         </section>
 
-        <DiscResultSection scores={DUMMY_DISC_SCORES} />
+        {scores ? (
+          <DiscResultSection scores={scores} />
+        ) : (
+          <p className="text-sm text-neutral-400">No DISC result data yet.</p>
+        )}
       </div>
     </MainWrapper>
   );

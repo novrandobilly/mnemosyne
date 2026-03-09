@@ -3,13 +3,14 @@ import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { MainWrapper } from "@/components/MainWrapper";
 import ParticipantBiodata from "@/features/global/components/ParticipantBiodata";
 import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
+import { useGetParticipantTestResult } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantTestResult";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DUMMY_PK_DATA } from "./constants";
 import InterpretationReport from "./features/InterpretationReport";
 import NeedScoringGrid from "./features/NeedScoringGrid";
 import RoleScoringGrid from "./features/RoleScoringGrid";
 import ScoreSummaryCards from "./features/ScoreSummaryCards";
+import type { PapiResults } from "./types";
 
 type Tab = "result" | "interpretation";
 
@@ -22,10 +23,21 @@ const PKResult = () => {
   const navigate = useNavigate();
   const { data: participantDetails } = useGetParticipantDetails();
   const { id, first_name, last_name } = participantDetails || {};
+  const { result: pkResult } = useGetParticipantTestResult("papikostick");
+
+  const results: PapiResults | null =
+    (pkResult?.data?.processed_scores as PapiResults) ?? null;
 
   const [activeTab, setActiveTab] = useState<Tab>("result");
 
-  const { results, participant: dummyParticipant } = DUMMY_PK_DATA;
+  const participantDate = pkResult
+    ? new Date(pkResult.updated).toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : "-";
+  const participantCompany = participantDetails?.company ?? "-";
 
   return (
     <MainWrapper>
@@ -96,7 +108,11 @@ const PKResult = () => {
                     >
                       Role Scoring
                     </IntiDinamisText>
-                    <RoleScoringGrid results={results} />
+                    {results ? (
+                      <RoleScoringGrid results={results} />
+                    ) : (
+                      <p className="text-sm text-neutral-400">No data yet.</p>
+                    )}
                   </div>
                   <div>
                     <IntiDinamisText
@@ -105,26 +121,28 @@ const PKResult = () => {
                     >
                       Need Scoring
                     </IntiDinamisText>
-                    <NeedScoringGrid results={results} />
+                    {results ? (
+                      <NeedScoringGrid results={results} />
+                    ) : (
+                      <p className="text-sm text-neutral-400">No data yet.</p>
+                    )}
                   </div>
                 </div>
 
                 {/* PapiWheel diagram */}
-                {/* <div className="flex shrink-0 justify-center lg:w-125"> */}
-                <PapiWheel data={results} />
-                {/* </div> */}
+                {results && <PapiWheel data={results} />}
               </div>
             </>
           )}
 
           {/* ── Tab: Interpretasi ── */}
-          {activeTab === "interpretation" && (
+          {activeTab === "interpretation" && results && (
             <InterpretationReport
               results={results}
               participant={{
                 name: `${first_name} ${last_name}`.trim() || "-",
-                date: dummyParticipant.date,
-                company: dummyParticipant.company,
+                date: participantDate,
+                company: participantCompany,
               }}
             />
           )}

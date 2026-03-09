@@ -9,7 +9,7 @@ const CATEGORIES: DiscCategory[] = ["D", "I", "S", "C", "Star"];
 const ROWS = ["MOST", "LEAST", "CHANGE"] as const;
 
 const rowTotal = (row: Record<DiscCategory, number>) =>
-  CATEGORIES.reduce((sum, cat) => sum + row[cat], 0);
+  CATEGORIES.reduce((sum, cat) => sum + row?.[cat], 0);
 
 const DiscScoringTable: FC<DiscScoringTableProps> = ({ scores }) => (
   <div className="overflow-x-auto">
@@ -48,7 +48,7 @@ const DiscScoringTable: FC<DiscScoringTableProps> = ({ scores }) => (
                   key={cat}
                   className="border border-neutral-200 px-4 py-2 text-center text-sm font-semibold text-neutral-800"
                 >
-                  {data[cat]}
+                  {data?.[cat]}
                 </td>
               ))}
               <td className="border border-neutral-200 px-4 py-2 text-center">

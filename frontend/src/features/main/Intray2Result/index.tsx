@@ -1,15 +1,21 @@
 import { MainWrapper } from "@/components/MainWrapper";
 import ParticipantBiodata from "@/features/global/components/ParticipantBiodata";
 import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
+import { useGetParticipantTestResult } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantTestResult";
 import ParticipantEmployment from "@/features/global/components/ParticipantEmployment";
 import { useNavigate } from "react-router-dom";
-import { DUMMY_INTRAY2_DATA } from "./constants";
+import type { Intray2Data } from "./constants";
 import Intray2ResultSection from "./features/Intray2ResultSection";
 
 const Intray2Result = () => {
   const navigate = useNavigate();
   const { data: participantDetails } = useGetParticipantDetails();
   const { id } = participantDetails || {};
+  const { result } = useGetParticipantTestResult("intray2");
+
+  const data: Intray2Data | null = result
+    ? { kkRows: result.data?.kk ?? [] }
+    : null;
 
   return (
     <MainWrapper>
@@ -27,7 +33,13 @@ const Intray2Result = () => {
           <ParticipantEmployment />
         </section>
 
-        <Intray2ResultSection data={DUMMY_INTRAY2_DATA} />
+        {data ? (
+          <Intray2ResultSection data={data} />
+        ) : (
+          <p className="text-sm text-neutral-400">
+            No Intray-2 result data yet.
+          </p>
+        )}
       </div>
     </MainWrapper>
   );
