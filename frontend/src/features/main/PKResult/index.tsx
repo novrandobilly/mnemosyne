@@ -84,7 +84,7 @@ const PKResult = () => {
           {/* ── Tab: Hasil Test ── */}
           {activeTab === "result" && (
             <>
-              <ScoreSummaryCards results={results} />
+              <ScoreSummaryCards />
 
               <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
                 {/* Scoring grids */}
