@@ -6,6 +6,7 @@ import {
 } from "@/tanstack/users/useTCompleteOnboarding";
 import { Navigate } from "react-router-dom";
 import { BiodataForm } from "./features/BiodataForm";
+import { MainWrapper } from "@/components/MainWrapper";
 
 const Onboarding = () => {
   const { data: profile, isPending } = useTProfile();
@@ -37,12 +38,14 @@ const Onboarding = () => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <BiodataForm
-        onSubmit={methods.handleSubmit(onSubmit)}
-        isSubmitting={isSubmitting}
-      />
-    </FormProvider>
+    <MainWrapper pageTitle="Onboarding">
+      <FormProvider {...methods}>
+        <BiodataForm
+          onSubmit={methods.handleSubmit(onSubmit)}
+          isSubmitting={isSubmitting}
+        />
+      </FormProvider>
+    </MainWrapper>
   );
 };
 

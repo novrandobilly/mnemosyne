@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { pb } from "@/lib/pocketbase";
+import { useToast } from "@/context/ToastContext";
 
 export interface GeneratedAccount {
   id: string;
@@ -24,6 +25,8 @@ function generateRandomString(length: number): string {
 export const DEFAULT_PASSWORD = "intidinamis2005";
 
 export const useTBulkGenerateAccounts = () => {
+  const { showGeneralErrorToast } = useToast();
+
   return useMutation({
     mutationFn: async ({
       count,
@@ -55,5 +58,6 @@ export const useTBulkGenerateAccounts = () => {
         password: credentials[i].password,
       }));
     },
+    onError: () => showGeneralErrorToast(),
   });
 };

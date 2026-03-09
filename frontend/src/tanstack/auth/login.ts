@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { pb } from "../../lib/pocketbase";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/context/ToastContext";
 
 interface LoginPayload {
   identity: string;
@@ -10,6 +11,7 @@ interface LoginPayload {
 export const useTLogin = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { showGeneralErrorToast } = useToast();
 
   const mutationResponse = useMutation({
     mutationKey: ["auth"],
@@ -33,6 +35,7 @@ export const useTLogin = () => {
 
       navigate(path);
     },
+    onError: () => showGeneralErrorToast(),
   });
 
   return mutationResponse;

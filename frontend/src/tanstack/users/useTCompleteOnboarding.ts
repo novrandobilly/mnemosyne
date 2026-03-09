@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { pb } from "@/lib/pocketbase";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/context/ToastContext";
 import { DEFAULT_PASSWORD } from "./useTBulkGenerateAccounts";
 import { useTProfile } from "../auth/profile";
 
@@ -27,6 +28,7 @@ export const useTCompleteOnboarding = () => {
     throw new Error("User profile not loaded. Cannot complete onboarding.");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { showGeneralErrorToast } = useToast();
 
   return useMutation({
     mutationFn: async ({
@@ -50,5 +52,6 @@ export const useTCompleteOnboarding = () => {
       queryClient.invalidateQueries({ queryKey: ["auth"] });
       navigate("/psikotes", { replace: true });
     },
+    onError: () => showGeneralErrorToast(),
   });
 };

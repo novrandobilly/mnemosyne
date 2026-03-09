@@ -1,8 +1,10 @@
 import { pb } from "@/lib/pocketbase";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/context/ToastContext";
 
 export const useToggleAllTests = () => {
   const queryClient = useQueryClient();
+  const { showGeneralErrorToast } = useToast();
   const mutationResponse = useMutation({
     mutationKey: ["toggle-all-tests"],
     mutationFn: async (isActive: boolean) => {
@@ -20,9 +22,7 @@ export const useToggleAllTests = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["test-bank"] });
     },
-    onError: (error) => {
-      console.error("Error toggling all tests:", error);
-    },
+    onError: () => showGeneralErrorToast(),
   });
 
   return mutationResponse;
