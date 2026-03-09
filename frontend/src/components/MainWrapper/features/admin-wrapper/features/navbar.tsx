@@ -12,6 +12,7 @@ const AdminNavbar: FC = () => {
     { label: "Assessment Lobby", path: "/psikotes" },
     { label: "Panel", path: "/admin/panel" },
     { label: "Account Generator", path: "/admin/id-generator" },
+    { label: "Reports", path: "/admin/reports" },
   ];
   const logout = useLogout();
 

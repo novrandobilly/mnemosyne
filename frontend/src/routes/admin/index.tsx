@@ -7,6 +7,7 @@ import DISCResult from "../../features/main/DISCResult";
 import Intray1Result from "../../features/main/Intray1Result";
 import Intray2Result from "../../features/main/Intray2Result";
 import AccountGenerator from "../../features/main/AccountGenerator";
+import Reports from "../../features/main/Reports";
 
 export const adminRoutes: RouteObject[] = [
   {
@@ -43,6 +44,10 @@ export const adminRoutes: RouteObject[] = [
       {
         path: "id-generator",
         element: <AccountGenerator />,
+      },
+      {
+        path: "reports",
+        element: <Reports />,
       },
     ],
   },
