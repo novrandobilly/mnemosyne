@@ -2,7 +2,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { TextInput } from "@/components/TextInput";
-import type { OnboardingData } from "@/tanstack/users/useTCompleteOnboarding";
+import type { OnboardingFormValues } from "@/tanstack/users/useTCompleteOnboarding";
 
 interface BiodataFormProps {
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
@@ -10,7 +10,7 @@ interface BiodataFormProps {
 }
 
 export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
-  const { control } = useFormContext<OnboardingData>();
+  const { control, getValues } = useFormContext<OnboardingFormValues>();
 
   return (
     <div className="relative min-h-screen bg-neutral-50 text-neutral-900">
@@ -114,7 +114,7 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
 
                 <Controller
                   control={control}
-                  name="email"
+                  name="contact_email"
                   rules={{
                     required: "Email is required",
                     pattern: {
@@ -202,6 +202,71 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
                       <TextInput
                         label="Department"
                         placeholder="e.g. Engineering"
+                        {...field}
+                      />
+                      {error && (
+                        <IntiDinamisText size="12" className="text-red-500">
+                          {error.message}
+                        </IntiDinamisText>
+                      )}
+                    </div>
+                  )}
+                />
+              </div>
+
+              <div className="border-t border-neutral-100 pt-1">
+                <IntiDinamisText
+                  size="12"
+                  className="uppercase tracking-[0.3em] text-neutral-400"
+                >
+                  Security
+                </IntiDinamisText>
+              </div>
+
+              {/* New Password + Confirm Password */}
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Controller
+                  control={control}
+                  name="new_password"
+                  rules={{
+                    required: "Password is required",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters",
+                    },
+                  }}
+                  render={({ field, fieldState: { error } }) => (
+                    <div className="flex flex-col gap-1.5">
+                      <TextInput
+                        label="New password"
+                        type="password"
+                        placeholder="Min. 8 characters"
+                        {...field}
+                      />
+                      {error && (
+                        <IntiDinamisText size="12" className="text-red-500">
+                          {error.message}
+                        </IntiDinamisText>
+                      )}
+                    </div>
+                  )}
+                />
+
+                <Controller
+                  control={control}
+                  name="confirm_password"
+                  rules={{
+                    required: "Please confirm your password",
+                    validate: (value) =>
+                      value === getValues("new_password") ||
+                      "Passwords do not match",
+                  }}
+                  render={({ field, fieldState: { error } }) => (
+                    <div className="flex flex-col gap-1.5">
+                      <TextInput
+                        label="Confirm password"
+                        type="password"
+                        placeholder="Repeat your password"
                         {...field}
                       />
                       {error && (

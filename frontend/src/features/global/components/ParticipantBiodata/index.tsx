@@ -17,7 +17,7 @@ const ParticipantBiodata: FC = () => {
   const {
     first_name,
     last_name,
-    email,
+    contact_email,
     phone_number,
     company,
     created,
@@ -47,7 +47,7 @@ const ParticipantBiodata: FC = () => {
       </div>
 
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
-        <InfoCard label="Email" value={email || "-"} />
+        <InfoCard label="Email" value={contact_email || "-"} />
         <InfoCard label="Phone" value={phone_number || "-"} />
         <InfoCard label="Company" value={company || "-"} />
         <InfoCard

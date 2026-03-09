@@ -11,6 +11,7 @@ export interface ParticipantDetailsResponse<T = { [key: string]: any }> {
   department: string;
   email: string;
   emailVisibility: boolean;
+  contact_email: string;
   first_name: string;
   last_name: string;
   phone_number: string;

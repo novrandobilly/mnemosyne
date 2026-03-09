@@ -21,6 +21,8 @@ function generateRandomString(length: number): string {
   return result;
 }
 
+export const DEFAULT_PASSWORD = "intidinamis2005";
+
 export const useTBulkGenerateAccounts = () => {
   return useMutation({
     mutationFn: async ({
@@ -30,7 +32,7 @@ export const useTBulkGenerateAccounts = () => {
       // Pre-generate all credentials before sending
       const credentials = Array.from({ length: count }, () => ({
         username: `${prefix}_${generateRandomString(3)}`,
-        password: `intidinamis2005`,
+        password: DEFAULT_PASSWORD,
       }));
 
       const batch = pb.createBatch();
@@ -41,6 +43,7 @@ export const useTBulkGenerateAccounts = () => {
           passwordConfirm: password,
           role: "participant",
           is_onboarded: false,
+          contact_email: `${username}@example.com`,
         });
       }
 

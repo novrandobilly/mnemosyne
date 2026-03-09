@@ -2,7 +2,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useTProfile } from "@/tanstack/auth/profile";
 import {
   useTCompleteOnboarding,
-  type OnboardingData,
+  type OnboardingFormValues,
 } from "@/tanstack/users/useTCompleteOnboarding";
 import { Navigate } from "react-router-dom";
 import { BiodataForm } from "./features/BiodataForm";
@@ -12,15 +12,17 @@ const Onboarding = () => {
   const { mutate: completeOnboarding, isPending: isSubmitting } =
     useTCompleteOnboarding();
 
-  const methods = useForm<OnboardingData>({
+  const methods = useForm<OnboardingFormValues>({
     defaultValues: {
       first_name: "",
       last_name: "",
       date_of_birth: "",
-      email: "",
+      contact_email: "",
       phone_number: "",
       company: "",
       department: "",
+      new_password: "",
+      confirm_password: "",
     },
   });
 
@@ -29,7 +31,7 @@ const Onboarding = () => {
   // If already onboarded, send straight to the lobby
   if (profile?.is_onboarded) return <Navigate to="/psikotes" replace />;
 
-  const onSubmit = (data: OnboardingData) => {
+  const onSubmit = ({ confirm_password: _, ...data }: OnboardingFormValues) => {
     if (!profile?.id) return;
     completeOnboarding({ id: profile.id, ...data });
   };
