@@ -12,5 +12,9 @@ export const RootRedirect = () => {
     return <Navigate to="/admin" replace />;
   }
 
+  if (profile.role === "participant" && !profile.is_onboarded) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
   return <Navigate to="/psikotes" replace />;
 };

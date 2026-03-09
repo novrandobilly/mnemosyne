@@ -23,8 +23,11 @@ export const useTLogin = () => {
       queryClient.invalidateQueries({ queryKey: ["auth"] });
 
       const role = data?.record?.role;
+      const isOnboarded = data?.record?.is_onboarded;
+
       const path = (function () {
         if (role === "admin" || role === "super_admin") return "/admin";
+        if (role === "participant" && !isOnboarded) return "/onboarding";
         return "/psikotes";
       })();
 

@@ -6,7 +6,7 @@ import PKResult from "../../features/main/PKResult";
 import DISCResult from "../../features/main/DISCResult";
 import Intray1Result from "../../features/main/Intray1Result";
 import Intray2Result from "../../features/main/Intray2Result";
-import ParticipantGenerator from "../../features/main/ParticipantGenerator";
+import AccountGenerator from "../../features/main/AccountGenerator";
 
 export const adminRoutes: RouteObject[] = [
   {
@@ -42,7 +42,7 @@ export const adminRoutes: RouteObject[] = [
       },
       {
         path: "id-generator",
-        element: <ParticipantGenerator />,
+        element: <AccountGenerator />,
       },
     ],
   },

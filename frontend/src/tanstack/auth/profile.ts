@@ -17,9 +17,12 @@ interface User extends Record<string, any> {
   // Custom Fields for Mnemosyne
   first_name: string;
   last_name: string;
+  date_of_birth: string;
+  phone_number: string;
   role: "super_admin" | "admin" | "participant" | string; // Literal types for better DX
   company: string;
   department: string;
+  is_onboarded: boolean;
 }
 
 export const useTProfile = () => {
