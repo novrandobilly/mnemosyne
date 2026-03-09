@@ -1,16 +1,10 @@
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 
-interface ProgressBarProps {
-  progress: number;
-  answeredCount: number;
-  totalCount: number;
-}
+import { usePapiKostickContext } from "../../context/FormContext";
 
-export const ProgressBar = ({
-  progress,
-  answeredCount,
-  totalCount,
-}: ProgressBarProps) => {
+export const ProgressBar = () => {
+  const { progress, answeredCount, totalQuestions } = usePapiKostickContext();
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
@@ -18,7 +12,7 @@ export const ProgressBar = ({
           Progress
         </IntiDinamisText>
         <IntiDinamisText size="14" weight="medium" className="text-neutral-900">
-          {answeredCount} / {totalCount} dijawab
+          {answeredCount} / {totalQuestions} dijawab
         </IntiDinamisText>
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200">

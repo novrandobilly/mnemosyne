@@ -1,16 +1,11 @@
-import { getPageForQuestion } from "../../hooks/usePapiKostick";
+import { getPageForQuestion } from "../../context/FormContext";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
+import { usePapiKostickContext } from "../../context/FormContext";
 
-interface UnansweredAlertProps {
-  unansweredIds: number[];
-  onJumpToPage: (page: number) => void;
-}
+export const UnansweredAlert = () => {
+  const { unansweredIds, goToPage } = usePapiKostickContext();
 
-export const UnansweredAlert = ({
-  unansweredIds,
-  onJumpToPage,
-}: UnansweredAlertProps) => {
   if (unansweredIds.length === 0) return null;
 
   // Group unanswered IDs by page number
@@ -41,7 +36,7 @@ export const UnansweredAlert = ({
                 <div key={page} className="flex flex-wrap items-center gap-2">
                   <IntiDinamisButton
                     variant="secondary"
-                    onClick={() => onJumpToPage(Number(page))}
+                    onClick={() => goToPage(Number(page))}
                     className="min-w-0 rounded-lg border-amber-300 bg-amber-200 px-3 py-1 text-xs text-amber-900 hover:bg-amber-300"
                   >
                     Halaman {Number(page) + 1}

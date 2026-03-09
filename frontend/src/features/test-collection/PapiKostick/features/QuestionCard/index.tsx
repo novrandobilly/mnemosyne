@@ -1,63 +1,14 @@
-import { cn } from "@/lib/tailwind-merge";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
-import IntiDinamisButton from "@/components/IntiDinamisButton";
-import type { PapiAnswer } from "../../hooks/usePapiKostick";
-
-interface OptionButtonProps {
-  label: "A" | "B";
-  text: string;
-  isSelected: boolean;
-  onSelect: () => void;
-}
-
-const OptionButton = ({
-  label,
-  text,
-  isSelected,
-  onSelect,
-}: OptionButtonProps) => (
-  <IntiDinamisButton
-    onClick={onSelect}
-    variant="secondary"
-    size="sm"
-    wrapChildrenWithText={false}
-    className={cn(
-      "min-w-0 flex flex-1 items-start justify-start gap-2.5 rounded-lg border p-2.5 text-left transition-colors duration-150 active:scale-[0.99] sm:gap-3 sm:rounded-xl sm:p-3",
-      isSelected
-        ? "border-neutral-900 bg-neutral-900 text-white hover:bg-neutral-800"
-        : "border-neutral-200 bg-neutral-50 text-neutral-800 hover:border-neutral-300 hover:bg-neutral-100",
-    )}
-  >
-    <IntiDinamisText
-      as="span"
-      size="10"
-      weight="bold"
-      className={cn(
-        "flex h-5 w-5 shrink-0 items-center justify-center rounded-full sm:h-6 sm:w-6 sm:text-xs",
-        isSelected
-          ? "border border-white/60 bg-white/15 text-white"
-          : "border border-neutral-300 bg-white text-neutral-700",
-      )}
-    >
-      {label}
-    </IntiDinamisText>
-    <IntiDinamisText
-      as="span"
-      size="14"
-      className="leading-5 sm:text-sm sm:leading-relaxed"
-    >
-      {text}
-    </IntiDinamisText>
-  </IntiDinamisButton>
-);
+import { Controller } from "react-hook-form";
+import { usePapiKostickContext } from "../../context/FormContext";
+import type { PapiAnswer } from "../../context/FormContext";
+import { OptionButton } from "./features/OptionButton";
 
 export interface QuestionCardProps {
   questionId: number;
   questionNumber: number;
   textA: string;
   textB: string;
-  selectedAnswer: PapiAnswer | undefined;
-  onSelectAnswer: (questionId: number, answer: PapiAnswer) => void;
 }
 
 export const QuestionCard = ({
@@ -65,9 +16,10 @@ export const QuestionCard = ({
   questionNumber,
   textA,
   textB,
-  selectedAnswer,
-  onSelectAnswer,
 }: QuestionCardProps) => {
+  const { methods } = usePapiKostickContext();
+  const { control } = methods;
+
   return (
     <div className="flex items-start gap-3 sm:gap-4">
       <IntiDinamisText
@@ -79,20 +31,29 @@ export const QuestionCard = ({
         {questionNumber}
       </IntiDinamisText>
 
-      <div className="grid flex-1 grid-cols-1 gap-2 sm:grid-cols-2">
-        <OptionButton
-          label="A"
-          text={textA}
-          isSelected={selectedAnswer === "a"}
-          onSelect={() => onSelectAnswer(questionId, "a")}
-        />
-        <OptionButton
-          label="B"
-          text={textB}
-          isSelected={selectedAnswer === "b"}
-          onSelect={() => onSelectAnswer(questionId, "b")}
-        />
-      </div>
+      <Controller
+        name={`q_${questionId}`}
+        control={control}
+        render={({ field: { onChange, value } }) => {
+          const selectAnswer = (answer: PapiAnswer) => onChange(answer);
+          return (
+            <div className="grid flex-1 grid-cols-1 gap-2 sm:grid-cols-2">
+              <OptionButton
+                label="A"
+                text={textA}
+                isSelected={value === "a"}
+                onSelect={() => selectAnswer("a")}
+              />
+              <OptionButton
+                label="B"
+                text={textB}
+                isSelected={value === "b"}
+                onSelect={() => selectAnswer("b")}
+              />
+            </div>
+          );
+        }}
+      />
     </div>
   );
 };

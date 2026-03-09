@@ -1,29 +1,20 @@
 import { cn } from "@/lib/tailwind-merge";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
+import { usePapiKostickContext } from "../../context/FormContext";
 
-interface NavigationControlsProps {
-  currentPage: number;
-  totalPages: number;
-  isFirstPage: boolean;
-  isLastPage: boolean;
-  isCompleted: boolean;
-  onPrev: () => void;
-  onNext: () => void;
-  onGoToPage: (page: number) => void;
-  onSubmit: () => void;
-}
+export const NavigationControls = () => {
+  const {
+    currentPage,
+    totalPages,
+    isFirstPage,
+    isLastPage,
+    isCompleted,
+    goPrev,
+    goNext,
+    goToPage,
+    handleSubmit,
+  } = usePapiKostickContext();
 
-export const NavigationControls = ({
-  currentPage,
-  totalPages,
-  isFirstPage,
-  isLastPage,
-  isCompleted,
-  onPrev,
-  onNext,
-  onGoToPage,
-  onSubmit,
-}: NavigationControlsProps) => {
   return (
     <div className="flex flex-col gap-3 sm:gap-4">
       {/* Page number buttons */}
@@ -31,7 +22,7 @@ export const NavigationControls = ({
         {Array.from({ length: totalPages }, (_, i) => (
           <IntiDinamisButton
             key={i}
-            onClick={() => onGoToPage(i)}
+            onClick={() => goToPage(i)}
             variant="secondary"
             size="icon"
             className={cn(
@@ -51,7 +42,7 @@ export const NavigationControls = ({
         <IntiDinamisButton
           variant="secondary"
           disabled={isFirstPage}
-          onClick={onPrev}
+          onClick={goPrev}
         >
           Sebelumnya
         </IntiDinamisButton>
@@ -60,12 +51,12 @@ export const NavigationControls = ({
           <IntiDinamisButton
             variant="primary"
             disabled={!isCompleted}
-            onClick={onSubmit}
+            onClick={handleSubmit}
           >
             Selesai
           </IntiDinamisButton>
         ) : (
-          <IntiDinamisButton variant="primary" onClick={onNext}>
+          <IntiDinamisButton variant="primary" onClick={goNext}>
             Selanjutnya
           </IntiDinamisButton>
         )}
