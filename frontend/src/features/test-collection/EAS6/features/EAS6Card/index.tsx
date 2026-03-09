@@ -1,5 +1,6 @@
 import { cn } from "@/lib/tailwind-merge";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
+import { useEas6Context } from "../../context/Eas6Context";
 
 const OPTION_LABELS = ["A", "B", "C", "D", "E"] as const;
 
@@ -7,17 +8,11 @@ interface EAS6CardProps {
   id: number;
   question: string;
   options: [string, string, string, string, string];
-  selectedAnswer: string | undefined;
-  onSelectAnswer: (id: number, option: string) => void;
 }
 
-export const EAS6Card = ({
-  id,
-  question,
-  options,
-  selectedAnswer,
-  onSelectAnswer,
-}: EAS6CardProps) => {
+export const EAS6Card = ({ id, question, options }: EAS6CardProps) => {
+  const { answers, selectAnswer } = useEas6Context();
+  const selectedAnswer = answers[id];
   return (
     <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
       <div className="mb-5 flex items-start gap-3">
@@ -43,7 +38,7 @@ export const EAS6Card = ({
             <button
               key={label}
               type="button"
-              onClick={() => onSelectAnswer(id, option)}
+              onClick={() => selectAnswer(id, option)}
               className={cn(
                 "flex min-w-20 items-center gap-2 rounded-xl border-2 px-4 py-2.5 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400",
                 isSelected

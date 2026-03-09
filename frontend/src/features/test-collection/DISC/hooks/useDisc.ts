@@ -1,35 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { DISC_QUESTIONS } from "@/data/disc";
 
 export const DISC_QUESTIONS_PER_PAGE = 7;
 
 export interface DiscAnswer {
-  most: number | null; // index 0-3 of the option selected as "Most like me"
-  least: number | null; // index 0-3 of the option selected as "Least like me"
+  most: number | null; // index 0–3 of the option selected as "Most like me"
+  least: number | null; // index 0–3 of the option selected as "Least like me"
 }
 
-export interface DiscAnswerRecord {
-  [questionId: number]: DiscAnswer;
-}
+export type DiscAnswerRecord = Record<number, DiscAnswer>;
 
-export interface UseDiscReturn {
-  currentPage: number;
-  totalPages: number;
-  currentPageQuestions: typeof DISC_QUESTIONS;
-  answers: DiscAnswerRecord;
-  progress: number;
-  completedCount: number;
-  totalQuestions: number;
-  isFirstPage: boolean;
-  isLastPage: boolean;
-  isCompleted: boolean;
-  incompleteIds: number[];
-  selectMost: (questionId: number, optionIndex: number) => void;
-  selectLeast: (questionId: number, optionIndex: number) => void;
-  goNext: () => void;
-  goPrev: () => void;
-  goToPage: (page: number) => void;
-}
+type DiscFormValues = { [key: string]: DiscAnswer };
 
 export const getPageForDiscQuestion = (questionId: number): number =>
   Math.floor((questionId - 1) / DISC_QUESTIONS_PER_PAGE);
@@ -40,12 +22,21 @@ const isAnswerComplete = (answer: DiscAnswer | undefined): boolean =>
   answer.least !== null &&
   answer.most !== answer.least;
 
-export const useDisc = (): UseDiscReturn => {
+export const useDisc = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  const [answers, setAnswers] = useState<DiscAnswerRecord>({});
+  const methods = useForm<DiscFormValues>({
+    defaultValues: JSON.parse(sessionStorage.getItem("disc_progress") || "{}"),
+  });
+  const { watch } = methods;
+  const values = watch();
 
   const total = DISC_QUESTIONS.length;
   const totalPages = Math.ceil(total / DISC_QUESTIONS_PER_PAGE);
+
+  const answers = DISC_QUESTIONS.reduce<DiscAnswerRecord>((acc, q) => {
+    acc[q.id] = values[`q_${q.id}`] ?? { most: null, least: null };
+    return acc;
+  }, {});
 
   const completedCount = DISC_QUESTIONS.filter((q) =>
     isAnswerComplete(answers[q.id]),
@@ -61,29 +52,27 @@ export const useDisc = (): UseDiscReturn => {
   ).map((q) => q.id);
 
   const selectMost = (questionId: number, optionIndex: number) => {
-    setAnswers((prev) => {
-      const current = prev[questionId] ?? { most: null, least: null };
-      // If this option is already "most", deselect it
-      if (current.most === optionIndex) {
-        return { ...prev, [questionId]: { ...current, most: null } };
-      }
-      // If this option is currently "least", clear least and set as most
+    const current = answers[questionId] ?? { most: null, least: null };
+    let updated: DiscAnswer;
+    if (current.most === optionIndex) {
+      updated = { ...current, most: null };
+    } else {
       const newLeast = current.least === optionIndex ? null : current.least;
-      return { ...prev, [questionId]: { most: optionIndex, least: newLeast } };
-    });
+      updated = { most: optionIndex, least: newLeast };
+    }
+    methods.setValue(`q_${questionId}`, updated);
   };
 
   const selectLeast = (questionId: number, optionIndex: number) => {
-    setAnswers((prev) => {
-      const current = prev[questionId] ?? { most: null, least: null };
-      // If this option is already "least", deselect it
-      if (current.least === optionIndex) {
-        return { ...prev, [questionId]: { ...current, least: null } };
-      }
-      // If this option is currently "most", clear most and set as least
+    const current = answers[questionId] ?? { most: null, least: null };
+    let updated: DiscAnswer;
+    if (current.least === optionIndex) {
+      updated = { ...current, least: null };
+    } else {
       const newMost = current.most === optionIndex ? null : current.most;
-      return { ...prev, [questionId]: { most: newMost, least: optionIndex } };
-    });
+      updated = { most: newMost, least: optionIndex };
+    }
+    methods.setValue(`q_${questionId}`, updated);
   };
 
   const goNext = () => {
@@ -98,7 +87,20 @@ export const useDisc = (): UseDiscReturn => {
     if (page >= 0 && page < totalPages) setCurrentPage(page);
   };
 
+  const handleSubmit = methods.handleSubmit((data) => {
+    console.log("Submitted DISC answers:", data);
+  });
+
+  // Persist answers across page refresh
+  useEffect(() => {
+    const subscription = watch((value) => {
+      sessionStorage.setItem("disc_progress", JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   return {
+    methods,
     currentPage,
     totalPages,
     currentPageQuestions,
@@ -115,5 +117,6 @@ export const useDisc = (): UseDiscReturn => {
     goNext,
     goPrev,
     goToPage,
+    handleSubmit,
   };
 };

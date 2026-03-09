@@ -1,19 +1,7 @@
-import {
-  DISC_QUESTIONS_PER_PAGE,
-  type DiscAnswer,
-  type DiscAnswerRecord,
-} from "../../hooks/useDisc";
+import { DISC_QUESTIONS_PER_PAGE } from "../../context/DiscContext";
+import { useDiscContext } from "../../context/DiscContext";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { DiscQuestionCard } from "../DiscQuestionCard";
-import type { DISC_QUESTIONS } from "@/data/disc";
-
-interface DiscQuestionListProps {
-  currentPage: number;
-  questions: typeof DISC_QUESTIONS;
-  answers: DiscAnswerRecord;
-  onSelectMost: (questionId: number, optionIndex: number) => void;
-  onSelectLeast: (questionId: number, optionIndex: number) => void;
-}
 
 const getLegendItem = (color: string, label: string, description: string) => (
   <div className="flex items-center gap-2">
@@ -31,13 +19,8 @@ const getLegendItem = (color: string, label: string, description: string) => (
   </div>
 );
 
-export const DiscQuestionList = ({
-  currentPage,
-  questions,
-  answers,
-  onSelectMost,
-  onSelectLeast,
-}: DiscQuestionListProps) => {
+export const DiscQuestionList = () => {
+  const { currentPage, currentPageQuestions: questions } = useDiscContext();
   const pageStart = currentPage * DISC_QUESTIONS_PER_PAGE + 1;
   const pageEnd = pageStart + questions.length - 1;
 
@@ -89,12 +72,7 @@ export const DiscQuestionList = ({
             key={question.id}
             className="border-b border-neutral-200 p-3 last:border-b-0 sm:p-4"
           >
-            <DiscQuestionCard
-              question={question}
-              answer={answers[question.id] as DiscAnswer | undefined}
-              onSelectMost={onSelectMost}
-              onSelectLeast={onSelectLeast}
-            />
+            <DiscQuestionCard question={question} />
           </div>
         ))}
       </div>

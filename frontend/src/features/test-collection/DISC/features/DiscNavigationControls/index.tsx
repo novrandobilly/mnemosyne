@@ -1,29 +1,19 @@
 import { cn } from "@/lib/tailwind-merge";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
+import { useDiscContext } from "../../context/DiscContext";
 
-interface DiscNavigationControlsProps {
-  currentPage: number;
-  totalPages: number;
-  isFirstPage: boolean;
-  isLastPage: boolean;
-  isCompleted: boolean;
-  onPrev: () => void;
-  onNext: () => void;
-  onGoToPage: (page: number) => void;
-  onSubmit: () => void;
-}
-
-export const DiscNavigationControls = ({
-  currentPage,
-  totalPages,
-  isFirstPage,
-  isLastPage,
-  isCompleted,
-  onPrev,
-  onNext,
-  onGoToPage,
-  onSubmit,
-}: DiscNavigationControlsProps) => {
+export const DiscNavigationControls = () => {
+  const {
+    currentPage,
+    totalPages,
+    isFirstPage,
+    isLastPage,
+    isCompleted,
+    goPrev: onPrev,
+    goNext: onNext,
+    goToPage: onGoToPage,
+    handleSubmit: onSubmit,
+  } = useDiscContext();
   return (
     <div className="flex flex-col gap-3 sm:gap-4">
       {/* Page number buttons */}

@@ -3,22 +3,20 @@ import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { cn } from "@/lib/tailwind-merge";
 import { eas5Data } from "@/data/eas5";
-import { useEas5 } from "./hooks/useEas5";
+import { Eas5Provider, useEas5Context } from "./context/Eas5Context";
 import { EAS5QuestionRow } from "./features/EAS5QuestionRow";
 
-export const Eas5Test = () => {
+const Eas5TestInner = () => {
   const {
     currentPileId,
     currentPile,
-    answers,
     answeredCount,
     totalQuestions,
     secondsLeft,
     isTimeUp,
-    selectAnswer,
     goToPile,
     formatTime,
-  } = useEas5();
+  } = useEas5Context();
 
   return (
     <MainWrapper pageTitle="EAS5">
@@ -89,8 +87,6 @@ export const Eas5Test = () => {
                 key={question.id}
                 questionId={question.id}
                 targetBlock={question.targetBlock}
-                selectedAnswer={answers[question.id]}
-                onSelectAnswer={selectAnswer}
               />
             ))}
           </div>
@@ -99,3 +95,9 @@ export const Eas5Test = () => {
     </MainWrapper>
   );
 };
+
+export const Eas5Test = () => (
+  <Eas5Provider>
+    <Eas5TestInner />
+  </Eas5Provider>
+);

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { intray2Docs } from "@/data/intray2";
 import type {
   WorksheetRow,
@@ -6,6 +7,10 @@ import type {
 } from "@/components/IntrayWorksheetTable";
 
 export type { WorksheetRow, WorksheetField };
+
+type Intray2FormValues = {
+  kk: WorksheetRow[];
+};
 
 export const MAX_KK_ROWS = 30;
 
@@ -35,30 +40,59 @@ function patchRow(
 }
 
 export function useIntray2() {
-  const [kkRows, setKkRows] = useState<WorksheetRow[]>(() => makeRows(5));
-
   const [activeDocId, setActiveDocId] = useState<string>(intray2Docs[0].id);
   const [isDocPanelOpen, setIsDocPanelOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const updateKkRow = (id: string, field: WorksheetField, value: string) =>
-    setKkRows((prev) => patchRow(prev, id, field, value));
+  const methods = useForm<Intray2FormValues>({
+    defaultValues: (() => {
+      try {
+        const saved = JSON.parse(
+          sessionStorage.getItem("intray2_progress") || "null",
+        );
+        return { kk: saved?.kk ?? makeRows(5) };
+      } catch {
+        return { kk: makeRows(5) };
+      }
+    })(),
+  });
+  const { watch, getValues, setValue } = methods;
+
+  const kkRows = watch("kk");
+
+  const updateKkRow = (id: string, field: WorksheetField, value: string) => {
+    setValue("kk", patchRow(getValues("kk"), id, field, value));
+  };
 
   const addKkRow = () => {
-    if (kkRows.length >= MAX_KK_ROWS) return;
-    setKkRows((prev) => [...prev, makeRow()]);
+    const rows = getValues("kk");
+    if (rows.length >= MAX_KK_ROWS) return;
+    setValue("kk", [...rows, makeRow()]);
   };
 
   const toggleDocPanel = () => setIsDocPanelOpen((p) => !p);
 
+  // Persist rows across page refresh
+  useEffect(() => {
+    const subscription = watch((value) => {
+      sessionStorage.setItem(
+        "intray2_progress",
+        JSON.stringify({ kk: value.kk }),
+      );
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   const handleSubmit = () => {
     if (isSubmitted) return;
     setIsSubmitted(true);
-    console.log("Intray-2 submitted:", { kk: kkRows });
+    const { kk } = getValues();
+    console.log("Intray-2 submitted:", { kk });
     // TODO: submit to PocketBase
   };
 
   return {
+    methods,
     kkRows,
     activeDocId,
     setActiveDocId,

@@ -1,27 +1,18 @@
 import { createContext, useContext } from "react";
-import { useDa5, type Da5AnswerRecord } from "../hooks/useDa5";
+import { FormProvider } from "react-hook-form";
+import { useDa5 } from "../hooks/useDa5";
 
-interface Da5ContextValue {
-  answers: Da5AnswerRecord;
-  answeredCount: number;
-  totalQuestions: number;
-  secondsLeft: number;
-  isTimeUp: boolean;
-  currentIndex: number;
-  isRulesOpen: boolean;
-  selectAnswer: (id: number, option: string) => void;
-  goToIndex: (idx: number) => void;
-  goNext: () => void;
-  goPrev: () => void;
-  toggleRules: () => void;
-  formatTime: (seconds: number) => string;
-}
+type Da5ContextValue = ReturnType<typeof useDa5>;
 
 const Da5Context = createContext<Da5ContextValue | null>(null);
 
 export function Da5Provider({ children }: { children: React.ReactNode }) {
   const value = useDa5();
-  return <Da5Context.Provider value={value}>{children}</Da5Context.Provider>;
+  return (
+    <FormProvider {...value.methods}>
+      <Da5Context.Provider value={value}>{children}</Da5Context.Provider>
+    </FormProvider>
+  );
 }
 
 export function useDa5Context(): Da5ContextValue {

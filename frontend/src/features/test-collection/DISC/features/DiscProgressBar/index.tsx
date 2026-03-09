@@ -1,16 +1,12 @@
 import { IntiDinamisText } from "@/components/IntiDinamisText";
+import { useDiscContext } from "../../context/DiscContext";
 
-interface ProgressBarProps {
-  progress: number;
-  completedCount: number;
-  totalCount: number;
-}
-
-export const DiscProgressBar = ({
-  progress,
-  completedCount,
-  totalCount,
-}: ProgressBarProps) => {
+export const DiscProgressBar = () => {
+  const {
+    progress,
+    completedCount,
+    totalQuestions: totalCount,
+  } = useDiscContext();
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">

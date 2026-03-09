@@ -1,26 +1,18 @@
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/tailwind-merge";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
+import { useEas4Context } from "../../context/Eas4Context";
 
 export interface EAS4RowProps {
   id: number;
   leftValue: string;
   rightValue: string;
-  selectedAnswer: boolean | undefined;
-  isFocused: boolean;
-  onSelect: (id: number, isSame: boolean) => void;
-  onFocus: (id: number) => void;
 }
 
-export const EAS4Row = ({
-  id,
-  leftValue,
-  rightValue,
-  selectedAnswer,
-  isFocused,
-  onSelect,
-  onFocus,
-}: EAS4RowProps) => {
+export const EAS4Row = ({ id, leftValue, rightValue }: EAS4RowProps) => {
+  const { answers, selectAnswer, focusedId, setFocusedId } = useEas4Context();
+  const selectedAnswer = answers[id] as boolean | undefined;
+  const isFocused = focusedId === id;
   const rowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,7 +28,7 @@ export const EAS4Row = ({
   return (
     <div
       ref={rowRef}
-      onClick={() => onFocus(id)}
+      onClick={() => setFocusedId(id)}
       className={cn(
         "flex items-center gap-3 rounded-lg px-3 py-1.5 transition-colors",
         isFocused
@@ -74,7 +66,7 @@ export const EAS4Row = ({
           type="button"
           onClick={(e) => {
             e.stopPropagation();
-            onSelect(id, false);
+            selectAnswer(id, false);
           }}
           className={cn(
             "h-7 w-7 rounded-md text-xs font-semibold transition-colors",
@@ -93,7 +85,7 @@ export const EAS4Row = ({
           type="button"
           onClick={(e) => {
             e.stopPropagation();
-            onSelect(id, true);
+            selectAnswer(id, true);
           }}
           className={cn(
             "h-7 w-7 rounded-md text-xs font-semibold transition-colors",

@@ -1,5 +1,6 @@
 import { cn } from "@/lib/tailwind-merge";
 import type { Eas10Answer } from "@/data/eas10";
+import { useEas10Context } from "../../context/Eas10Context";
 
 const CHOICES: { value: Eas10Answer; label: string; title: string }[] = [
   { value: "Benar", label: "B", title: "Benar" },
@@ -11,17 +12,11 @@ interface EAS10RowProps {
   id: number;
   expression: string;
   conclusion: string;
-  selectedAnswer: Eas10Answer | undefined;
-  onSelectAnswer: (id: number, answer: Eas10Answer) => void;
 }
 
-export const EAS10Row = ({
-  id,
-  expression,
-  conclusion,
-  selectedAnswer,
-  onSelectAnswer,
-}: EAS10RowProps) => {
+export const EAS10Row = ({ id, expression, conclusion }: EAS10RowProps) => {
+  const { answers, selectAnswer } = useEas10Context();
+  const selectedAnswer = answers[id];
   return (
     <div className="flex items-center gap-3 border-b border-neutral-100 py-3 last:border-b-0">
       {/* Row number */}
@@ -49,7 +44,7 @@ export const EAS10Row = ({
               key={value}
               type="button"
               title={title}
-              onClick={() => onSelectAnswer(id, value)}
+              onClick={() => selectAnswer(id, value)}
               className={cn(
                 "flex h-8 w-10 items-center justify-center rounded-lg border-2 text-xs font-bold transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400",
                 isSelected

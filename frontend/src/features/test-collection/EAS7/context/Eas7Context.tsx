@@ -1,25 +1,18 @@
 import { createContext, useContext, type ReactNode } from "react";
-import { useEas7, type Eas7AnswerRecord } from "../hooks/useEas7";
-import { eas7Data, type Eas7Answer } from "@/data/eas7";
+import { FormProvider } from "react-hook-form";
+import { useEas7 } from "../hooks/useEas7";
 
-interface Eas7ContextValue {
-  currentGroupId: number;
-  currentGroup: (typeof eas7Data)[number];
-  answers: Eas7AnswerRecord;
-  answeredCount: number;
-  totalQuestions: number;
-  secondsLeft: number;
-  isTimeUp: boolean;
-  selectAnswer: (questionId: number, answer: Eas7Answer) => void;
-  goToGroup: (groupId: number) => void;
-  formatTime: (seconds: number) => string;
-}
+type Eas7ContextValue = ReturnType<typeof useEas7>;
 
 const Eas7Context = createContext<Eas7ContextValue | null>(null);
 
 export const Eas7Provider = ({ children }: { children: ReactNode }) => {
   const value = useEas7();
-  return <Eas7Context.Provider value={value}>{children}</Eas7Context.Provider>;
+  return (
+    <FormProvider {...value.methods}>
+      <Eas7Context.Provider value={value}>{children}</Eas7Context.Provider>
+    </FormProvider>
+  );
 };
 
 export const useEas7Context = (): Eas7ContextValue => {

@@ -1,27 +1,31 @@
 import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { eas6Data } from "@/data/eas6";
 
 export type Eas6AnswerRecord = Record<number, string>;
-
-interface UseEas6Return {
-  answers: Eas6AnswerRecord;
-  answeredCount: number;
-  totalQuestions: number;
-  secondsLeft: number;
-  isTimeUp: boolean;
-  selectAnswer: (id: number, option: string) => void;
-  formatTime: (seconds: number) => string;
-}
+type Eas6FormValues = Record<string, string>;
 
 const INITIAL_SECONDS = 5 * 60;
 
-export const useEas6 = (): UseEas6Return => {
-  const [answers, setAnswers] = useState<Eas6AnswerRecord>({});
+export const useEas6 = () => {
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
   const hasAutoSubmitted = useRef(false);
 
-  const answeredCount = Object.keys(answers).length;
+  const methods = useForm<Eas6FormValues>({
+    defaultValues: JSON.parse(sessionStorage.getItem("eas6_progress") || "{}"),
+  });
+  const { watch } = methods;
+  const values = watch();
+
+  const answeredCount = Object.keys(values).filter((k) =>
+    k.startsWith("q_"),
+  ).length;
   const totalQuestions = eas6Data.length;
+  const answers: Eas6AnswerRecord = Object.fromEntries(
+    Object.entries(values)
+      .filter(([k]) => k.startsWith("q_"))
+      .map(([k, v]) => [Number(k.slice(2)), v]),
+  );
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -36,12 +40,23 @@ export const useEas6 = (): UseEas6Return => {
   useEffect(() => {
     if (secondsLeft !== 0 || hasAutoSubmitted.current) return;
     hasAutoSubmitted.current = true;
-    console.log("EAS6 timer ended. Auto submit triggered.", answers);
+    console.log(
+      "EAS6 timer ended. Auto submit triggered.",
+      methods.getValues(),
+    );
     // TODO: submit to PocketBase
-  }, [secondsLeft, answers]);
+  }, [secondsLeft]);
+
+  // Persist answers across page refresh
+  useEffect(() => {
+    const subscription = watch((value) => {
+      sessionStorage.setItem("eas6_progress", JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const selectAnswer = (id: number, option: string) => {
-    setAnswers((prev) => ({ ...prev, [id]: option }));
+    methods.setValue(`q_${id}`, option);
   };
 
   const formatTime = (seconds: number): string => {
@@ -51,6 +66,7 @@ export const useEas6 = (): UseEas6Return => {
   };
 
   return {
+    methods,
     answers,
     answeredCount,
     totalQuestions,

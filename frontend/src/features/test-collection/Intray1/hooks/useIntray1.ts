@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { intray1Docs } from "@/data/intray1";
 
 export type WorksheetField =
@@ -14,6 +15,11 @@ export interface WorksheetRow {
   tindakanSolusi: string;
   noMemo: string;
 }
+
+type Intray1FormValues = {
+  kk1: WorksheetRow[];
+  kk2: WorksheetRow[];
+};
 
 export const MAX_KK1_ROWS = 30;
 
@@ -43,35 +49,68 @@ function patchRow(
 }
 
 export function useIntray1() {
-  const [kk1Rows, setKk1Rows] = useState<WorksheetRow[]>(() => makeRows(5));
-  const [kk2Rows, setKk2Rows] = useState<WorksheetRow[]>(() => makeRows(3));
-
   const [activeTab, setActiveTab] = useState<"kk1" | "kk2">("kk1");
   const [activeDocId, setActiveDocId] = useState<string>(intray1Docs[0].id);
   const [isDocPanelOpen, setIsDocPanelOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const updateKk1Row = (id: string, field: WorksheetField, value: string) =>
-    setKk1Rows((prev) => patchRow(prev, id, field, value));
+  const methods = useForm<Intray1FormValues>({
+    defaultValues: (() => {
+      try {
+        const saved = JSON.parse(
+          sessionStorage.getItem("intray1_progress") || "null",
+        );
+        return {
+          kk1: saved?.kk1 ?? makeRows(5),
+          kk2: saved?.kk2 ?? makeRows(3),
+        };
+      } catch {
+        return { kk1: makeRows(5), kk2: makeRows(3) };
+      }
+    })(),
+  });
+  const { watch, getValues, setValue } = methods;
 
-  const updateKk2Row = (id: string, field: WorksheetField, value: string) =>
-    setKk2Rows((prev) => patchRow(prev, id, field, value));
+  const kk1Rows = watch("kk1");
+  const kk2Rows = watch("kk2");
+
+  const updateKk1Row = (id: string, field: WorksheetField, value: string) => {
+    setValue("kk1", patchRow(getValues("kk1"), id, field, value));
+  };
+
+  const updateKk2Row = (id: string, field: WorksheetField, value: string) => {
+    setValue("kk2", patchRow(getValues("kk2"), id, field, value));
+  };
 
   const addKk1Row = () => {
-    if (kk1Rows.length >= MAX_KK1_ROWS) return;
-    setKk1Rows((prev) => [...prev, makeRow()]);
+    const rows = getValues("kk1");
+    if (rows.length >= MAX_KK1_ROWS) return;
+    setValue("kk1", [...rows, makeRow()]);
   };
 
   const toggleDocPanel = () => setIsDocPanelOpen((p) => !p);
 
+  // Persist rows across page refresh
+  useEffect(() => {
+    const subscription = watch((value) => {
+      sessionStorage.setItem(
+        "intray1_progress",
+        JSON.stringify({ kk1: value.kk1, kk2: value.kk2 }),
+      );
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   const handleSubmit = () => {
     if (isSubmitted) return;
     setIsSubmitted(true);
-    console.log("Intray-1 submitted:", { kk1: kk1Rows, kk2: kk2Rows });
+    const { kk1, kk2 } = getValues();
+    console.log("Intray-1 submitted:", { kk1, kk2 });
     // TODO: submit to PocketBase
   };
 
   return {
+    methods,
     kk1Rows,
     kk2Rows,
     activeTab,

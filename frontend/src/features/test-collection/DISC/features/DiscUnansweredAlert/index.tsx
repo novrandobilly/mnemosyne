@@ -1,16 +1,12 @@
-import { getPageForDiscQuestion } from "../../hooks/useDisc";
+import {
+  getPageForDiscQuestion,
+  useDiscContext,
+} from "../../context/DiscContext";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 
-interface DiscUnansweredAlertProps {
-  incompleteIds: number[];
-  onJumpToPage: (page: number) => void;
-}
-
-export const DiscUnansweredAlert = ({
-  incompleteIds,
-  onJumpToPage,
-}: DiscUnansweredAlertProps) => {
+export const DiscUnansweredAlert = () => {
+  const { incompleteIds, goToPage: onJumpToPage } = useDiscContext();
   if (incompleteIds.length === 0) return null;
 
   const byPage = incompleteIds.reduce<Record<number, number[]>>((acc, id) => {

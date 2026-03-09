@@ -1,20 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { eas7Data, type Eas7Answer } from "@/data/eas7";
 
 export type Eas7AnswerRecord = Record<number, Eas7Answer>;
-
-interface UseEas7Return {
-  currentGroupId: number;
-  currentGroup: (typeof eas7Data)[number];
-  answers: Eas7AnswerRecord;
-  answeredCount: number;
-  totalQuestions: number;
-  secondsLeft: number;
-  isTimeUp: boolean;
-  selectAnswer: (questionId: number, answer: Eas7Answer) => void;
-  goToGroup: (groupId: number) => void;
-  formatTime: (seconds: number) => string;
-}
+type Eas7FormValues = Record<string, Eas7Answer>;
 
 const INITIAL_SECONDS = 5 * 60;
 const TOTAL_QUESTIONS = eas7Data.reduce(
@@ -22,15 +11,25 @@ const TOTAL_QUESTIONS = eas7Data.reduce(
   0,
 );
 
-export const useEas7 = (): UseEas7Return => {
+export const useEas7 = () => {
   const [currentGroupId, setCurrentGroupId] = useState(1);
-  const [answers, setAnswers] = useState<Eas7AnswerRecord>({});
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
   const hasAutoSubmitted = useRef(false);
+
+  const methods = useForm<Eas7FormValues>({
+    defaultValues: JSON.parse(sessionStorage.getItem("eas7_progress") || "{}"),
+  });
+  const { watch } = methods;
+  const values = watch();
 
   const currentGroup =
     eas7Data.find((g) => g.groupId === currentGroupId) ?? eas7Data[0];
 
+  const answers: Eas7AnswerRecord = Object.fromEntries(
+    Object.entries(values)
+      .filter(([k]) => k.startsWith("q_"))
+      .map(([k, v]) => [Number(k.slice(2)), v as Eas7Answer]),
+  );
   const answeredCount = Object.keys(answers).length;
 
   useEffect(() => {
@@ -46,12 +45,23 @@ export const useEas7 = (): UseEas7Return => {
   useEffect(() => {
     if (secondsLeft !== 0 || hasAutoSubmitted.current) return;
     hasAutoSubmitted.current = true;
-    console.log("EAS7 timer ended. Auto submit triggered.", answers);
+    console.log(
+      "EAS7 timer ended. Auto submit triggered.",
+      methods.getValues(),
+    );
     // TODO: submit to PocketBase
-  }, [secondsLeft, answers]);
+  }, [secondsLeft]);
+
+  // Persist answers across page refresh
+  useEffect(() => {
+    const subscription = watch((value) => {
+      sessionStorage.setItem("eas7_progress", JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const selectAnswer = (questionId: number, answer: Eas7Answer) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: answer }));
+    methods.setValue(`q_${questionId}`, answer);
   };
 
   const goToGroup = (groupId: number) => {
@@ -66,6 +76,7 @@ export const useEas7 = (): UseEas7Return => {
   };
 
   return {
+    methods,
     currentGroupId,
     currentGroup,
     answers,

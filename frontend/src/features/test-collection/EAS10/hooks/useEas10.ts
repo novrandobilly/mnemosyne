@@ -1,25 +1,27 @@
 import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { eas10Data, type Eas10Answer } from "@/data/eas10";
 
 export type Eas10AnswerRecord = Record<number, Eas10Answer>;
-
-interface UseEas10Return {
-  answers: Eas10AnswerRecord;
-  answeredCount: number;
-  totalQuestions: number;
-  secondsLeft: number;
-  isTimeUp: boolean;
-  selectAnswer: (id: number, answer: Eas10Answer) => void;
-  formatTime: (seconds: number) => string;
-}
+type Eas10FormValues = Record<string, Eas10Answer>;
 
 const INITIAL_SECONDS = 5 * 60;
 
-export const useEas10 = (): UseEas10Return => {
-  const [answers, setAnswers] = useState<Eas10AnswerRecord>({});
+export const useEas10 = () => {
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
   const hasAutoSubmitted = useRef(false);
 
+  const methods = useForm<Eas10FormValues>({
+    defaultValues: JSON.parse(sessionStorage.getItem("eas10_progress") || "{}"),
+  });
+  const { watch } = methods;
+  const values = watch();
+
+  const answers: Eas10AnswerRecord = Object.fromEntries(
+    Object.entries(values)
+      .filter(([k]) => k.startsWith("q_"))
+      .map(([k, v]) => [Number(k.slice(2)), v as Eas10Answer]),
+  );
   const answeredCount = Object.keys(answers).length;
   const totalQuestions = eas10Data.length;
 
@@ -34,12 +36,23 @@ export const useEas10 = (): UseEas10Return => {
   useEffect(() => {
     if (secondsLeft !== 0 || hasAutoSubmitted.current) return;
     hasAutoSubmitted.current = true;
-    console.log("EAS10 timer ended. Auto submit triggered.", answers);
+    console.log(
+      "EAS10 timer ended. Auto submit triggered.",
+      methods.getValues(),
+    );
     // TODO: submit to PocketBase
-  }, [secondsLeft, answers]);
+  }, [secondsLeft]);
+
+  // Persist answers across page refresh
+  useEffect(() => {
+    const subscription = watch((value) => {
+      sessionStorage.setItem("eas10_progress", JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const selectAnswer = (id: number, answer: Eas10Answer) => {
-    setAnswers((prev) => ({ ...prev, [id]: answer }));
+    methods.setValue(`q_${id}`, answer);
   };
 
   const formatTime = (seconds: number): string => {
@@ -49,6 +62,7 @@ export const useEas10 = (): UseEas10Return => {
   };
 
   return {
+    methods,
     answers,
     answeredCount,
     totalQuestions,

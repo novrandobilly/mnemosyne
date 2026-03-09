@@ -3,24 +3,18 @@ import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import thumbUpIcon from "@/assets/icons/thumb-up.svg";
 import thumbDownIcon from "@/assets/icons/thumb-down.svg";
-import type { DiscAnswer } from "../../hooks/useDisc";
 import type { DiscQuestion } from "@/data/disc";
+import { useDiscContext } from "../../context/DiscContext";
 
 interface DiscQuestionCardProps {
   question: DiscQuestion;
-  answer: DiscAnswer | undefined;
-  onSelectMost: (questionId: number, optionIndex: number) => void;
-  onSelectLeast: (questionId: number, optionIndex: number) => void;
 }
 
 const OPTION_LABELS = ["A", "B", "C", "D"] as const;
 
-export const DiscQuestionCard = ({
-  question,
-  answer,
-  onSelectMost,
-  onSelectLeast,
-}: DiscQuestionCardProps) => {
+export const DiscQuestionCard = ({ question }: DiscQuestionCardProps) => {
+  const { answers, selectMost, selectLeast } = useDiscContext();
+  const answer = answers[question.id];
   return (
     <div className="flex items-start gap-3 sm:gap-4">
       {/* Question number */}
@@ -66,7 +60,7 @@ export const DiscQuestionCard = ({
               {/* Most / Least selector buttons */}
               <div className="flex shrink-0 gap-1.5">
                 <IntiDinamisButton
-                  onClick={() => onSelectMost(question.id, index)}
+                  onClick={() => selectMost(question.id, index)}
                   variant="secondary"
                   size="xs"
                   wrapChildrenWithText={false}
@@ -91,7 +85,7 @@ export const DiscQuestionCard = ({
                   </IntiDinamisText>
                 </IntiDinamisButton>
                 <IntiDinamisButton
-                  onClick={() => onSelectLeast(question.id, index)}
+                  onClick={() => selectLeast(question.id, index)}
                   variant="secondary"
                   size="xs"
                   wrapChildrenWithText={false}

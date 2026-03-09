@@ -1,22 +1,21 @@
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { cn } from "@/lib/tailwind-merge";
+import { useEas5Context } from "../../context/Eas5Context";
 
 const ANSWER_CHOICES = [1, 2, 3, 4, 5, 6, 7, 8] as const;
 
-export interface EAS5QuestionRowProps {
+interface EAS5QuestionRowProps {
   questionId: number;
   targetBlock: string;
-  selectedAnswer: number | undefined;
-  onSelectAnswer: (questionId: number, answer: number) => void;
 }
 
 export const EAS5QuestionRow = ({
   questionId,
   targetBlock,
-  selectedAnswer,
-  onSelectAnswer,
 }: EAS5QuestionRowProps) => {
+  const { answers, selectAnswer } = useEas5Context();
+  const selectedAnswer = answers[questionId];
   return (
     <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-4">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
@@ -44,7 +43,7 @@ export const EAS5QuestionRow = ({
             key={choice}
             variant="secondary"
             size="icon"
-            onClick={() => onSelectAnswer(questionId, choice)}
+            onClick={() => selectAnswer(questionId, choice)}
             className={cn(
               "h-9 w-9 rounded-lg border sm:h-10 sm:w-10",
               selectedAnswer === choice

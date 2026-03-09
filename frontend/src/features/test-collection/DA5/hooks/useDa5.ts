@@ -1,35 +1,31 @@
 import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { da5Data } from "@/data/da5";
 
 export type Da5AnswerRecord = Record<number, string>;
-
-interface UseDa5Return {
-  answers: Da5AnswerRecord;
-  answeredCount: number;
-  totalQuestions: number;
-  secondsLeft: number;
-  isTimeUp: boolean;
-  currentIndex: number;
-  isRulesOpen: boolean;
-  selectAnswer: (id: number, option: string) => void;
-  goToIndex: (idx: number) => void;
-  goNext: () => void;
-  goPrev: () => void;
-  toggleRules: () => void;
-  formatTime: (seconds: number) => string;
-}
+type Da5FormValues = Record<string, string>;
 
 const INITIAL_SECONDS = 5 * 60;
 
-export const useDa5 = (): UseDa5Return => {
-  const [answers, setAnswers] = useState<Da5AnswerRecord>({});
+export const useDa5 = () => {
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isRulesOpen, setIsRulesOpen] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const hasAutoSubmitted = useRef(false);
 
+  const methods = useForm<Da5FormValues>({
+    defaultValues: JSON.parse(sessionStorage.getItem("da5_progress") || "{}"),
+  });
+  const { watch } = methods;
+  const values = watch();
+
   const totalQuestions = da5Data.length;
+  const answers: Da5AnswerRecord = Object.fromEntries(
+    Object.entries(values)
+      .filter(([k]) => k.startsWith("q_"))
+      .map(([k, v]) => [Number(k.slice(2)), v]),
+  );
   const answeredCount = Object.keys(answers).length;
 
   useEffect(() => {
@@ -44,13 +40,21 @@ export const useDa5 = (): UseDa5Return => {
     if (secondsLeft !== 0 || hasAutoSubmitted.current) return;
     hasAutoSubmitted.current = true;
     setIsTimeUp(true);
-    console.log("DA5 timer ended. Auto submit triggered.", answers);
+    console.log("DA5 timer ended. Auto submit triggered.", methods.getValues());
     // TODO: submit to PocketBase
-  }, [secondsLeft, answers]);
+  }, [secondsLeft]);
+
+  // Persist answers across page refresh
+  useEffect(() => {
+    const subscription = watch((value) => {
+      sessionStorage.setItem("da5_progress", JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const selectAnswer = (id: number, option: string) => {
     if (isTimeUp) return;
-    setAnswers((prev) => ({ ...prev, [id]: option }));
+    methods.setValue(`q_${id}`, option);
   };
 
   const goToIndex = (idx: number) => {
@@ -69,6 +73,7 @@ export const useDa5 = (): UseDa5Return => {
   };
 
   return {
+    methods,
     answers,
     answeredCount,
     totalQuestions,

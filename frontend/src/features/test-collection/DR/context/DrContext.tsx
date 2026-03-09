@@ -1,20 +1,18 @@
 import { createContext, useContext } from "react";
-import { useDr, type DrAnswerRecord } from "../hooks/useDr";
+import { FormProvider } from "react-hook-form";
+import { useDr } from "../hooks/useDr";
 
-interface DrContextValue {
-  answers: DrAnswerRecord;
-  selectAnswer: (id: number, option: string) => void;
-  isTimeUp: boolean;
-  timeDisplay: string;
-  totalQuestions: number;
-  answeredCount: number;
-}
+type DrContextValue = ReturnType<typeof useDr>;
 
 const DrContext = createContext<DrContextValue | null>(null);
 
 export function DrProvider({ children }: { children: React.ReactNode }) {
   const value = useDr();
-  return <DrContext.Provider value={value}>{children}</DrContext.Provider>;
+  return (
+    <FormProvider {...value.methods}>
+      <DrContext.Provider value={value}>{children}</DrContext.Provider>
+    </FormProvider>
+  );
 }
 
 export function useDrContext(): DrContextValue {

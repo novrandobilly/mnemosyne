@@ -1,20 +1,18 @@
 import { createContext, useContext } from "react";
-import { useA5, type A5AnswerRecord } from "../hooks/useA5";
+import { FormProvider } from "react-hook-form";
+import { useA5 } from "../hooks/useA5";
 
-interface A5ContextValue {
-  answers: A5AnswerRecord;
-  selectAnswer: (id: number, option: string) => void;
-  isTimeUp: boolean;
-  timeDisplay: string;
-  totalQuestions: number;
-  answeredCount: number;
-}
+type A5ContextValue = ReturnType<typeof useA5>;
 
 const A5Context = createContext<A5ContextValue | null>(null);
 
 export function A5Provider({ children }: { children: React.ReactNode }) {
   const value = useA5();
-  return <A5Context.Provider value={value}>{children}</A5Context.Provider>;
+  return (
+    <FormProvider {...value.methods}>
+      <A5Context.Provider value={value}>{children}</A5Context.Provider>
+    </FormProvider>
+  );
 }
 
 export function useA5Context(): A5ContextValue {

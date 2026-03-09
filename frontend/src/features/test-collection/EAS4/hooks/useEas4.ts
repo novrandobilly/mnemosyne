@@ -1,30 +1,30 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { eas4Data } from "@/data/eas4";
 
 export type Eas4AnswerRecord = Record<number, boolean>;
-
-interface UseEas4Return {
-  answers: Eas4AnswerRecord;
-  focusedId: number;
-  answeredCount: number;
-  totalQuestions: number;
-  secondsLeft: number;
-  isTimeUp: boolean;
-  selectAnswer: (id: number, isSame: boolean) => void;
-  setFocusedId: (id: number) => void;
-  formatTime: (seconds: number) => string;
-}
+type Eas4FormValues = Record<string, boolean>;
 
 const INITIAL_SECONDS = 5 * 60;
 
-export const useEas4 = (): UseEas4Return => {
-  const [answers, setAnswers] = useState<Eas4AnswerRecord>({});
+export const useEas4 = () => {
   const [focusedId, setFocusedId] = useState(1);
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
   const hasAutoSubmitted = useRef(false);
 
-  const answeredCount = Object.keys(answers).length;
+  const methods = useForm<Eas4FormValues>({
+    defaultValues: JSON.parse(sessionStorage.getItem("eas4_progress") || "{}"),
+  });
+  const { watch } = methods;
+  const values = watch();
+
   const totalQuestions = eas4Data.length;
+  const answers: Eas4AnswerRecord = Object.fromEntries(
+    Object.entries(values)
+      .filter(([k]) => k.startsWith("q_"))
+      .map(([k, v]) => [Number(k.slice(2)), v as boolean]),
+  );
+  const answeredCount = Object.keys(answers).length;
 
   // Countdown timer
   useEffect(() => {
@@ -41,9 +41,20 @@ export const useEas4 = (): UseEas4Return => {
   useEffect(() => {
     if (secondsLeft !== 0 || hasAutoSubmitted.current) return;
     hasAutoSubmitted.current = true;
-    console.log("EAS4 timer ended. Auto submit triggered.", answers);
+    console.log(
+      "EAS4 timer ended. Auto submit triggered.",
+      methods.getValues(),
+    );
     // TODO: submit to PocketBase
-  }, [secondsLeft, answers]);
+  }, [secondsLeft]);
+
+  // Persist answers across page refresh
+  useEffect(() => {
+    const subscription = watch((value) => {
+      sessionStorage.setItem("eas4_progress", JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const advanceFocus = useCallback((fromId: number) => {
     const nextItem = eas4Data.find((item) => item.id > fromId);
@@ -54,7 +65,7 @@ export const useEas4 = (): UseEas4Return => {
 
   const selectAnswer = useCallback(
     (id: number, isSame: boolean) => {
-      setAnswers((prev) => ({ ...prev, [id]: isSame }));
+      methods.setValue(`q_${id}`, isSame);
       advanceFocus(id);
     },
     [advanceFocus],
@@ -101,6 +112,7 @@ export const useEas4 = (): UseEas4Return => {
   );
 
   return {
+    methods,
     answers,
     focusedId,
     answeredCount,

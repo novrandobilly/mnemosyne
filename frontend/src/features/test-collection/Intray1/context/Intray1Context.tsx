@@ -1,32 +1,19 @@
 import { createContext, useContext } from "react";
-import {
-  useIntray1,
-  type WorksheetRow,
-  type WorksheetField,
-} from "../hooks/useIntray1";
+import { FormProvider } from "react-hook-form";
+import { useIntray1 } from "../hooks/useIntray1";
 
-interface Intray1ContextValue {
-  kk1Rows: WorksheetRow[];
-  kk2Rows: WorksheetRow[];
-  activeTab: "kk1" | "kk2";
-  setActiveTab: (tab: "kk1" | "kk2") => void;
-  activeDocId: string;
-  setActiveDocId: (id: string) => void;
-  isDocPanelOpen: boolean;
-  toggleDocPanel: () => void;
-  isSubmitted: boolean;
-  handleSubmit: () => void;
-  updateKk1Row: (id: string, field: WorksheetField, value: string) => void;
-  updateKk2Row: (id: string, field: WorksheetField, value: string) => void;
-  addKk1Row: () => void;
-}
+type Intray1ContextValue = ReturnType<typeof useIntray1>;
 
 const Intray1Context = createContext<Intray1ContextValue | null>(null);
 
 export function Intray1Provider({ children }: { children: React.ReactNode }) {
   const value = useIntray1();
   return (
-    <Intray1Context.Provider value={value}>{children}</Intray1Context.Provider>
+    <FormProvider {...value.methods}>
+      <Intray1Context.Provider value={value}>
+        {children}
+      </Intray1Context.Provider>
+    </FormProvider>
   );
 }
 
