@@ -32,10 +32,8 @@ const ParticipantTable: FC = () => {
                   (testResult: { [key: string]: any }) => testResult?.test_type,
                 ) || [];
 
-              console.log("flags:", flags);
               const name = `${first_name} ${last_name}`;
               const testNumber = testResultViaParticipant.length;
-              // const flags = testResultViaParticipant?.[0]?.flags || [];
 
               return (
                 <ListRow

@@ -1,7 +1,6 @@
 import { MainWrapper } from "@/components/MainWrapper";
 import ParticipantBiodata from "@/features/global/components/ParticipantBiodata";
 import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
-import ParticipantEmployment from "@/features/global/components/ParticipantEmployment";
 import { useGetParticipantTestResult } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantTestResult";
 import { useNavigate } from "react-router-dom";
 import DiscResultSection from "./features/DiscResultSection";
@@ -28,7 +27,7 @@ const DISCResult = () => {
 
         <section className="grid gap-4 lg:grid-cols-[1.5fr_0.5fr]">
           <ParticipantBiodata />
-          <ParticipantEmployment />
+          {/* <ParticipantEmployment /> */}
         </section>
 
         {scores ? (

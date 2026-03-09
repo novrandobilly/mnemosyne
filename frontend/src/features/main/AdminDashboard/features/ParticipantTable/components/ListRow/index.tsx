@@ -5,6 +5,9 @@ import FlagBadge from "../../../FlagBadge";
 import { FLAG_LABELS } from "../../../../constants/participants";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { formatDate } from "@/utils/tools";
+import { useModal } from "@/context/ModalContext";
+import { useDeleteParticipant } from "../../hooks/useDeleteParticipant";
+import { DeleteConfirmModal } from "../DeleteConfirmModal";
 
 interface ListRowProps {
   id: string;
@@ -24,6 +27,22 @@ const ListRow: FC<ListRowProps> = ({
   index,
 }) => {
   const navigate = useNavigate();
+  const { showModal } = useModal();
+  const { mutate: deleteParticipant, isPending: isDeleting } =
+    useDeleteParticipant();
+
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    showModal({
+      content: (
+        <DeleteConfirmModal
+          name={name}
+          isPending={isDeleting}
+          onConfirm={() => deleteParticipant(id)}
+        />
+      ),
+    });
+  };
 
   return (
     <tr
@@ -61,8 +80,9 @@ const ListRow: FC<ListRowProps> = ({
         <IntiDinamisButton
           type="button"
           variant="secondary"
-          className="min-w-0 rounded-full px-3 py-1.5 text-xs"
-          onClick={(e) => e.stopPropagation()}
+          className="min-w-0 rounded-full px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 hover:border-rose-200"
+          onClick={handleDeleteClick}
+          disabled={isDeleting}
         >
           Delete
         </IntiDinamisButton>

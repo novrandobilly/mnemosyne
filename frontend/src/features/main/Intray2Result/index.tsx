@@ -2,7 +2,6 @@ import { MainWrapper } from "@/components/MainWrapper";
 import ParticipantBiodata from "@/features/global/components/ParticipantBiodata";
 import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
 import { useGetParticipantTestResult } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantTestResult";
-import ParticipantEmployment from "@/features/global/components/ParticipantEmployment";
 import { useNavigate } from "react-router-dom";
 import type { Intray2Data } from "./constants";
 import Intray2ResultSection from "./features/Intray2ResultSection";
@@ -30,7 +29,7 @@ const Intray2Result = () => {
 
         <section className="grid gap-4 lg:grid-cols-[1.5fr_0.5fr]">
           <ParticipantBiodata />
-          <ParticipantEmployment />
+          {/* <ParticipantEmployment /> */}
         </section>
 
         {data ? (
