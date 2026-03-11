@@ -2,12 +2,12 @@ import type { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import FlagBadge from "../../../FlagBadge";
-import { FLAG_LABELS } from "../../../../constants/participants";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { formatDate } from "@/utils/tools";
 import { useModal } from "@/context/ModalContext";
 import { useDeleteParticipant } from "../../hooks/useDeleteParticipant";
 import { DeleteConfirmModal } from "../DeleteConfirmModal";
+import { FLAG_LABELS } from "../../constants/test-flag";
 
 interface ListRowProps {
   id: string;

@@ -1,0 +1,15 @@
+export const FLAG_LABELS = [
+  { label: "PK", value: "papikostick" },
+  { label: "DISC", value: "disc" },
+  { label: "EAS4", value: "eas4" },
+  { label: "EAS5", value: "eas5" },
+  { label: "EAS6", value: "eas6" },
+  { label: "EAS7", value: "eas7" },
+  { label: "EAS10", value: "eas10" },
+  { label: "A5", value: "a5" },
+  { label: "DR", value: "dr" },
+  { label: "DA5", value: "da5" },
+  { label: "ST7", value: "st7" },
+  { label: "Intray1", value: "intray1" },
+  { label: "Intray2", value: "intray2" },
+] as const;
