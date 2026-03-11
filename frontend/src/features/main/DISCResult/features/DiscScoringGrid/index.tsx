@@ -1,18 +1,14 @@
 import type { FC } from "react";
-import { useGetDiscResult } from "../../hooks/useGetDiscResult";
-import type { DiscCategory, DiscScores } from "../../types";
+import type { DiscScores } from "../../types";
+
+const METRICS = ["MOST", "LEAST", "CHANGE"] as const;
+const CATEGORIES = ["D", "I", "S", "C", "Star"] as const;
 
 interface DiscScoringGridProps {
   scores: DiscScores;
 }
 
-const CATEGORIES: DiscCategory[] = ["D", "I", "S", "C", "Star"];
-const METRICS = ["MOST", "LEAST", "CHANGE"] as const;
-
 const DiscScoringGrid: FC<DiscScoringGridProps> = ({ scores }) => {
-  const result = useGetDiscResult();
-  console.log("result:", result);
-
   return (
     <div className="overflow-x-auto">
       <table className="border-collapse text-sm w-full max-w-lg">

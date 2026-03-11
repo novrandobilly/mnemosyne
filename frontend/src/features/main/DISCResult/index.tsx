@@ -4,7 +4,7 @@ import { useGetParticipantDetails } from "@/features/global/components/Participa
 import { useGetParticipantTestResult } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantTestResult";
 import { useNavigate } from "react-router-dom";
 import DiscResultSection from "./features/DiscResultSection";
-import type { DiscScores } from "./types";
+import type { DiscResult, DiscScores } from "./types";
 
 const DISCResult = () => {
   const navigate = useNavigate();
@@ -12,7 +12,14 @@ const DISCResult = () => {
   const { id } = participantDetails || {};
   const { result: discResult } = useGetParticipantTestResult("disc");
 
-  const scores: DiscScores | null = (discResult?.data as DiscScores) ?? null;
+  const discData = discResult?.data as DiscResult | undefined;
+  const scores: DiscScores | undefined = discData?.processedResults
+    ? {
+        MOST: discData.processedResults.most,
+        LEAST: discData.processedResults.least,
+        CHANGE: discData.processedResults.change,
+      }
+    : undefined;
 
   return (
     <MainWrapper>

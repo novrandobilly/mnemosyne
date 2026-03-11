@@ -1,6 +1,6 @@
 import { Document } from "@react-pdf/renderer";
 import type { PapiResults } from "@/features/main/PKResult/types";
-import type { DiscScores } from "@/features/main/DISCResult/types";
+import type { DiscResult, DiscScores } from "@/features/main/DISCResult/types";
 import type { WorksheetRow } from "@/components/IntrayWorksheetTable";
 import { CoverPage } from "./CoverPage";
 import { PapiModule } from "./PapiModule";
@@ -35,7 +35,14 @@ export const ReportDocument = ({
   const papiScores = papiResult?.data?.processed_scores as
     | PapiResults
     | undefined;
-  const discScores = discResult?.data as DiscScores | undefined;
+  const discData = discResult?.data as DiscResult | undefined;
+  const discScores: DiscScores | undefined = discData?.processedResults
+    ? {
+        MOST: discData.processedResults.most,
+        LEAST: discData.processedResults.least,
+        CHANGE: discData.processedResults.change,
+      }
+    : undefined;
   const intray1Rows1: WorksheetRow[] = intray1Result?.data?.kk1 ?? [];
   const intray1Rows2: WorksheetRow[] = intray1Result?.data?.kk2 ?? [];
   const intray2Rows: WorksheetRow[] = intray2Result?.data?.kk ?? [];
