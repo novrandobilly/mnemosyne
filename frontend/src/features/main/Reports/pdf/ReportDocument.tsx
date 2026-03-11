@@ -9,11 +9,14 @@ import { IntrayModule } from "./IntrayModule";
 import { CompetenceModule } from "./CompetenceModule";
 import type { ReportModuleId, ReportParticipant } from "../types";
 
+import type { DiscGraphUrls } from "../types";
+
 interface ReportDocumentProps {
   participant: ReportParticipant;
   selectedModules: ReportModuleId[];
   generatedAt: string;
   papiWheelImageUrl?: string;
+  discGraphImageUrls?: DiscGraphUrls;
 }
 
 export const ReportDocument = ({
@@ -21,6 +24,7 @@ export const ReportDocument = ({
   selectedModules,
   generatedAt,
   papiWheelImageUrl,
+  discGraphImageUrls,
 }: ReportDocumentProps) => {
   const testResults = participant.expand?.test_results_via_participant ?? [];
 
@@ -68,7 +72,11 @@ export const ReportDocument = ({
       )}
 
       {selectedModules.includes("disc") && discScores && (
-        <DiscModule scores={discScores} participant={participant} />
+        <DiscModule
+          scores={discScores}
+          participant={participant}
+          graphImageUrls={discGraphImageUrls}
+        />
       )}
 
       {selectedModules.includes("intray1") && (

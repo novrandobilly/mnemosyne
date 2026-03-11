@@ -11,7 +11,9 @@ import {
 } from "../../types";
 import { ReportDocument } from "../../pdf/ReportDocument";
 import { usePapiWheelCapture } from "../../hooks/usePapiWheelCapture";
+import { useDiscGraphsCapture } from "../../hooks/useDiscGraphsCapture";
 import type { PapiResults } from "@/features/main/PKResult/types";
+import type { DiscResult, DiscScores } from "@/features/main/DISCResult/types";
 import { triggerDownload } from "../BulkReportPanel/utils";
 
 interface IndividualReportModalProps {
@@ -46,10 +48,28 @@ export const IndividualReportModal = ({
     | undefined;
   const papiSelected = selected.includes("papi");
 
-  const { wheelImageUrl, isCapturing, portal } = usePapiWheelCapture(
-    papiScores,
-    papiSelected,
-  );
+  const {
+    wheelImageUrl,
+    isCapturing: isPapiCapturing,
+    portal,
+  } = usePapiWheelCapture(papiScores, papiSelected);
+
+  const discResult = testResults.find((r) => r.test_type === "disc");
+  const discData = discResult?.data as DiscResult | undefined;
+  const discScores: DiscScores | undefined = discData?.processedResults
+    ? {
+        MOST: discData.processedResults.most,
+        LEAST: discData.processedResults.least,
+        CHANGE: discData.processedResults.change,
+      }
+    : undefined;
+  const discSelected = selected.includes("disc");
+
+  const {
+    graphUrls: discGraphUrls,
+    isCapturing: isDiscCapturing,
+    portals: discPortals,
+  } = useDiscGraphsCapture(discScores, discSelected);
 
   const generatedAt = new Date().toLocaleDateString("en-US", {
     year: "numeric",
@@ -71,6 +91,7 @@ export const IndividualReportModal = ({
           selectedModules={selected}
           generatedAt={generatedAt}
           papiWheelImageUrl={wheelImageUrl}
+          discGraphImageUrls={discGraphUrls}
         />,
       ).toBlob();
       triggerDownload(blob, fileName);
@@ -80,7 +101,10 @@ export const IndividualReportModal = ({
     }
   };
 
-  const isPapiReady = !papiSelected || !isCapturing;
+  const isPapiReady = !papiSelected || !isPapiCapturing;
+  const isDiscReady = !discSelected || !isDiscCapturing;
+  const isReady = isPapiReady && isDiscReady;
+  const isCapturing = isPapiCapturing || isDiscCapturing;
 
   return (
     <div className="w-full max-w-md rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
@@ -159,7 +183,7 @@ export const IndividualReportModal = ({
         <IntiDinamisButton
           type="button"
           onClick={handleDownload}
-          disabled={selected.length === 0 || !isPapiReady || isDownloading}
+          disabled={selected.length === 0 || !isReady || isDownloading}
           isLoading={isCapturing || isDownloading}
         >
           {isCapturing
@@ -170,6 +194,7 @@ export const IndividualReportModal = ({
         </IntiDinamisButton>
       </div>
       {portal}
+      {discPortals}
     </div>
   );
 };

@@ -4,14 +4,17 @@ import {
   isModuleAvailable,
   type ReportModuleId,
   type ReportParticipant,
+  type DiscGraphUrls,
 } from "../../../types";
 import { BULK_ZIP_THRESHOLD } from "../constants";
 import {
   generatePdfBlob,
   triggerDownload,
   captureParticipantWheel,
+  captureParticipantDiscGraphs,
 } from "../utils";
 import type { PapiResults } from "@/features/main/PKResult/types";
+import type { DiscResult, DiscScores } from "@/features/main/DISCResult/types";
 
 export const useBulkDownload = (
   selectedParticipants: ReportParticipant[],
@@ -45,7 +48,33 @@ export const useBulkDownload = (
             );
           }
         }
-        return generatePdfBlob(p, selectedModules, wheelImageUrl);
+
+        let discGraphImageUrls: DiscGraphUrls | undefined;
+        if (selectedModules.includes("disc")) {
+          const discResult = (
+            p.expand?.test_results_via_participant ?? []
+          ).find((r) => r.test_type === "disc");
+          const discData = discResult?.data as DiscResult | undefined;
+          const discScores: DiscScores | undefined = discData?.processedResults
+            ? {
+                MOST: discData.processedResults.most,
+                LEAST: discData.processedResults.least,
+                CHANGE: discData.processedResults.change,
+              }
+            : undefined;
+          if (discScores) {
+            discGraphImageUrls = await captureParticipantDiscGraphs(
+              discScores,
+            ).catch(() => undefined);
+          }
+        }
+
+        return generatePdfBlob(
+          p,
+          selectedModules,
+          wheelImageUrl,
+          discGraphImageUrls,
+        );
       }),
     );
     const valid = results.filter((r): r is NonNullable<typeof r> => r !== null);

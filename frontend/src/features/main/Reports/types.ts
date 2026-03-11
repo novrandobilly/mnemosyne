@@ -51,3 +51,9 @@ export function isModuleAvailable(
 export type ReportParticipant = ParticipantDetailsResponse<{
   test_results_via_participant: TestResult[];
 }>;
+
+export interface DiscGraphUrls {
+  most: string | undefined;
+  least: string | undefined;
+  change: string | undefined;
+}
