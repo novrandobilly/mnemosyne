@@ -13,12 +13,14 @@ interface ReportDocumentProps {
   participant: ReportParticipant;
   selectedModules: ReportModuleId[];
   generatedAt: string;
+  papiWheelImageUrl?: string;
 }
 
 export const ReportDocument = ({
   participant,
   selectedModules,
   generatedAt,
+  papiWheelImageUrl,
 }: ReportDocumentProps) => {
   const testResults = participant.expand?.test_results_via_participant ?? [];
 
@@ -51,7 +53,11 @@ export const ReportDocument = ({
       />
 
       {selectedModules.includes("papi") && papiScores && (
-        <PapiModule scores={papiScores} participant={participant} />
+        <PapiModule
+          scores={papiScores}
+          participant={participant}
+          wheelImageUrl={papiWheelImageUrl}
+        />
       )}
 
       {selectedModules.includes("disc") && discScores && (

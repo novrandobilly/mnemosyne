@@ -111,6 +111,4 @@ const IntiDinamisButton = forwardRef<HTMLButtonElement, ButtonProps>(
   },
 );
 
-IntiDinamisButton.displayName = "IntiDinamisButton";
-
 export default IntiDinamisButton;
