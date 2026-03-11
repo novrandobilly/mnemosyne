@@ -1,13 +1,13 @@
 import { Fragment } from "react";
 import { Page, View, Text } from "@react-pdf/renderer";
 import type { PapiResults } from "@/features/main/PKResult/types";
-import { pdfStyles, PDF_COLORS } from "./styles";
-import type { ReportParticipant } from "../types";
-import { ScoreSummarySection } from "./PapiModule/features/ScoreSummarySection";
-import { RoleScoringSection } from "./PapiModule/features/RoleScoringSection";
-import { NeedScoringSection } from "./PapiModule/features/NeedScoringSection";
-import { PapiWheelSection } from "./PapiModule/features/PapiWheelSection";
-import { InterpretationSection } from "./PapiModule/features/InterpretationSection";
+import { pdfStyles, PDF_COLORS } from "../styles";
+import type { ReportParticipant } from "../../types";
+import { ScoreSummarySection } from "./features/ScoreSummarySection";
+import { RoleScoringSection } from "./features/RoleScoringSection";
+import { NeedScoringSection } from "./features/NeedScoringSection";
+import { PapiWheelSection } from "./features/PapiWheelSection";
+import { InterpretationSection } from "./features/InterpretationSection";
 
 interface PapiModuleProps {
   scores: PapiResults;

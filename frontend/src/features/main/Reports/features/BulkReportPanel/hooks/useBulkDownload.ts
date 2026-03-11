@@ -6,7 +6,12 @@ import {
   type ReportParticipant,
 } from "../../../types";
 import { BULK_ZIP_THRESHOLD } from "../constants";
-import { generatePdfBlob, triggerDownload } from "../utils";
+import {
+  generatePdfBlob,
+  triggerDownload,
+  captureParticipantWheel,
+} from "../utils";
+import type { PapiResults } from "@/features/main/PKResult/types";
 
 export const useBulkDownload = (
   selectedParticipants: ReportParticipant[],
@@ -25,12 +30,27 @@ export const useBulkDownload = (
     );
 
     const results = await Promise.all(
-      downloadable.map((p) => generatePdfBlob(p, selectedModules)),
+      downloadable.map(async (p) => {
+        let wheelImageUrl: string | undefined;
+        if (selectedModules.includes("papi")) {
+          const papiResult = (
+            p.expand?.test_results_via_participant ?? []
+          ).find((r) => r.test_type === "papikostick");
+          const scores = papiResult?.data?.processed_scores as
+            | PapiResults
+            | undefined;
+          if (scores) {
+            wheelImageUrl = await captureParticipantWheel(scores).catch(
+              () => undefined,
+            );
+          }
+        }
+        return generatePdfBlob(p, selectedModules, wheelImageUrl);
+      }),
     );
     const valid = results.filter((r): r is NonNullable<typeof r> => r !== null);
 
     if (valid.length > BULK_ZIP_THRESHOLD) {
-      // Bundle into a single zip
       const dateTag = new Date().toISOString().slice(0, 10);
       const zip = new JSZip();
       for (const { blob, filename } of valid) {
@@ -39,7 +59,6 @@ export const useBulkDownload = (
       const zipBlob = await zip.generateAsync({ type: "blob" });
       triggerDownload(zipBlob, `mnemosyne_reports_${dateTag}.zip`);
     } else {
-      // ≤5: trigger individual downloads
       for (const { blob, filename } of valid) {
         triggerDownload(blob, filename);
         await new Promise((res) => setTimeout(res, 400));

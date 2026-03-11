@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { useModal } from "@/context/ModalContext";
@@ -10,6 +10,9 @@ import {
   type ReportParticipant,
 } from "../../types";
 import { ReportDocument } from "../../pdf/ReportDocument";
+import { usePapiWheelCapture } from "../../hooks/usePapiWheelCapture";
+import type { PapiResults } from "@/features/main/PKResult/types";
+import { triggerDownload } from "../BulkReportPanel/utils";
 
 interface IndividualReportModalProps {
   participant: ReportParticipant;
@@ -29,12 +32,24 @@ export const IndividualReportModal = ({
   const [selected, setSelected] = useState<ReportModuleId[]>(
     availableModules.map((m) => m.id),
   );
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const toggle = (id: ReportModuleId) => {
     setSelected((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
   };
+
+  const papiResult = testResults.find((r) => r.test_type === "papikostick");
+  const papiScores = papiResult?.data?.processed_scores as
+    | PapiResults
+    | undefined;
+  const papiSelected = selected.includes("papi");
+
+  const { wheelImageUrl, isCapturing, portal } = usePapiWheelCapture(
+    papiScores,
+    papiSelected,
+  );
 
   const generatedAt = new Date().toLocaleDateString("en-US", {
     year: "numeric",
@@ -46,6 +61,26 @@ export const IndividualReportModal = ({
     `${participant.first_name}_${participant.last_name}_mnemosyne_report.pdf`
       .toLowerCase()
       .replace(/\s+/g, "_");
+
+  const handleDownload = async () => {
+    setIsDownloading(true);
+    try {
+      const blob = await pdf(
+        <ReportDocument
+          participant={participant}
+          selectedModules={selected}
+          generatedAt={generatedAt}
+          papiWheelImageUrl={wheelImageUrl}
+        />,
+      ).toBlob();
+      triggerDownload(blob, fileName);
+    } finally {
+      setIsDownloading(false);
+      closeModal();
+    }
+  };
+
+  const isPapiReady = !papiSelected || !isCapturing;
 
   return (
     <div className="w-full max-w-md rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
@@ -121,26 +156,20 @@ export const IndividualReportModal = ({
           Cancel
         </IntiDinamisButton>
 
-        {selected.length > 0 ? (
-          <PDFDownloadLink
-            document={
-              <ReportDocument
-                participant={participant}
-                selectedModules={selected}
-                generatedAt={generatedAt}
-              />
-            }
-            fileName={fileName}
-            className="inline-flex items-center justify-center rounded-xl bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50"
-          >
-            {({ loading }) => (loading ? "Preparing PDF…" : "Download PDF")}
-          </PDFDownloadLink>
-        ) : (
-          <IntiDinamisButton type="button" disabled>
-            Select at least one module
-          </IntiDinamisButton>
-        )}
+        <IntiDinamisButton
+          type="button"
+          onClick={handleDownload}
+          disabled={selected.length === 0 || !isPapiReady || isDownloading}
+          isLoading={isCapturing || isDownloading}
+        >
+          {isCapturing
+            ? "Preparing wheel…"
+            : isDownloading
+              ? "Generating PDF…"
+              : "Download PDF"}
+        </IntiDinamisButton>
       </div>
+      {portal}
     </div>
   );
 };

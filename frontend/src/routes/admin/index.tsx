@@ -8,7 +8,6 @@ import Intray1Result from "../../features/main/Intray1Result";
 import Intray2Result from "../../features/main/Intray2Result";
 import AccountGenerator from "../../features/main/AccountGenerator";
 import Reports from "../../features/main/Reports";
-import PdfPreview from "../../features/main/Reports/features/PdfPreview";
 
 export const adminRoutes: RouteObject[] = [
   {
@@ -49,10 +48,6 @@ export const adminRoutes: RouteObject[] = [
       {
         path: "reports",
         element: <Reports />,
-      },
-      {
-        path: "pdf-preview",
-        element: <PdfPreview />,
       },
     ],
   },
