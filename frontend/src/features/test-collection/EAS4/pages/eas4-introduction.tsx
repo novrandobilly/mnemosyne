@@ -31,6 +31,12 @@ export const Eas4Introduction = () => {
 
   const allPracticeDone = Object.values(practiceAnswers).every((val) => val !== null);
 
+  const handleStart = () => {
+    sessionStorage.removeItem("eas4_progress");
+    sessionStorage.removeItem("eas4_seconds_left");
+    navigate("/psikotes/eas4/test-start");
+  };
+
   return (
     <MainWrapper pageTitle="EAS4 - Visual Speed & Accuracy">
       <div className="mx-auto max-w-3xl space-y-8">
@@ -229,7 +235,7 @@ export const Eas4Introduction = () => {
           <IntiDinamisButton
             variant="primary"
             className="w-full sm:w-64 py-3 text-sm font-semibold rounded-full shadow-md"
-            onClick={() => navigate("/psikotes/eas4/test-start")}
+            onClick={handleStart}
           >
             Mulai Tes Sekarang
           </IntiDinamisButton>

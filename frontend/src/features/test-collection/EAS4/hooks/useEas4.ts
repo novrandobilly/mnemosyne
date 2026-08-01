@@ -9,7 +9,10 @@ const INITIAL_SECONDS = 5 * 60;
 
 export const useEas4 = () => {
   const [focusedId, setFocusedId] = useState(1);
-  const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
+  const [secondsLeft, setSecondsLeft] = useState<number>(() => {
+    const saved = sessionStorage.getItem("eas4_seconds_left");
+    return saved !== null ? parseInt(saved, 10) : INITIAL_SECONDS;
+  });
   const hasAutoSubmitted = useRef(false);
 
   const methods = useForm<Eas4FormValues>({
@@ -31,11 +34,20 @@ export const useEas4 = () => {
     if (secondsLeft <= 0) return;
 
     const timer = setInterval(() => {
-      setSecondsLeft((prev) => Math.max(prev - 1, 0));
+      setSecondsLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          sessionStorage.setItem("eas4_seconds_left", "0");
+          return 0;
+        }
+        const next = prev - 1;
+        sessionStorage.setItem("eas4_seconds_left", next.toString());
+        return next;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [secondsLeft]);
+  }, []);
 
   // Auto-submit on time up
   useEffect(() => {

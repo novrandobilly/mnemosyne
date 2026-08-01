@@ -21,7 +21,6 @@ export const EAS4Row = ({ id, leftValue, rightValue }: EAS4RowProps) => {
     }
   }, [isFocused]);
 
-  const isAnswered = selectedAnswer !== undefined;
   const isSame = selectedAnswer === true;
   const isDiff = selectedAnswer === false;
 
@@ -29,12 +28,7 @@ export const EAS4Row = ({ id, leftValue, rightValue }: EAS4RowProps) => {
     <div
       ref={rowRef}
       onClick={() => setFocusedId(id)}
-      className={cn(
-        "flex items-center gap-3 rounded-lg px-3 py-1.5 transition-colors",
-        isFocused
-          ? "bg-neutral-100 ring-1 ring-neutral-300"
-          : "hover:bg-neutral-50",
-      )}
+      className="flex items-center gap-3 rounded-lg px-3 py-1.5 transition-colors hover:bg-neutral-50"
     >
       {/* Row number */}
       <IntiDinamisText
@@ -69,12 +63,10 @@ export const EAS4Row = ({ id, leftValue, rightValue }: EAS4RowProps) => {
             selectAnswer(id, false);
           }}
           className={cn(
-            "h-7 w-7 rounded-md text-xs font-semibold transition-colors",
+            "h-7 w-12 rounded-md text-xs font-semibold transition-colors cursor-pointer",
             isDiff
               ? "bg-rose-600 text-white"
-              : isAnswered
-                ? "bg-neutral-100 text-neutral-400 hover:bg-neutral-200"
-                : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200",
+              : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200",
           )}
           aria-label="Different"
           aria-pressed={isDiff}
@@ -88,12 +80,10 @@ export const EAS4Row = ({ id, leftValue, rightValue }: EAS4RowProps) => {
             selectAnswer(id, true);
           }}
           className={cn(
-            "h-7 w-7 rounded-md text-xs font-semibold transition-colors",
+            "h-7 w-12 rounded-md text-xs font-semibold transition-colors cursor-pointer",
             isSame
               ? "bg-emerald-600 text-white"
-              : isAnswered
-                ? "bg-neutral-100 text-neutral-400 hover:bg-neutral-200"
-                : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200",
+              : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200",
           )}
           aria-label="Same"
           aria-pressed={isSame}
