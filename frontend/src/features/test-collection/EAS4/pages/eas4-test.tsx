@@ -1,8 +1,8 @@
 import { MainWrapper } from "@/components/MainWrapper";
-import { Eas4Provider } from "./context/Eas4Context";
-import { EAS4Header } from "./features/EAS4Header";
-import { EAS4ColumnHeaders } from "./features/EAS4ColumnHeaders";
-import { EAS4List } from "./features/EAS4List";
+import { Eas4Provider } from "../context/Eas4Context";
+import { EAS4Header } from "../features/EAS4Header";
+import { EAS4ColumnHeaders } from "../features/EAS4ColumnHeaders";
+import { EAS4List } from "../features/EAS4List";
 
 export const Eas4Test = () => (
   <MainWrapper pageTitle="EAS4">
