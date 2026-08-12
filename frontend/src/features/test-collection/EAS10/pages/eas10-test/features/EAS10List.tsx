@@ -1,5 +1,5 @@
 import { eas10Data } from "@/data/eas10";
-import { EAS10Row } from "../EAS10Row";
+import { EAS10Row } from "./EAS10Row";
 
 export const EAS10List = () => {
   return (
