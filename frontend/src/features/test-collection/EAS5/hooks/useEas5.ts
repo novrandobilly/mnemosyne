@@ -7,7 +7,7 @@ export interface Eas5AnswerRecord {
 }
 type Eas5FormValues = Record<string, number>;
 
-const INITIAL_SECONDS = 50 * 60;
+const INITIAL_SECONDS = 5 * 60;
 
 export const useEas5 = () => {
   const [currentPileId, setCurrentPileId] = useState(1);

@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes";
 import { ToastProvider } from "./context/ToastContext";
 import { ModalProvider } from "./context/ModalContext";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 function App() {
   const queryClient = new QueryClient();
@@ -12,6 +13,7 @@ function App() {
       <ToastProvider>
         <ModalProvider>
           <BrowserRouter>
+            <ScrollToTop />
             <div className="min-h-screen  flex justify-center">
               <main className="w-full max-w-360 min-h-screen">
                 <AppRoutes />
