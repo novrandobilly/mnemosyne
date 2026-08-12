@@ -5,7 +5,7 @@ import { eas6Data } from "@/data/eas6";
 export type Eas6AnswerRecord = Record<number, string>;
 type Eas6FormValues = Record<string, string>;
 
-const INITIAL_SECONDS = 5 * 60;
+const INITIAL_SECONDS = 50 * 60;
 
 export const useEas6 = () => {
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);

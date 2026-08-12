@@ -12,25 +12,25 @@ interface ExampleRow {
 const EXAMPLE_2_ROWS: ExampleRow[] = [
   {
     id: 2,
-    question: "20,  18,  16,  14,  12,  10,  8,  ?",
+    question: "20  18  16  14  12  10  8  ?",
     options: ["7", "6", "5", "4", "3"],
     correctAnswer: "6",
   },
   {
     id: 3,
-    question: "20,  20,  19,  19,  18,  18,  17,  ?",
+    question: "20  20  19  19  18  18  17  ?",
     options: ["17", "16", "15", "14", "13"],
     correctAnswer: "17",
   },
   {
     id: 4,
-    question: "4,  6,  5,  7,  6,  8,  7,  ?",
+    question: "4  6  5  7  6  8  7  ?",
     options: ["6", "7", "8", "9", "10"],
     correctAnswer: "9",
   },
   {
     id: 5,
-    question: "2,  4,  6,  8,  11,  13,  15,  ?",
+    question: "2  4  6  8  11  13  15  ?",
     options: ["14", "15", "16", "17", "18"],
     correctAnswer: "18",
   },
@@ -75,7 +75,7 @@ export const EAS6Example2 = () => {
             <div
               key={row.id}
               className={cn(
-                "flex flex-col gap-4 rounded-xl border p-4 bg-white shadow-sm transition-all duration-300 sm:flex-row sm:items-center sm:justify-between",
+                "flex flex-col gap-4 rounded-xl border p-4 bg-white shadow-sm transition-all duration-300 md:flex-row md:items-center md:justify-between",
                 isAnswered
                   ? isCorrect
                     ? "border-emerald-200 bg-emerald-50/10"
@@ -87,18 +87,17 @@ export const EAS6Example2 = () => {
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-xs font-semibold text-neutral-500">
                   {row.id}
                 </span>
-                <IntiDinamisText
-                  as="p"
-                  size="20"
-                  weight="semibold"
-                  className="font-mono tracking-wide text-neutral-900"
-                >
-                  {row.question}
-                </IntiDinamisText>
+                <div className="grid grid-cols-8 gap-x-1 sm:gap-x-2 font-mono text-sm font-semibold text-neutral-900">
+                  {row.question.trim().split(/\s+/).map((item, idx) => (
+                    <div key={idx} className="w-8 text-center sm:w-10">
+                      {item}
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <div className="flex items-center gap-4 justify-between sm:justify-end">
-                <div className="flex flex-wrap gap-2">
+              <div className="flex items-center gap-4 justify-between md:justify-end">
+                <div className="flex flex-nowrap gap-2 overflow-x-auto md:overflow-x-visible">
                   {row.options.map((option) => {
                     const isSelected = selected === option;
                     return (
@@ -107,21 +106,21 @@ export const EAS6Example2 = () => {
                         type="button"
                         onClick={() => handleSelectAnswer(row.id, option)}
                         className={cn(
-                          "flex min-w-14 items-center justify-center rounded-xl border px-3 py-1.5 transition-all duration-150 cursor-pointer",
+                          "flex min-w-12 sm:min-w-14 items-center justify-center rounded-xl border px-3 py-1.5 transition-all duration-150 cursor-pointer",
                           isSelected
                             ? "border-neutral-900 bg-neutral-900 text-white font-semibold"
                             : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400 hover:bg-neutral-50",
                         )}
                       >
-                        <span className="font-mono text-sm">{option}</span>
+                        <span className="font-mono text-sm font-semibold">{option}</span>
                       </button>
                     );
                   })}
                 </div>
 
-                {isAnswered && (
-                  <div className="w-14 text-right pr-1">
-                    {isCorrect ? (
+                <div className="w-14 text-right pr-1 shrink-0">
+                  {isAnswered && (
+                    isCorrect ? (
                       <span className="text-xs font-semibold text-emerald-600">
                         Benar
                       </span>
@@ -129,9 +128,9 @@ export const EAS6Example2 = () => {
                       <span className="text-xs font-semibold text-rose-600">
                         Salah
                       </span>
-                    )}
-                  </div>
-                )}
+                    )
+                  )}
+                </div>
               </div>
             </div>
           );

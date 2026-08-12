@@ -132,4 +132,5 @@ const problems: Omit<Eas6Item, "id">[] = [
 export const eas6Data: Eas6Item[] = problems.map((p, i) => ({
   id: i + 1,
   ...p,
+  question: p.question.replace(/,/g, ""),
 }));

@@ -1,8 +1,5 @@
 import { cn } from "@/lib/tailwind-merge";
-import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { useEas6Context } from "../../../context/Eas6Context";
-
-const OPTION_LABELS = ["A", "B", "C", "D", "E"] as const;
 
 interface EAS6CardProps {
   id: number;
@@ -15,49 +12,48 @@ export const EAS6Card = ({ id, question, options }: EAS6CardProps) => {
   const selectedAnswer = answers[id];
   return (
     <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-      <div className="mb-5 flex items-start gap-3">
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-xs font-semibold text-neutral-500">
-          {id}
-        </span>
-        <IntiDinamisText
-          as="p"
-          size="20"
-          weight="semibold"
-          className="font-mono leading-snug tracking-wide text-neutral-900"
-        >
-          {question}
-        </IntiDinamisText>
-      </div>
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between w-full">
+        {/* Left Side: Question number + Grid of series numbers */}
+        <div className="flex items-center gap-3">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-xs font-semibold text-neutral-500">
+            {id}
+          </span>
+          <div className="grid grid-cols-8 gap-x-1 sm:gap-x-2 font-mono text-sm font-semibold text-neutral-900">
+            {question
+              .trim()
+              .split(/\s+/)
+              .map((item, idx) => (
+                <div key={idx} className="w-8 text-center sm:w-10">
+                  {item}
+                </div>
+              ))}
+          </div>
+        </div>
 
-      <div className="flex flex-wrap gap-3">
-        {options.map((option, index) => {
-          const label = OPTION_LABELS[index];
-          const isSelected = selectedAnswer === option;
+        {/* Right Side: Options buttons */}
+        <div className="flex flex-nowrap gap-2 overflow-x-auto md:overflow-x-visible">
+          {options.map((option) => {
+            const isSelected = selectedAnswer === option;
 
-          return (
-            <button
-              key={label}
-              type="button"
-              onClick={() => selectAnswer(id, option)}
-              className={cn(
-                "flex min-w-20 items-center gap-2 rounded-xl border-2 px-4 py-2.5 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400",
-                isSelected
-                  ? "border-neutral-900 bg-neutral-900 text-white"
-                  : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-400 hover:bg-neutral-50",
-              )}
-            >
-              <span
+            return (
+              <button
+                key={option}
+                type="button"
+                onClick={() => selectAnswer(id, option)}
                 className={cn(
-                  "text-xs font-bold",
-                  isSelected ? "text-white/60" : "text-neutral-400",
+                  "flex min-w-12 sm:min-w-14 items-center justify-center rounded-xl border-2 px-3 py-1.5 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 cursor-pointer",
+                  isSelected
+                    ? "border-neutral-900 bg-neutral-900 text-white"
+                    : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-400 hover:bg-neutral-50",
                 )}
               >
-                {label}
-              </span>
-              <span className="font-mono text-sm font-semibold">{option}</span>
-            </button>
-          );
-        })}
+                <span className="font-mono text-sm font-semibold">
+                  {option}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
