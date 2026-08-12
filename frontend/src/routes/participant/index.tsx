@@ -2,7 +2,8 @@ import { Navigate, type RouteObject } from "react-router-dom";
 import AssessmentLobby from "../../features/main/AssessmentLobby";
 import { PapiKostickTest } from "@/features/test-collection/PapiKostick";
 import { DiscTest } from "@/features/test-collection/DISC";
-import { Eas5Test } from "@/features/test-collection/EAS5";
+import { Eas5Test } from "@/features/test-collection/EAS5/pages/eas5-test";
+import { Eas5Introduction } from "@/features/test-collection/EAS5/pages/eas5-introduction";
 import { Eas4Test } from "@/features/test-collection/EAS4/pages/eas4-test";
 import { Eas4Introduction } from "@/features/test-collection/EAS4/pages/eas4-introduction";
 import { Eas6Test } from "@/features/test-collection/EAS6";
@@ -50,7 +51,20 @@ export const participantRoutes: RouteObject[] = [
       },
       {
         path: "eas5",
-        element: <Eas5Test />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="introduction" replace />,
+          },
+          {
+            path: "introduction",
+            element: <Eas5Introduction />,
+          },
+          {
+            path: "test-start",
+            element: <Eas5Test />,
+          },
+        ],
       },
       {
         path: "eas6",

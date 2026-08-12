@@ -11,7 +11,10 @@ const INITIAL_SECONDS = 5 * 60;
 
 export const useEas5 = () => {
   const [currentPileId, setCurrentPileId] = useState(1);
-  const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
+  const [secondsLeft, setSecondsLeft] = useState<number>(() => {
+    const saved = sessionStorage.getItem("eas5_seconds_left");
+    return saved !== null ? parseInt(saved, 10) : INITIAL_SECONDS;
+  });
   const hasAutoSubmitted = useRef(false);
 
   const methods = useForm<Eas5FormValues>({
@@ -32,15 +35,25 @@ export const useEas5 = () => {
   );
   const answeredCount = Object.keys(answers).length;
 
+  // Countdown timer
   useEffect(() => {
     if (secondsLeft <= 0) return;
 
     const timer = setInterval(() => {
-      setSecondsLeft((prev) => Math.max(prev - 1, 0));
+      setSecondsLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          sessionStorage.setItem("eas5_seconds_left", "0");
+          return 0;
+        }
+        const next = prev - 1;
+        sessionStorage.setItem("eas5_seconds_left", next.toString());
+        return next;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [secondsLeft]);
+  }, []);
 
   useEffect(() => {
     if (secondsLeft !== 0 || hasAutoSubmitted.current) return;
