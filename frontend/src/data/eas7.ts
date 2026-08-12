@@ -3,7 +3,6 @@ export type Eas7Answer = "True" | "False" | "Unknown";
 export interface Eas7Question {
   id: number;
   statement: string;
-  correctAnswer: Eas7Answer;
 }
 
 export interface Eas7Group {
@@ -16,220 +15,189 @@ export const eas7Data: Eas7Group[] = [
   {
     groupId: 1,
     premises: [
-      "Semua karyawan yang berprestasi mendapatkan bonus tahunan.",
-      "Andi adalah karyawan yang berprestasi.",
-      "Semua penerima bonus tahunan diundang ke acara gala dinner.",
-      "Budi tidak mendapatkan bonus tahunan.",
+      "Tuan J tidak merokok",
+      "Tuan K dan teman-temannya merokok",
+      "Tuan K bukan penerbang",
+      "Tuan K mempunyai teman seorang penerbang",
     ],
     questions: [
       {
         id: 1,
-        statement: "Andi diundang ke acara gala dinner.",
-        correctAnswer: "True",
+        statement: "Nyonya J tidak merokok",
       },
       {
         id: 2,
-        statement: "Budi adalah karyawan yang berprestasi.",
-        correctAnswer: "False",
+        statement: "Nyonya J seorang perokok",
       },
       {
         id: 3,
-        statement: "Semua karyawan diundang ke gala dinner.",
-        correctAnswer: "False",
+        statement: "Semua penerbang merokok",
       },
       {
         id: 4,
-        statement: "Budi tidak diundang ke acara gala dinner.",
-        correctAnswer: "True",
+        statement: "Beberapa penerbang merokok",
       },
       {
         id: 5,
-        statement: "Andi mendapatkan bonus tahunan.",
-        correctAnswer: "True",
+        statement: "Nyonya J adalah seorang penerbang",
       },
     ],
   },
   {
     groupId: 2,
     premises: [
-      "Semua buah yang matang rasanya manis.",
-      "Mangga yang ada di keranjang ini sudah matang.",
-      "Beberapa buah yang manis mengandung banyak vitamin C.",
-      "Jeruk nipis rasanya asam meskipun sudah matang.",
+      "Semua yang tinggal di daerah pertanian adalah keluarga Ny Bani",
+      "Tina tidak mempunyai anak",
+      "Sulaiman adalah saudara laki-laki Ny Bani",
+      "Badu tinggal di daerah pertanian",
+      "Ny Bani punya anak yang bekerja di Angkatan Laut",
     ],
     questions: [
       {
         id: 6,
-        statement: "Mangga di keranjang ini rasanya manis.",
-        correctAnswer: "True",
+        statement: "Tina tinggal di daerah pertanian",
       },
       {
         id: 7,
-        statement: "Semua buah manis mengandung banyak vitamin C.",
-        correctAnswer: "False",
+        statement: "Badu adalah keluarga Ny Bani",
       },
       {
         id: 8,
-        statement: "Jeruk nipis yang matang rasanya manis.",
-        correctAnswer: "False",
+        statement: "Sulaiman tinggal di daerah pertanian",
       },
       {
         id: 9,
-        statement: "Mangga di keranjang ini mengandung banyak vitamin C.",
-        correctAnswer: "Unknown",
+        statement: "Tina tidak tinggal di daerah pertanian",
       },
       {
         id: 10,
-        statement: "Ada buah manis yang tidak mengandung banyak vitamin C.",
-        correctAnswer: "Unknown",
+        statement: "Ny Bani tinggal di daerah pertanian",
       },
     ],
   },
   {
     groupId: 3,
     premises: [
-      "Setiap siswa yang lulus ujian akan naik kelas.",
-      "Siswa yang naik kelas mendapatkan sertifikat kelulusan.",
-      "Dina lulus ujian.",
-      "Evan tidak naik kelas.",
-      "Semua penerima sertifikat kelulusan diizinkan mendaftar ke sekolah favorit.",
+      "Semua rumah di jalan Kenanga dikontrakkan",
+      "Hasan mengontrakkan rumahnya",
+      "Erida tidak mempunyai rumah",
+      "Ali tinggal di jalan Kenanga",
+      "Semua rumah di jalan Kenanga Bagus",
     ],
     questions: [
       {
         id: 11,
-        statement: "Dina mendapatkan sertifikat kelulusan.",
-        correctAnswer: "True",
+        statement: "Ali tinggal di sebuah rumah yang bagus",
       },
       {
         id: 12,
-        statement: "Evan lulus ujian.",
-        correctAnswer: "False",
+        statement: "Erida tinggal di sebuah rumah pertanian",
       },
       {
         id: 13,
-        statement: "Dina diizinkan mendaftar ke sekolah favorit.",
-        correctAnswer: "True",
+        statement: "Hasan tinggal di jalan Kenanga",
       },
       {
         id: 14,
-        statement: "Evan mendapatkan sertifikat kelulusan.",
-        correctAnswer: "False",
+        statement: "Ali adalah seorang musikus yang baik",
       },
       {
         id: 15,
-        statement: "Semua siswa mendaftar ke sekolah favorit.",
-        correctAnswer: "False",
+        statement: "Ali menyewakan rumahnya",
       },
     ],
   },
   {
     groupId: 4,
     premises: [
-      "Semua dokter di klinik ini berpengalaman lebih dari 5 tahun.",
-      "Dr. Farhan bekerja di klinik ini.",
-      "Beberapa dokter yang berpengalaman juga mengajar di universitas.",
-      "Tidak ada dokter di klinik ini yang bekerja di rumah sakit swasta.",
+      "Semua kapal di sungai M adalah kapal layar",
+      "Beberapa kapal milik Andi ada di danau B",
+      "Denni mempunyai kapal motor",
+      "Semua kapal milik Dodi ada di sungai M",
+      "Sebagian besar kapal milik Andi adalah kapal motor",
     ],
     questions: [
       {
         id: 16,
-        statement: "Dr. Farhan berpengalaman lebih dari 5 tahun.",
-        correctAnswer: "True",
+        statement: "Beberapa kapal milik Andi ada di sungai M",
       },
       {
         id: 17,
-        statement: "Dr. Farhan mengajar di universitas.",
-        correctAnswer: "Unknown",
+        statement: "Andi tidak mempunyai kapal di sungai M",
       },
       {
         id: 18,
-        statement: "Dr. Farhan bekerja di rumah sakit swasta.",
-        correctAnswer: "False",
+        statement: "Dodi tidak mempunyai kapal layar",
       },
       {
         id: 19,
-        statement: "Semua dokter berpengalaman mengajar di universitas.",
-        correctAnswer: "False",
+        statement: "Denni tidak mempunyai kapal motor di sungai M",
       },
       {
         id: 20,
-        statement: "Ada dokter berpengalaman yang tidak bekerja di klinik ini.",
-        correctAnswer: "Unknown",
+        statement: "Dodi tidak mempunyai kapal motor",
       },
     ],
   },
   {
     groupId: 5,
     premises: [
-      "Semua produk yang lolos uji kualitas diberi label hijau.",
-      "Produk berlabel hijau boleh dijual ke pasar internasional.",
-      "Produk X tidak lolos uji kualitas.",
-      "Produk Y lolos uji kualitas.",
+      "Sekolah lebih besar dibandingkan gereja",
+      "Gereja lebih kecil dibandingkan stasiun kereta api",
+      "Stasiun kereta api lebih besar dibandingkan kantor pos",
+      "Gereja sama besar dengan gedung olah raga",
     ],
     questions: [
       {
         id: 21,
-        statement: "Produk Y boleh dijual ke pasar internasional.",
-        correctAnswer: "True",
+        statement: "Gedung olah raga lebih besar dibandingkan gedung sekolah",
       },
       {
         id: 22,
-        statement: "Produk X diberi label hijau.",
-        correctAnswer: "False",
+        statement: "Sekolah dan kantor pos sama besarnya",
       },
       {
         id: 23,
-        statement: "Produk X boleh dijual ke pasar internasional.",
-        correctAnswer: "False",
+        statement: "Sekolah lebih kecil dibandingkan dengan stasiun kereta api",
       },
       {
         id: 24,
-        statement: "Produk Y diberi label hijau.",
-        correctAnswer: "True",
+        statement: "Gedung olah raga lebih besar dibandingkan dengan kantor pos",
       },
       {
         id: 25,
-        statement:
-          "Semua produk yang dijual ke pasar internasional lolos uji kualitas.",
-        correctAnswer: "Unknown",
+        statement: "Kantor pos lebih kecil dibandingkan gedung olah raga",
       },
     ],
   },
   {
     groupId: 6,
     premises: [
-      "Semua anggota tim inti mendapat akses ke ruang server.",
-      "Hanya karyawan dengan izin keamanan level A yang boleh memasuki ruang server.",
-      "Gina adalah anggota tim inti.",
-      "Hendra bukan anggota tim inti.",
-      "Semua karyawan dengan izin keamanan level A wajib mengikuti pelatihan siber.",
+      "Neni lebih tua dari Tono",
+      "Iwan tidak lebih muda dari Hendra",
+      "Tono lebih muda dari Erna",
+      "Erna tidak lebih tua dari Hendra",
     ],
     questions: [
       {
         id: 26,
-        statement: "Gina memiliki izin keamanan level A.",
-        correctAnswer: "True",
+        statement: "Erna tidak lebih tua dari Neni",
       },
       {
         id: 27,
-        statement: "Hendra memiliki akses ke ruang server.",
-        correctAnswer: "Unknown",
+        statement: "Tono tidak lebih muda dari Iwan",
       },
       {
         id: 28,
-        statement: "Gina wajib mengikuti pelatihan siber.",
-        correctAnswer: "True",
+        statement: "Hendra tidak sama umurnya dengan Neni",
       },
       {
         id: 29,
-        statement: "Hendra tidak memiliki izin keamanan level A.",
-        correctAnswer: "Unknown",
+        statement: "Tono tidak lebih tua dari Hendra",
       },
       {
         id: 30,
-        statement:
-          "Semua karyawan yang ikut pelatihan siber adalah anggota tim inti.",
-        correctAnswer: "False",
+        statement: "Erna lebih muda dari Hendra",
       },
     ],
   },

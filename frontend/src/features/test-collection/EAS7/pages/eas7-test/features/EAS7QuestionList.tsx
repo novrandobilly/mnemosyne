@@ -1,5 +1,5 @@
-import { useEas7Context } from "../../context/Eas7Context";
-import { EAS7QuestionRow } from "../EAS7QuestionRow";
+import { useEas7Context } from "../../../context/Eas7Context";
+import { EAS7QuestionRow } from "./EAS7QuestionRow";
 
 export const EAS7QuestionList = () => {
   const { currentGroup } = useEas7Context();

@@ -2,7 +2,7 @@ import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { cn } from "@/lib/tailwind-merge";
 import { eas7Data } from "@/data/eas7";
-import { useEas7Context } from "../../context/Eas7Context";
+import { useEas7Context } from "../../../context/Eas7Context";
 
 export const EAS7GroupNav = () => {
   const { currentGroupId, answers, goToGroup } = useEas7Context();
@@ -22,7 +22,7 @@ export const EAS7GroupNav = () => {
             variant="secondary"
             onClick={() => goToGroup(group.groupId)}
             className={cn(
-              "flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-medium transition-all",
+              "flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-medium transition-all cursor-pointer",
               isActive
                 ? "bg-neutral-900 text-white"
                 : isComplete
