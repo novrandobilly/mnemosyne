@@ -1,7 +1,7 @@
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { cn } from "@/lib/tailwind-merge";
-import { useEas5Context } from "../context/Eas5Context";
+import { useEas5Context } from "../../../context/Eas5Context";
 
 const ANSWER_CHOICES = [1, 2, 3, 4, 5, 6, 7, 8] as const;
 

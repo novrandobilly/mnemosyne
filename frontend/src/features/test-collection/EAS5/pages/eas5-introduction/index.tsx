@@ -1,10 +1,10 @@
 import { MainWrapper } from "@/components/MainWrapper";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
-import { useEas5ConfirmModal } from "../hooks/useEas5ConfirmModal";
-import { EAS5InstructionsPanel } from "../features/EAS5InstructionsPanel";
-import { EAS5Example1 } from "../features/EAS5Example1";
-import { EAS5Example2 } from "../features/EAS5Example2";
-import { EAS5StartButton } from "../features/EAS5StartButton";
+import { useEas5ConfirmModal } from "../../hooks/useEas5ConfirmModal";
+import { EAS5InstructionsPanel } from "./features/EAS5InstructionsPanel";
+import { EAS5Example1 } from "./features/EAS5Example1";
+import { EAS5Example2 } from "./features/EAS5Example2";
+import { EAS5StartButton } from "./features/EAS5StartButton";
 
 export const Eas5Introduction = () => {
   const { handleConfirmStart } = useEas5ConfirmModal();
