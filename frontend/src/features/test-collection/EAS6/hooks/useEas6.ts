@@ -74,5 +74,6 @@ export const useEas6 = () => {
     isTimeUp: secondsLeft === 0,
     selectAnswer,
     formatTime,
+    eas6Data,
   };
 };

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/tailwind-merge";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
-import { useEas6Context } from "../../context/Eas6Context";
+import { useEas6Context } from "../../../context/Eas6Context";
 
 const OPTION_LABELS = ["A", "B", "C", "D", "E"] as const;
 

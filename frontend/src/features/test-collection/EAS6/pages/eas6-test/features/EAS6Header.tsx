@@ -1,6 +1,6 @@
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { cn } from "@/lib/tailwind-merge";
-import { useEas6Context } from "../../context/Eas6Context";
+import { useEas6Context } from "../../../context/Eas6Context";
 
 export const EAS6Header = () => {
   const { answeredCount, totalQuestions, secondsLeft, formatTime } =

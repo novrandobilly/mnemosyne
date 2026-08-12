@@ -1,5 +1,5 @@
 import { IntiDinamisText } from "@/components/IntiDinamisText";
-import { useEas6Context } from "../../context/Eas6Context";
+import { useEas6Context } from "../../../context/Eas6Context";
 
 export const EAS6TimeUpBanner = () => {
   const { isTimeUp } = useEas6Context();

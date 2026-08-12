@@ -6,7 +6,8 @@ import { Eas5Test } from "@/features/test-collection/EAS5/pages/eas5-test";
 import { Eas5Introduction } from "@/features/test-collection/EAS5/pages/eas5-introduction";
 import { Eas4Test } from "@/features/test-collection/EAS4/pages/eas4-test";
 import { Eas4Introduction } from "@/features/test-collection/EAS4/pages/eas4-introduction";
-import { Eas6Test } from "@/features/test-collection/EAS6";
+import { Eas6Test } from "@/features/test-collection/EAS6/pages/eas6-test";
+import { Eas6Introduction } from "@/features/test-collection/EAS6/pages/eas6-introduction";
 import { Eas7Test } from "@/features/test-collection/EAS7";
 import { Eas10Test } from "@/features/test-collection/EAS10";
 import { A5Test } from "@/features/test-collection/A5";
@@ -68,7 +69,20 @@ export const participantRoutes: RouteObject[] = [
       },
       {
         path: "eas6",
-        element: <Eas6Test />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="introduction" replace />,
+          },
+          {
+            path: "introduction",
+            element: <Eas6Introduction />,
+          },
+          {
+            path: "test-start",
+            element: <Eas6Test />,
+          },
+        ],
       },
       {
         path: "eas7",
