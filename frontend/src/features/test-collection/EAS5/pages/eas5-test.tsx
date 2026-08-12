@@ -39,11 +39,11 @@ const Eas5TestInner = () => {
               </IntiDinamisText>
             </div>
 
-            <div className="overflow-hidden rounded-xl border border-neutral-200">
+            <div className="flex items-center justify-center overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 p-4 h-80">
               <img
                 src={currentPile.imageUrl}
                 alt={`EAS5 pile ${currentPile.pileId}`}
-                className="h-full w-full object-cover"
+                className="max-h-full max-w-full object-contain"
               />
             </div>
 
