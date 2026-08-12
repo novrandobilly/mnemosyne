@@ -30,7 +30,7 @@ export const useEas5 = () => {
 
   const answers: Eas5AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k]) => k.startsWith("q_"))
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && (v as any) !== "")
       .map(([k, v]) => [Number(k.slice(2)), v as number]),
   );
   const answeredCount = Object.keys(answers).length;
@@ -74,7 +74,12 @@ export const useEas5 = () => {
   }, [watch]);
 
   const selectAnswer = (questionId: number, answer: number) => {
-    methods.setValue(`q_${questionId}`, answer);
+    const current = methods.getValues(`q_${questionId}`);
+    if (current === answer) {
+      methods.setValue(`q_${questionId}`, null as any);
+    } else {
+      methods.setValue(`q_${questionId}`, answer);
+    }
   };
 
   const goToPile = (pileId: number) => {

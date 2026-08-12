@@ -19,7 +19,7 @@ export const useEas10 = () => {
 
   const answers: Eas10AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k]) => k.startsWith("q_"))
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && (v as any) !== "")
       .map(([k, v]) => [Number(k.slice(2)), v as Eas10Answer]),
   );
   const answeredCount = Object.keys(answers).length;
@@ -52,7 +52,12 @@ export const useEas10 = () => {
   }, [watch]);
 
   const selectAnswer = (id: number, answer: Eas10Answer) => {
-    methods.setValue(`q_${id}`, answer);
+    const current = methods.getValues(`q_${id}`);
+    if (current === answer) {
+      methods.setValue(`q_${id}`, null as any);
+    } else {
+      methods.setValue(`q_${id}`, answer);
+    }
   };
 
   const formatTime = (seconds: number): string => {

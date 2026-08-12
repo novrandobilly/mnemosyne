@@ -27,7 +27,7 @@ export const useEas7 = () => {
 
   const answers: Eas7AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k]) => k.startsWith("q_"))
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && (v as any) !== "")
       .map(([k, v]) => [Number(k.slice(2)), v as Eas7Answer]),
   );
   const answeredCount = Object.keys(answers).length;
@@ -61,7 +61,12 @@ export const useEas7 = () => {
   }, [watch]);
 
   const selectAnswer = (questionId: number, answer: Eas7Answer) => {
-    methods.setValue(`q_${questionId}`, answer);
+    const current = methods.getValues(`q_${questionId}`);
+    if (current === answer) {
+      methods.setValue(`q_${questionId}`, null as any);
+    } else {
+      methods.setValue(`q_${questionId}`, answer);
+    }
   };
 
   const goToGroup = (groupId: number) => {

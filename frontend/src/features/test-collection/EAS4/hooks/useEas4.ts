@@ -24,7 +24,7 @@ export const useEas4 = () => {
   const totalQuestions = eas4Data.length;
   const answers: Eas4AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k]) => k.startsWith("q_"))
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && (v as any) !== "")
       .map(([k, v]) => [Number(k.slice(2)), v as boolean]),
   );
   const answeredCount = Object.keys(answers).length;
@@ -77,8 +77,13 @@ export const useEas4 = () => {
 
   const selectAnswer = useCallback(
     (id: number, isSame: boolean) => {
-      methods.setValue(`q_${id}`, isSame);
-      advanceFocus(id);
+      const current = methods.getValues(`q_${id}`);
+      if (current === isSame) {
+        methods.setValue(`q_${id}`, null as any);
+      } else {
+        methods.setValue(`q_${id}`, isSame);
+        advanceFocus(id);
+      }
     },
     [advanceFocus],
   );

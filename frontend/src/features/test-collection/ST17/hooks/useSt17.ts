@@ -21,7 +21,7 @@ export const useSt17 = () => {
   const totalQuestions = ST17_TOTAL_QUESTIONS;
   const answers: St17AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k]) => k.startsWith("q_"))
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && (v as any) !== "")
       .map(([k, v]) => [Number(k.slice(2)), v as St17Answer]),
   );
   const answeredCount = Object.keys(answers).length;
@@ -55,7 +55,12 @@ export const useSt17 = () => {
 
   const selectAnswer = (id: number, option: St17Answer) => {
     if (isTimeUp) return;
-    methods.setValue(`q_${id}`, option);
+    const current = methods.getValues(`q_${id}`);
+    if (current === option) {
+      methods.setValue(`q_${id}`, null as any);
+    } else {
+      methods.setValue(`q_${id}`, option);
+    }
   };
 
   const formatTime = (seconds: number): string => {

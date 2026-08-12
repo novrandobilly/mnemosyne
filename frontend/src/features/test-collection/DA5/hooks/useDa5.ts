@@ -23,7 +23,7 @@ export const useDa5 = () => {
   const totalQuestions = da5Data.length;
   const answers: Da5AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k]) => k.startsWith("q_"))
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && v !== "")
       .map(([k, v]) => [Number(k.slice(2)), v]),
   );
   const answeredCount = Object.keys(answers).length;
@@ -54,7 +54,12 @@ export const useDa5 = () => {
 
   const selectAnswer = (id: number, option: string) => {
     if (isTimeUp) return;
-    methods.setValue(`q_${id}`, option);
+    const current = methods.getValues(`q_${id}`);
+    if (current === option) {
+      methods.setValue(`q_${id}`, null as any);
+    } else {
+      methods.setValue(`q_${id}`, option);
+    }
   };
 
   const goToIndex = (idx: number) => {

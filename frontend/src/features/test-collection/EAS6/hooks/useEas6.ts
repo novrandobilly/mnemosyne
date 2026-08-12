@@ -17,15 +17,13 @@ export const useEas6 = () => {
   const { watch } = methods;
   const values = watch();
 
-  const answeredCount = Object.keys(values).filter((k) =>
-    k.startsWith("q_"),
-  ).length;
-  const totalQuestions = eas6Data.length;
   const answers: Eas6AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k]) => k.startsWith("q_"))
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && v !== "")
       .map(([k, v]) => [Number(k.slice(2)), v]),
   );
+  const answeredCount = Object.keys(answers).length;
+  const totalQuestions = eas6Data.length;
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -56,7 +54,12 @@ export const useEas6 = () => {
   }, [watch]);
 
   const selectAnswer = (id: number, option: string) => {
-    methods.setValue(`q_${id}`, option);
+    const current = methods.getValues(`q_${id}`);
+    if (current === option) {
+      methods.setValue(`q_${id}`, null as any);
+    } else {
+      methods.setValue(`q_${id}`, option);
+    }
   };
 
   const formatTime = (seconds: number): string => {
