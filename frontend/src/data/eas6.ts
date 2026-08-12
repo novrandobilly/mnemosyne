@@ -5,127 +5,107 @@ export interface Eas6Item {
   answer: string;
 }
 
-// Each question shows 7 numbers; the user must find the 8th.
+// Mapped from the commented database entries at the bottom of the file
 const problems: Omit<Eas6Item, "id">[] = [
   {
-    // +3 each step
-    question: "2,  5,  8,  11,  14,  17,  20,  ?",
-    options: ["21", "22", "23", "24", "25"],
-    answer: "23",
+    question: "3  3  6  6  9  9  12  ?",
+    options: ["15", "14", "13", "12", "11"],
+    answer: "12",
   },
   {
-    // ×2 each step
-    question: "3,  6,  12,  24,  48,  96,  192,  ?",
-    options: ["256", "288", "320", "384", "400"],
-    answer: "384",
+    question: "98  87  76  65  54  43  32  ?",
+    options: ["23", "21", "19", "11", "7"],
+    answer: "21",
   },
   {
-    // Fibonacci (each = sum of previous two)
-    question: "0,  1,  1,  2,  3,  5,  8,  ?",
-    options: ["11", "12", "13", "14", "15"],
-    answer: "13",
+    question: "29  92  28  82  27  72  26  ?",
+    options: ["52", "62", "26", "25", "17"],
+    answer: "62",
   },
   {
-    // Perfect squares
-    question: "1,  4,  9,  16,  25,  36,  49,  ?",
-    options: ["56", "60", "64", "72", "81"],
+    question: "1/2  1  2  4  8  16  32  ?",
+    options: ["44", "58", "60", "62", "64"],
     answer: "64",
   },
   {
-    // -5 each step
-    question: "50,  45,  40,  35,  30,  25,  20,  ?",
-    options: ["10", "12", "14", "15", "16"],
-    answer: "15",
-  },
-  {
-    // ÷2 each step
-    question: "256,  128,  64,  32,  16,  8,  4,  ?",
-    options: ["0", "1", "2", "3", "4"],
-    answer: "2",
-  },
-  {
-    // +7 each step
-    question: "5,  12,  19,  26,  33,  40,  47,  ?",
-    options: ["48", "51", "54", "56", "60"],
-    answer: "54",
-  },
-  {
-    // Odd numbers
-    question: "1,  3,  5,  7,  9,  11,  13,  ?",
-    options: ["14", "15", "16", "17", "18"],
-    answer: "15",
-  },
-  {
-    // Differences increase by 2: +1,+2,+3,+4,+5,+6,+7
-    question: "2,  3,  5,  8,  12,  17,  23,  ?",
-    options: ["28", "29", "30", "31", "32"],
-    answer: "30",
-  },
-  {
-    // Powers of 2
-    question: "1,  2,  4,  8,  16,  32,  64,  ?",
-    options: ["96", "108", "128", "144", "256"],
-    answer: "128",
-  },
-  {
-    // n×(n+1): 1×2, 2×3, 3×4 ...
-    question: "2,  6,  12,  20,  30,  42,  56,  ?",
-    options: ["63", "66", "70", "72", "80"],
-    answer: "72",
-  },
-  {
-    // Alternating ×2 then +1: 1,2,3,6,7,14,15
-    question: "1,  2,  3,  6,  7,  14,  15,  ?",
-    options: ["16", "21", "28", "30", "32"],
-    answer: "30",
-  },
-  {
-    // ÷3 each step
-    question: "2187,  729,  243,  81,  27,  9,  3,  ?",
-    options: ["0", "1", "2", "3", "6"],
-    answer: "1",
-  },
-  {
-    // Alternating +5 then -2
-    question: "3,  8,  6,  11,  9,  14,  12,  ?",
-    options: ["14", "15", "16", "17", "18"],
-    answer: "17",
-  },
-  {
-    // n² + 1
-    question: "2,  5,  10,  17,  26,  37,  50,  ?",
-    options: ["61", "63", "65", "67", "70"],
+    question: "98  89  78  87  76  67  56  ?",
+    options: ["45", "54", "65", "74", "76"],
     answer: "65",
   },
   {
-    // Triangular numbers
-    question: "1,  3,  6,  10,  15,  21,  28,  ?",
-    options: ["32", "34", "36", "38", "40"],
+    question: "1  3  6  10  15  21  28  ?",
+    options: ["31", "33", "36", "39", "41"],
     answer: "36",
   },
   {
-    // ×3 each step
-    question: "2,  6,  18,  54,  162,  486,  1458,  ?",
-    options: ["3000", "3600", "4374", "4800", "5000"],
-    answer: "4374",
+    question: "81  27  9  3  1  1/3  1/9  ?",
+    options: ["1/12", "1/18", "1/21", "1/27", "1/30"],
+    answer: "1/27",
   },
   {
-    // Perfect cubes
-    question: "1,  8,  27,  64,  125,  216,  343,  ?",
-    options: ["400", "448", "512", "600", "729"],
-    answer: "512",
+    question: "40  32  25  19  14  10  7  ?",
+    options: ["1", "2", "3", "4", "5"],
+    answer: "5",
   },
   {
-    // Alternating -10 and +5
-    question: "80,  70,  75,  65,  70,  60,  65,  ?",
-    options: ["55", "57", "60", "62", "70"],
-    answer: "55",
+    question: "80  40  44  22  26  13  17  ?",
+    options: ["21", "8,5", "6", "4,5", "4"],
+    answer: "8,5",
   },
   {
-    // Prime numbers
-    question: "2,  3,  5,  7,  11,  13,  17,  ?",
-    options: ["18", "19", "20", "21", "23"],
-    answer: "19",
+    question: "4  8  5  9  6  10  7  ?",
+    options: ["13", "9", "12", "11", "10"],
+    answer: "11",
+  },
+  {
+    question: "10  5  11  6  12  7  13  ?",
+    options: ["11", "10", "9", "8", "7"],
+    answer: "8",
+  },
+  {
+    question: "20  22  19  23  18  24  17  ?",
+    options: ["22", "23", "24", "25", "26"],
+    answer: "25",
+  },
+  {
+    question: "10  8  10  12  10  12  14  ?",
+    options: ["18", "16", "15", "14", "12"],
+    answer: "12",
+  },
+  {
+    question: "56  28  31  32  16  19  20  ?",
+    options: ["6", "16", "12", "14", "10"],
+    answer: "10",
+  },
+  {
+    question: "1  4  10  22  46  94  190  ?",
+    options: ["382", "360", "350", "255", "198"],
+    answer: "382",
+  },
+  {
+    question: "5  4  3  6  9  8  7  ?",
+    options: ["11", "12", "13", "14", "15"],
+    answer: "14",
+  },
+  {
+    question: "2  3  4  16  4  5  6  ?",
+    options: ["16", "20", "24", "26", "27"],
+    answer: "24",
+  },
+  {
+    question: "2  7  12  6  4  9  14  ?",
+    options: ["7", "9", "11", "13", "15"],
+    answer: "7",
+  },
+  {
+    question: "6  8  10  5  3  5  7  ?",
+    options: ["6", "5", "4", "3", "2"],
+    answer: "2",
+  },
+  {
+    question: "3  5  2  4  8  10  7  ?",
+    options: ["12", "14", "16", "18", "20"],
+    answer: "14",
   },
 ];
 
