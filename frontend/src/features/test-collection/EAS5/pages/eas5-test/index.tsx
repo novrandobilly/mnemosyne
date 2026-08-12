@@ -2,7 +2,6 @@ import { MainWrapper } from "@/components/MainWrapper";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { cn } from "@/lib/tailwind-merge";
-import { eas5Data } from "@/data/eas5";
 import { Eas5Provider, useEas5Context } from "../../context/Eas5Context";
 import { EAS5QuestionRow } from "./features/EAS5QuestionRow";
 
@@ -16,6 +15,7 @@ const Eas5TestInner = () => {
     isTimeUp,
     goToPile,
     formatTime,
+    eas5Data,
   } = useEas5Context();
 
   return (

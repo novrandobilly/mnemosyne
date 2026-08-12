@@ -100,5 +100,6 @@ export const useEas5 = () => {
     selectAnswer,
     goToPile,
     formatTime,
+    eas5Data,
   };
 };
