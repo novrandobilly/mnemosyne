@@ -40,7 +40,10 @@ export const Eas4Introduction = () => {
 
   const handleSelect = (index: number, choice: "B" | "S") => {
     if (index < 4) return;
-    setAnswers((prev) => ({ ...prev, [index]: choice }));
+    setAnswers((prev) => {
+      const current = prev[index];
+      return { ...prev, [index]: current === choice ? null : choice };
+    });
   };
 
   const handleStart = () => {

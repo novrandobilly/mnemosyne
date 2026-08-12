@@ -47,7 +47,10 @@ export const EAS6Example2 = () => {
   });
 
   const handleSelectAnswer = (id: number, value: string) => {
-    setInteractiveAnswers((prev) => ({ ...prev, [id]: value }));
+    setInteractiveAnswers((prev) => {
+      const current = prev[id];
+      return { ...prev, [id]: current === value ? null : value };
+    });
   };
 
   return (

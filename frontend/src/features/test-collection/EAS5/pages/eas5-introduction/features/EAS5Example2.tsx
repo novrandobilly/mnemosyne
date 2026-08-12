@@ -28,7 +28,10 @@ export const EAS5Example2 = () => {
   });
 
   const handleSelectAnswer = (block: string, value: number) => {
-    setInteractiveAnswers((prev) => ({ ...prev, [block]: value }));
+    setInteractiveAnswers((prev) => {
+      const current = prev[block];
+      return { ...prev, [block]: current === value ? null : value };
+    });
   };
 
   return (
