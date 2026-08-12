@@ -97,6 +97,21 @@ export const EAS6Example2 = () => {
               </div>
 
               <div className="flex items-center gap-4 justify-between md:justify-end">
+                {/* Left of the options: Feedback Text */}
+                <div className="w-14 text-left pl-1 shrink-0">
+                  {isAnswered && (
+                    isCorrect ? (
+                      <span className="text-xs font-semibold text-emerald-600">
+                        Benar
+                      </span>
+                    ) : (
+                      <span className="text-xs font-semibold text-rose-600">
+                        Salah
+                      </span>
+                    )
+                  )}
+                </div>
+
                 <div className="flex flex-nowrap gap-2 overflow-x-auto md:overflow-x-visible">
                   {row.options.map((option) => {
                     const isSelected = selected === option;
@@ -118,19 +133,6 @@ export const EAS6Example2 = () => {
                   })}
                 </div>
 
-                <div className="w-14 text-right pr-1 shrink-0">
-                  {isAnswered && (
-                    isCorrect ? (
-                      <span className="text-xs font-semibold text-emerald-600">
-                        Benar
-                      </span>
-                    ) : (
-                      <span className="text-xs font-semibold text-rose-600">
-                        Salah
-                      </span>
-                    )
-                  )}
-                </div>
               </div>
             </div>
           );
