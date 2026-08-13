@@ -63,6 +63,8 @@ export function St7QuestionRow({ question }: Props) {
                   src={url}
                   alt={`Q${question.id} pilihan ${label}`}
                   className="h-20 w-20 object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <span
