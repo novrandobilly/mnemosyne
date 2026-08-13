@@ -17,7 +17,7 @@ export function St7PhaseSection({ phase }: Props) {
         >
           Pola Fase {phase.phase}
         </IntiDinamisText>
-        <div className="overflow-hidden rounded-xl border border-neutral-200">
+        <div className="overflow-hidden rounded-xl border border-neutral-200 p-2">
           <img
             src={phase.referenceImageUrl}
             alt={`Pola lipatan fase ${phase.phase}`}

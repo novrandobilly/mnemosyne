@@ -58,23 +58,15 @@ export function St7QuestionRow({ question }: Props) {
                 isTimeUp && disabledCls,
               )}
             >
-              <div className="overflow-hidden rounded-lg">
+              <div className="overflow-hidden">
                 <img
                   src={url}
                   alt={`Q${question.id} pilihan ${label}`}
-                  className="h-20 w-20 object-cover"
+                  className="h-28 w-28 object-contain"
                   loading="lazy"
                   decoding="async"
                 />
               </div>
-              <span
-                className={cn(
-                  "text-xs font-semibold",
-                  isSelected ? "text-emerald-700" : "text-neutral-500",
-                )}
-              >
-                {label}
-              </span>
             </button>
           );
         })}
