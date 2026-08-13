@@ -24,10 +24,11 @@ export function St7QuestionRow({ question }: Props) {
 
   const selectedCls = "border-emerald-400 bg-emerald-50 shadow-sm";
   const unselectedCls =
-    "border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50";
+    "border-neutral-200 bg-white hover:border-neutral-400 hover:bg-neutral-100 hover:shadow-md transition-all duration-200";
   const disabledCls = "cursor-not-allowed opacity-60";
   const imgSelectedCls = "ring-2 ring-emerald-400 bg-emerald-50";
-  const imgUnselectedCls = "hover:bg-neutral-50";
+  const imgUnselectedCls =
+    "hover:bg-neutral-100 hover:ring-2 hover:ring-neutral-300 transition-all duration-200";
 
   return (
     <div className="border-b border-neutral-100 py-5 last:border-none">
