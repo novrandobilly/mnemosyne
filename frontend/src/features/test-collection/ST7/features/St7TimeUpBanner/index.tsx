@@ -1,8 +1,8 @@
-import { useSt17Context } from "../../context/St17Context";
+import { useSt7Context } from "../../context/St7Context";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 
-export function St17TimeUpBanner() {
-  const { isTimeUp } = useSt17Context();
+export function St7TimeUpBanner() {
+  const { isTimeUp } = useSt7Context();
 
   if (!isTimeUp) return null;
 

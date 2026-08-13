@@ -1,24 +1,24 @@
 import {
-  type St17Question,
-  type St17Answer,
-  ST17_NONE_OPTION_TEXT,
-  ST17_NONE_OPTION_LABEL,
-} from "@/data/st17";
-import { useSt17Context } from "../../context/St17Context";
+  type St7Question,
+  type St7Answer,
+  ST7_NONE_OPTION_TEXT,
+  ST7_NONE_OPTION_LABEL,
+} from "@/data/st7";
+import { useSt7Context } from "../../context/St7Context";
 import { cn } from "@/lib/tailwind-merge";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 
 const IMAGE_LABELS = ["A", "B", "C", "D"] as const;
 
 interface Props {
-  question: St17Question;
+  question: St7Question;
 }
 
-export function St17QuestionRow({ question }: Props) {
-  const { answers, selectAnswer, isTimeUp } = useSt17Context();
+export function St7QuestionRow({ question }: Props) {
+  const { answers, selectAnswer, isTimeUp } = useSt7Context();
   const selected = answers[question.id];
 
-  const handleSelect = (option: St17Answer) => {
+  const handleSelect = (option: St7Answer) => {
     if (!isTimeUp) selectAnswer(question.id, option);
   };
 
@@ -45,7 +45,7 @@ export function St17QuestionRow({ question }: Props) {
       <div className="grid grid-cols-5 gap-2">
         {/* A–D image options */}
         {question.optionImageUrls.map((url, idx) => {
-          const label = IMAGE_LABELS[idx] as St17Answer;
+          const label = IMAGE_LABELS[idx] as St7Answer;
           const isSelected = selected === label;
           return (
             <button
@@ -79,11 +79,11 @@ export function St17QuestionRow({ question }: Props) {
 
         {/* E — text option */}
         {(() => {
-          const isSelected = selected === ST17_NONE_OPTION_LABEL;
+          const isSelected = selected === ST7_NONE_OPTION_LABEL;
           return (
             <button
               disabled={isTimeUp}
-              onClick={() => handleSelect(ST17_NONE_OPTION_LABEL as St17Answer)}
+              onClick={() => handleSelect(ST7_NONE_OPTION_LABEL as St7Answer)}
               className={cn(
                 "flex cursor-pointer flex-col items-center justify-between gap-2 rounded-xl border-2 p-2 transition-all",
                 isSelected ? selectedCls : unselectedCls,
@@ -97,7 +97,7 @@ export function St17QuestionRow({ question }: Props) {
                     isSelected ? "text-emerald-700" : "text-neutral-500"
                   }
                 >
-                  {ST17_NONE_OPTION_TEXT}
+                  {ST7_NONE_OPTION_TEXT}
                 </IntiDinamisText>
               </div>
               <span

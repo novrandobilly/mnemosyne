@@ -8,5 +8,5 @@ export const SCORE_ITEM_CONFIG = [
   { id: "a5", label: "A5" },
   { id: "dr", label: "DR" },
   { id: "da5", label: "DA5" },
-  { id: "st17", label: "ST17" },
+  { id: "st7", label: "ST7" },
 ] as const;

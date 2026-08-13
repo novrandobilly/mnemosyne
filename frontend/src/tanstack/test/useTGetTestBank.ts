@@ -27,7 +27,7 @@ const TEST_ORDER = [
   "/a5",
   "/dr",
   "/da5",
-  "/st17",
+  "/st7",
   "/intray1",
   "/intray2",
 ];

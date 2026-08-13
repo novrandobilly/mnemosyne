@@ -1,28 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { ST17_TOTAL_QUESTIONS, type St17Answer } from "@/data/st17";
+import { ST7_TOTAL_QUESTIONS, type St7Answer } from "@/data/st7";
 
-export type St17AnswerRecord = Record<number, St17Answer>;
-type St17FormValues = Record<string, St17Answer>;
+export type St7AnswerRecord = Record<number, St7Answer>;
+type St7FormValues = Record<string, St7Answer>;
 
 const INITIAL_SECONDS = 20 * 60;
 
-export const useSt17 = () => {
+export const useSt7 = () => {
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const hasAutoSubmitted = useRef(false);
 
-  const methods = useForm<St17FormValues>({
-    defaultValues: JSON.parse(sessionStorage.getItem("st17_progress") || "{}"),
+  const methods = useForm<St7FormValues>({
+    defaultValues: JSON.parse(sessionStorage.getItem("st7_progress") || "{}"),
   });
   const { watch } = methods;
   const values = watch();
 
-  const totalQuestions = ST17_TOTAL_QUESTIONS;
-  const answers: St17AnswerRecord = Object.fromEntries(
+  const totalQuestions = ST7_TOTAL_QUESTIONS;
+  const answers: St7AnswerRecord = Object.fromEntries(
     Object.entries(values)
       .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && (v as any) !== "")
-      .map(([k, v]) => [Number(k.slice(2)), v as St17Answer]),
+      .map(([k, v]) => [Number(k.slice(2)), v as St7Answer]),
   );
   const answeredCount = Object.keys(answers).length;
 
@@ -39,7 +39,7 @@ export const useSt17 = () => {
     hasAutoSubmitted.current = true;
     setIsTimeUp(true);
     console.log(
-      "ST17 timer ended. Auto submit triggered.",
+      "ST7 timer ended. Auto submit triggered.",
       methods.getValues(),
     );
     // TODO: submit to PocketBase
@@ -48,12 +48,12 @@ export const useSt17 = () => {
   // Persist answers across page refresh
   useEffect(() => {
     const subscription = watch((value) => {
-      sessionStorage.setItem("st17_progress", JSON.stringify(value));
+      sessionStorage.setItem("st7_progress", JSON.stringify(value));
     });
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  const selectAnswer = (id: number, option: St17Answer) => {
+  const selectAnswer = (id: number, option: St7Answer) => {
     if (isTimeUp) return;
     const current = methods.getValues(`q_${id}`);
     if (current === option) {

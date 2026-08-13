@@ -31,7 +31,7 @@ export const REPORT_MODULES: ReportModuleConfig[] = [
       "a5",
       "dr",
       "da5",
-      "st17",
+      "st7",
     ],
   },
 ];

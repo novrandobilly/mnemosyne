@@ -1,10 +1,10 @@
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { cn } from "@/lib/tailwind-merge";
-import { useSt17Context } from "../../context/St17Context";
+import { useSt7Context } from "../../context/St7Context";
 
-export function St17Header() {
+export function St7Header() {
   const { answeredCount, totalQuestions, secondsLeft, formatTime } =
-    useSt17Context();
+    useSt7Context();
 
   return (
     <div className="sticky top-0 z-10 flex items-center justify-between rounded-2xl border border-neutral-200 bg-white/90 px-6 py-4 shadow-sm backdrop-blur-sm">

@@ -15,7 +15,7 @@ import { Eas10Introduction } from "@/features/test-collection/EAS10/pages/eas10-
 import { A5Test } from "@/features/test-collection/A5";
 import { DrTest } from "@/features/test-collection/DR";
 import { Da5Test } from "@/features/test-collection/DA5";
-import { St17Test } from "@/features/test-collection/ST17";
+import { St7Test } from "@/features/test-collection/ST7";
 import { Intray1Test } from "@/features/test-collection/Intray1";
 import { Intray2Test } from "@/features/test-collection/Intray2";
 
@@ -133,8 +133,8 @@ export const participantRoutes: RouteObject[] = [
         element: <Da5Test />,
       },
       {
-        path: "st17",
-        element: <St17Test />,
+        path: "st7",
+        element: <St7Test />,
       },
       {
         path: "intray1",
