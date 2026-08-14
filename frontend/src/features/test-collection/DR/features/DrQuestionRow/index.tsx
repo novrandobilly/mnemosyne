@@ -28,15 +28,15 @@ export function DrQuestionRow({ item }: Props) {
       {/* Side-by-side flex/grid row: Problem on Left, Options + Buttons on Right */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         {/* Left: Problem Pattern */}
-        <div className="space-y-1.5">
+        <div className="space-y-1.5 flex flex-col items-start">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
             Soal
           </span>
-          <div className="w-full aspect-[5/1] overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 p-1.5 flex items-center justify-center">
+          <div className="w-full overflow-hidden bg-transparent">
             <img
               src={item.problemImageUrl}
               alt={`Soal DR ${item.id} pola`}
-              className="h-full w-full object-contain"
+              className="w-full h-auto block"
               loading="lazy"
               decoding="async"
             />
@@ -44,23 +44,23 @@ export function DrQuestionRow({ item }: Props) {
         </div>
 
         {/* Right: Options Strip & Selection Buttons */}
-        <div className="space-y-1.5">
+        <div className="space-y-1.5 flex flex-col items-start">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
             Pilihan
           </span>
-          <div className="space-y-2">
-            <div className="w-full aspect-[5/1] overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 p-1.5 flex items-center justify-center">
+          <div className="w-full space-y-2">
+            <div className="w-full overflow-hidden bg-transparent">
               <img
                 src={item.optionsImageUrl}
                 alt={`Pilihan jawaban DR ${item.id}`}
-                className="h-full w-full object-contain"
+                className="w-full h-auto block"
                 loading="lazy"
                 decoding="async"
               />
             </div>
 
             {/* 5 evenly distributed option buttons aligning with the 5 option slots */}
-            <div className="grid grid-cols-5 gap-1.5">
+            <div className="grid grid-cols-5 gap-1.5 w-full">
               {OPTION_LABELS.map((label) => {
                 const isSelected = selected === label;
                 return (

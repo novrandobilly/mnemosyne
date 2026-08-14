@@ -3,31 +3,39 @@ import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { cn } from "@/lib/tailwind-merge";
 import { type DrAnswer } from "@/data/dr";
 
+// Example Image Assets
+import drExQ1 from "@/assets/tests/dr/examples/dr_ex_q1.jpg";
+import drExOpt1 from "@/assets/tests/dr/examples/dr_ex_opt1.jpg";
+import drExQ2 from "@/assets/tests/dr/examples/dr_ex_q2.jpg";
+import drExOpt2 from "@/assets/tests/dr/examples/dr_ex_opt2.jpg";
+import drExQ3 from "@/assets/tests/dr/examples/dr_ex_q3.jpg";
+import drExOpt3 from "@/assets/tests/dr/examples/dr_ex_opt3.jpg";
+
 interface ExampleQuestion {
   id: number;
   correctAnswer: DrAnswer;
-  problemPlaceholderText: string;
-  optionsPlaceholderText: string;
+  problemImageUrl: string;
+  optionsImageUrl: string;
 }
 
 const EXAMPLE_QUESTIONS: ExampleQuestion[] = [
   {
     id: 1,
     correctAnswer: "A",
-    problemPlaceholderText: "Pola Soal 1",
-    optionsPlaceholderText: "Pilihan 1 (A B C D E)",
+    problemImageUrl: drExQ1,
+    optionsImageUrl: drExOpt1,
   },
   {
     id: 2,
     correctAnswer: "C",
-    problemPlaceholderText: "Pola Soal 2",
-    optionsPlaceholderText: "Pilihan 2 (A B C D E)",
+    problemImageUrl: drExQ2,
+    optionsImageUrl: drExOpt2,
   },
   {
     id: 3,
     correctAnswer: "E",
-    problemPlaceholderText: "Pola Soal 3",
-    optionsPlaceholderText: "Pilihan 3 (A B C D E)",
+    problemImageUrl: drExQ3,
+    optionsImageUrl: drExOpt3,
   },
 ];
 
@@ -58,7 +66,7 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
           <span
             className={cn(
               "text-xs font-semibold ml-1",
-              isCorrect ? "text-emerald-600" : "text-rose-600"
+              isCorrect ? "text-emerald-600" : "text-rose-600",
             )}
           >
             {isCorrect ? "✓ Benar" : "✗ Salah"}
@@ -67,65 +75,41 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
       </div>
 
       {/* Side-by-side flex/grid row: Problem on Left, Options + Buttons on Right */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-        {/* 1. Problem Pattern Strip Placeholder */}
-        <div className="space-y-1.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+        {/* 1. Problem Pattern Strip */}
+        <div className="space-y-1.5 flex flex-col items-start">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
             Soal
           </span>
-          <div className="w-full aspect-[5/1] overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 p-2 flex items-center justify-center">
-            <div className="flex items-center gap-2 text-neutral-400">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              <IntiDinamisText size="10" className="text-neutral-400">
-                {question.problemPlaceholderText}
-              </IntiDinamisText>
-            </div>
+          <div className="w-full overflow-hidden bg-transparent">
+            <img
+              src={question.problemImageUrl}
+              alt={`Pola Contoh ${question.id}`}
+              className="w-full h-auto block"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         </div>
 
-        {/* 2. Options Strip Placeholder & 5 Choice Buttons */}
-        <div className="space-y-1.5">
+        {/* 2. Options Strip & 5 Choice Buttons */}
+        <div className="space-y-1.5 flex flex-col items-start">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
             Pilihan
           </span>
-          <div className="space-y-2">
-            <div className="w-full aspect-[5/1] overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 p-2 flex items-center justify-center">
-              <div className="flex items-center gap-2 text-neutral-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <IntiDinamisText size="10" className="text-neutral-400">
-                  {question.optionsPlaceholderText}
-                </IntiDinamisText>
-              </div>
+          <div className="w-full space-y-2">
+            <div className="w-full overflow-hidden bg-transparent">
+              <img
+                src={question.optionsImageUrl}
+                alt={`Pilihan Jawaban Contoh ${question.id}`}
+                className="w-full h-auto block"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
 
-            {/* 5 evenly distributed buttons aligned under the 5 choices */}
-            <div className="grid grid-cols-5 gap-1.5">
+            {/* 5 evenly distributed buttons strictly matching image width */}
+            <div className="grid grid-cols-5 gap-1.5 w-full">
               {OPTION_LABELS.map((label) => {
                 const isSelected = selected === label;
                 const isCorrectOption = label === question.correctAnswer;
@@ -145,7 +129,7 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
                     onClick={() => onSelect(label)}
                     className={cn(
                       "flex cursor-pointer items-center justify-center rounded-lg border-2 py-1.5 text-xs font-semibold transition-all duration-200",
-                      borderCls
+                      borderCls,
                     )}
                   >
                     {label}
