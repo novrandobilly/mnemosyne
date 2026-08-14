@@ -3,28 +3,48 @@ import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { cn } from "@/lib/tailwind-merge";
 import { ST7_NONE_OPTION_TEXT } from "@/data/st7";
 
+// Import example reference and option assets
+import st7ExRef from "@/assets/tests/st7/examples/st7_ex_ref.jpg";
+import st7ExQ1A from "@/assets/tests/st7/examples/st7_ex_q1_a.jpg";
+import st7ExQ1B from "@/assets/tests/st7/examples/st7_ex_q1_b.jpg";
+import st7ExQ1C from "@/assets/tests/st7/examples/st7_ex_q1_c.jpg";
+import st7ExQ1D from "@/assets/tests/st7/examples/st7_ex_q1_d.jpg";
+import st7ExQ2A from "@/assets/tests/st7/examples/st7_ex_q2_a.jpg";
+import st7ExQ2B from "@/assets/tests/st7/examples/st7_ex_q2_b.jpg";
+import st7ExQ2C from "@/assets/tests/st7/examples/st7_ex_q2_c.jpg";
+import st7ExQ2D from "@/assets/tests/st7/examples/st7_ex_q2_d.jpg";
+import st7ExQ3A from "@/assets/tests/st7/examples/st7_ex_q3_a.jpg";
+import st7ExQ3B from "@/assets/tests/st7/examples/st7_ex_q3_b.jpg";
+import st7ExQ3C from "@/assets/tests/st7/examples/st7_ex_q3_c.jpg";
+import st7ExQ3D from "@/assets/tests/st7/examples/st7_ex_q3_d.jpg";
+
 type OptionLabel = "A" | "B" | "C" | "D" | "E";
 
 interface ExampleQuestion {
   id: number;
   correctAnswer: OptionLabel;
+  optionUrls: [string, string, string, string];
 }
 
 const EXAMPLE_QUESTIONS: ExampleQuestion[] = [
-  { id: 1, correctAnswer: "A" },
-  { id: 2, correctAnswer: "C" },
-  { id: 3, correctAnswer: "E" },
+  {
+    id: 1,
+    correctAnswer: "C",
+    optionUrls: [st7ExQ1A, st7ExQ1B, st7ExQ1C, st7ExQ1D],
+  },
+  {
+    id: 2,
+    correctAnswer: "A",
+    optionUrls: [st7ExQ2A, st7ExQ2B, st7ExQ2C, st7ExQ2D],
+  },
+  {
+    id: 3,
+    correctAnswer: "E",
+    optionUrls: [st7ExQ3A, st7ExQ3B, st7ExQ3C, st7ExQ3D],
+  },
 ];
 
 const OPTION_LABELS: OptionLabel[] = ["A", "B", "C", "D", "E"];
-
-const PlaceholderImage = ({ label }: { label: string }) => (
-  <div className="flex h-16 w-16 items-center justify-center bg-neutral-100 rounded-sm">
-    <IntiDinamisText size="10" className="text-neutral-400 font-mono">
-      {label}
-    </IntiDinamisText>
-  </div>
-);
 
 interface QuestionRowProps {
   question: ExampleQuestion;
@@ -36,10 +56,8 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
   const isAnswered = selected !== null;
   const isCorrect = selected === question.correctAnswer;
 
-  // Exact styles matched from St7QuestionRow
   const unselectedCls =
     "border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50 transition-all duration-200";
-
   const imgUnselectedCls = "hover:bg-neutral-50";
 
   return (
@@ -68,13 +86,12 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
 
       {/* Options */}
       <div className="grid grid-cols-5 gap-2">
-        {OPTION_LABELS.map((label) => {
+        {OPTION_LABELS.map((label, idx) => {
           const isSelected = selected === label;
           const isE = label === "E";
           const isCorrectOption = label === question.correctAnswer;
 
           if (isE) {
-            // Option E matches St7QuestionRow's border, padding, and layout structure
             let borderCls = unselectedCls;
             if (isSelected) {
               borderCls = isCorrectOption
@@ -125,7 +142,8 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
             );
           }
 
-          // Option A-D matches St7QuestionRow's borderless, padding-only structure
+          const optionUrl = question.optionUrls[idx];
+
           let imgCls = imgUnselectedCls;
           if (isSelected) {
             imgCls = isCorrectOption
@@ -145,7 +163,15 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
                 imgCls,
               )}
             >
-              <PlaceholderImage label={label} />
+              <div className="overflow-hidden">
+                <img
+                  src={optionUrl}
+                  alt={`Contoh Q${question.id} pilihan ${label}`}
+                  className="h-28 w-28 object-contain"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
             </button>
           );
         })}
@@ -168,7 +194,7 @@ export const St7Example = () => {
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[240px_1fr]">
-      {/* Sticky reference placeholder */}
+      {/* Sticky reference */}
       <div className="lg:self-start lg:sticky lg:top-24">
         <IntiDinamisText
           size="12"
@@ -176,24 +202,12 @@ export const St7Example = () => {
         >
           Pola Contoh
         </IntiDinamisText>
-        <div className="flex flex-col items-center justify-center overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 p-4 h-48 gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-10 w-10 text-neutral-300"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-            />
-          </svg>
-          <IntiDinamisText size="12" className="text-neutral-400 text-center">
-            Gambar pola lipatan akan muncul di sini
-          </IntiDinamisText>
+        <div className="overflow-hidden rounded-xl border border-neutral-200 p-2 bg-white">
+          <img
+            src={st7ExRef}
+            alt="Pola lipatan contoh"
+            className="w-full object-cover"
+          />
         </div>
         <IntiDinamisText size="10" className="mt-2 text-neutral-400">
           Soal 1–3
