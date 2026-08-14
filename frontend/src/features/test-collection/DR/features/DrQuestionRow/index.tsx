@@ -26,7 +26,7 @@ export function DrQuestionRow({ item }: Props) {
       </div>
 
       {/* Side-by-side flex/grid row: Problem on Left, Options + Buttons on Right */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
         {/* Left: Problem Pattern */}
         <div className="space-y-1.5 flex flex-col items-start">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
