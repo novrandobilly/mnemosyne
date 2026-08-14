@@ -9,7 +9,7 @@ export function Da5Test() {
   return (
     <MainWrapper pageTitle="DA5">
       <Da5Provider>
-        <div className="mx-auto flex max-w-3xl flex-col gap-6">
+        <div className="mx-auto flex max-w-4xl flex-col gap-6">
           <Da5Header />
           <Da5TimeUpBanner />
           <Da5QuestionView />
