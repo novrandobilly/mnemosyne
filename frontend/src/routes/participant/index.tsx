@@ -15,7 +15,8 @@ import { Eas10Introduction } from "@/features/test-collection/EAS10/pages/eas10-
 import { A5Test } from "@/features/test-collection/A5";
 import { DrTest } from "@/features/test-collection/DR/pages/dr-test";
 import { DrIntroduction } from "@/features/test-collection/DR/pages/dr-introduction";
-import { Da5Test } from "@/features/test-collection/DA5";
+import { Da5Test } from "@/features/test-collection/DA5/pages/da5-test";
+import { Da5Introduction } from "@/features/test-collection/DA5/pages/da5-introduction";
 import { St7Test } from "@/features/test-collection/ST7/pages/st7-test";
 import { St7Introduction } from "@/features/test-collection/ST7/pages/st7-introduction";
 import { Intray1Test } from "@/features/test-collection/Intray1";
@@ -145,7 +146,20 @@ export const participantRoutes: RouteObject[] = [
       },
       {
         path: "da5",
-        element: <Da5Test />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="introduction" replace />,
+          },
+          {
+            path: "introduction",
+            element: <Da5Introduction />,
+          },
+          {
+            path: "test-start",
+            element: <Da5Test />,
+          },
+        ],
       },
       {
         path: "st7",
