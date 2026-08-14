@@ -1,8 +1,8 @@
 import { MainWrapper } from "@/components/MainWrapper";
 import { DrProvider } from "./context/DrContext";
-import { DrHeader } from "./features/DrHeader";
-import { DrTimeUpBanner } from "./features/DrTimeUpBanner";
-import { DrList } from "./features/DrList";
+import { DrHeader } from "./pages/dr-test/features/DrHeader";
+import { DrTimeUpBanner } from "./pages/dr-test/features/DrTimeUpBanner";
+import { DrList } from "./pages/dr-test/features/DrList";
 
 export function DrTest() {
   return (

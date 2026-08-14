@@ -1,5 +1,5 @@
 import { type DrItem, type DrAnswer } from "@/data/dr";
-import { useDrContext } from "../../context/DrContext";
+import { useDrContext } from "../../../../context/DrContext";
 import { cn } from "@/lib/tailwind-merge";
 
 const OPTION_LABELS: DrAnswer[] = ["A", "B", "C", "D", "E"];
@@ -46,7 +46,7 @@ export function DrQuestionRow({ item }: Props) {
             </div>
 
             {/* 5 evenly distributed option buttons aligning with the 5 option slots */}
-            <div className="grid grid-cols-5 gap-1.5 w-full">
+            <div className="grid grid-cols-5 gap-1 w-full px-0.5">
               {OPTION_LABELS.map((label) => {
                 const isSelected = selected === label;
                 return (

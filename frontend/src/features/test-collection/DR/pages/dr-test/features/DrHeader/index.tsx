@@ -1,4 +1,4 @@
-import { useDrContext } from "../../context/DrContext";
+import { useDrContext } from "../../../../context/DrContext";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 
 export function DrHeader() {

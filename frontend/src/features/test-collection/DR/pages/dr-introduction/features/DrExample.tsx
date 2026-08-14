@@ -109,7 +109,7 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
             </div>
 
             {/* 5 evenly distributed buttons strictly matching image width */}
-            <div className="grid grid-cols-5 gap-1.5 w-full">
+            <div className="grid grid-cols-5 gap-1 w-full px-0.5">
               {OPTION_LABELS.map((label) => {
                 const isSelected = selected === label;
                 const isCorrectOption = label === question.correctAnswer;
