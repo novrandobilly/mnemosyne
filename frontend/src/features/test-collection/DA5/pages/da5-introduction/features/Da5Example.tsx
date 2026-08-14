@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { cn } from "@/lib/tailwind-merge";
+import { useState } from "react";
 
 // Import DA5 Example assets
 import da5ExQ1 from "@/assets/tests/da5/examples/da5_ex_q1.png";
@@ -89,8 +89,8 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
         )}
       </div>
 
-      {/* Side-by-side Layout: Stimulus on Left (w-1/3 approx), 5 Options on Right (w-2/3 approx) */}
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2.2fr] gap-20 items-start">
+      {/* Side-by-side Layout: Stimulus on Left, 5 Options on Right */}
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_2.2fr] gap-12 items-start">
         {/* Stimulus Box */}
         <div className="space-y-1.5 flex flex-col items-start w-full">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
