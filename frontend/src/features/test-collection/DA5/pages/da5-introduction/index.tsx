@@ -9,7 +9,7 @@ export const Da5Introduction = () => {
 
   return (
     <MainWrapper pageTitle="Petunjuk DA5">
-      <div className="mx-auto max-w-4xl space-y-6">
+      <div className="mx-auto max-w-4xl w-full space-y-6">
         <Da5InstructionsPanel />
         <Da5Example />
         <Da5StartButton onClick={handleConfirmStart} />
