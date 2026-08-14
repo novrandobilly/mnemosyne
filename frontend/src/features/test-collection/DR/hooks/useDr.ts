@@ -21,14 +21,19 @@ export function useDr() {
   const totalQuestions = drData.length;
   const answers: DrAnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k]) => k.startsWith("q_"))
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && v !== "")
       .map(([k, v]) => [Number(k.slice(2)), v]),
   );
   const answeredCount = Object.keys(answers).length;
 
   function selectAnswer(id: number, option: string) {
     if (isTimeUp) return;
-    methods.setValue(`q_${id}`, option);
+    const current = methods.getValues(`q_${id}`);
+    if (current === option) {
+      methods.setValue(`q_${id}`, "" as any);
+    } else {
+      methods.setValue(`q_${id}`, option);
+    }
   }
 
   useEffect(() => {

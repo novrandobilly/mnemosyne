@@ -1,7 +1,6 @@
 import { type DrItem, type DrAnswer } from "@/data/dr";
 import { useDrContext } from "../../context/DrContext";
 import { cn } from "@/lib/tailwind-merge";
-import { IntiDinamisText } from "@/components/IntiDinamisText";
 
 const OPTION_LABELS: DrAnswer[] = ["A", "B", "C", "D", "E"];
 
@@ -14,45 +13,32 @@ export function DrQuestionRow({ item }: Props) {
   const selected = answers[item.id];
 
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm space-y-4">
-      {/* Header: Question Number & Instruction */}
-      <div className="flex items-center gap-3">
+    <div>
+      <div className="flex items-start gap-4">
+        {/* Question Number */}
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-xs font-semibold text-neutral-500">
           {item.id}
         </span>
-        <IntiDinamisText size="12" className="text-neutral-400">
-          Tentukan gambar yang tepat untuk melengkapi deretan pola
-        </IntiDinamisText>
-      </div>
 
-      {/* Side-by-side flex/grid row: Problem on Left, Options + Buttons on Right */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-        {/* Left: Problem Pattern */}
-        <div className="space-y-1.5 flex flex-col items-start">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
-            Soal
-          </span>
+        {/* Side-by-side: Problem on Left, Options + Buttons on Right */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 flex-1 items-start">
+          {/* Left: Problem Pattern */}
           <div className="w-full overflow-hidden bg-transparent">
             <img
               src={item.problemImageUrl}
-              alt={`Soal DR ${item.id} pola`}
+              alt={`Soal DR ${item.id}`}
               className="w-full h-auto block"
               loading="lazy"
               decoding="async"
             />
           </div>
-        </div>
 
-        {/* Right: Options Strip & Selection Buttons */}
-        <div className="space-y-1.5 flex flex-col items-start">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
-            Pilihan
-          </span>
-          <div className="w-full space-y-2">
+          {/* Right: Options Strip & Selection Buttons */}
+          <div className="w-full space-y-1.5">
             <div className="w-full overflow-hidden bg-transparent">
               <img
                 src={item.optionsImageUrl}
-                alt={`Pilihan jawaban DR ${item.id}`}
+                alt={`Pilihan DR ${item.id}`}
                 className="w-full h-auto block"
                 loading="lazy"
                 decoding="async"
