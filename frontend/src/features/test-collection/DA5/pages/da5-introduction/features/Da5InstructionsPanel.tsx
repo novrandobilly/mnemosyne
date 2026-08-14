@@ -12,12 +12,19 @@ export const Da5InstructionsPanel = () => {
         PETUNJUK :
       </IntiDinamisText>
       <IntiDinamisText size="14" className="text-neutral-700 leading-relaxed">
-        Pada tes ini Anda akan melihat sebuah gambar stimulus/soal utama yang
-        ditampilkan di bagian atas, serta 5 pilihan jawaban (A, B, C, D, dan E) di bagian bawah.
+        Dalam tes ini anda akan menghadapi sejumlah tanda yang terletak dalam
+        kotak. Tanda-tanda tersebut dirubah mengikuti aturan-aturan tertentu
+        yang dinyatakan dengan tanda-tanda didalam lingkaran atau wajik. Daftar
+        aturan perubahan tanda tersebut terdapat dalam lembar perintah.
       </IntiDinamisText>
       <IntiDinamisText size="14" className="text-neutral-700 leading-relaxed">
-        Tugas Anda adalah memilih salah satu gambar dari pilihan A, B, C, D, atau E
-        yang paling sesuai atau identik dengan pola gambar stimulus tersebut.
+        PERHATIKANLAH 10 MACAM PERINTAH TERSEBUT DIHALAMAN SEBELAH KIRI
+      </IntiDinamisText>
+      <IntiDinamisText size="14" className="text-neutral-700 leading-relaxed">
+        Setiap soal terdiri dari satu atau lebih tanda-tanda. Kerjakanlah selalu
+        mulai dari tanda yang paling atas dan ikutilah perintah-perintah yang
+        ada. Kemudian pilih salah satu dari lima pilihan jawaban yang tersedia
+        disebelah kanan dari setiap soal.
       </IntiDinamisText>
 
       <div className="rounded-xl bg-neutral-50 p-4 border border-neutral-100">
