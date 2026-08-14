@@ -51,9 +51,9 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
       </div>
 
       {/* Side-by-side or Stacked Layout: Stimulus on Top/Left, 5 Options on Bottom/Right */}
-      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-48">
         {/* Stimulus Box */}
-        <div className="flex flex-col items-center gap-1.5 shrink-0">
+        <div className="flex flex-col items-start gap-1.5 shrink-0">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
             Soal
           </span>
@@ -81,7 +81,7 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
         </div>
 
         {/* 5 Options Grid */}
-        <div className="flex-1 w-full space-y-1.5">
+        <div className="flex flex-col flex-1 w-full space-y-1.5">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
             Pilihan
           </span>
@@ -109,7 +109,10 @@ const QuestionRow = ({ question, selected, onSelect }: QuestionRowProps) => {
                   )}
                 >
                   <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-neutral-100">
-                    <IntiDinamisText size="10" className="text-neutral-400 font-mono">
+                    <IntiDinamisText
+                      size="10"
+                      className="text-neutral-400 font-mono"
+                    >
                       Opt {label}
                     </IntiDinamisText>
                   </div>
