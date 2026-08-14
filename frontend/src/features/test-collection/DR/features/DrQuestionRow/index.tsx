@@ -1,83 +1,9 @@
-import { type DrItem } from "@/data/dr";
+import { type DrItem, type DrAnswer } from "@/data/dr";
 import { useDrContext } from "../../context/DrContext";
 import { cn } from "@/lib/tailwind-merge";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 
-const OPTION_LABELS = ["A", "B", "C", "D", "E"] as const;
-
-interface SequenceCellProps {
-  src: string | null;
-}
-
-function SequenceCell({ src }: SequenceCellProps) {
-  const isEmpty = src === null;
-  return (
-    <div
-      className={cn(
-        "flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg border",
-        isEmpty
-          ? "border-dashed border-neutral-400 bg-neutral-900"
-          : "border-neutral-200 bg-white",
-      )}
-    >
-      {isEmpty ? (
-        <span className="text-2xl font-light text-white">?</span>
-      ) : (
-        <img src={src} alt="sequence" className="h-full w-full object-cover" />
-      )}
-    </div>
-  );
-}
-
-interface OptionCellProps {
-  src: string;
-  label: string;
-  isSelected: boolean;
-  disabled: boolean;
-  onClick: () => void;
-}
-
-function OptionCell({
-  src,
-  label,
-  isSelected,
-  disabled,
-  onClick,
-}: OptionCellProps) {
-  return (
-    <button
-      disabled={disabled}
-      onClick={onClick}
-      className={cn(
-        "flex flex-col items-center gap-1 rounded-lg border p-1 transition-colors",
-        isSelected
-          ? "border-neutral-900 bg-neutral-900 ring-2 ring-neutral-900 ring-offset-1"
-          : "border-neutral-200 bg-white hover:border-neutral-400 hover:bg-neutral-50",
-        disabled && "cursor-not-allowed opacity-60",
-      )}
-    >
-      <div
-        className={cn(
-          "flex h-16 w-16 items-center justify-center overflow-hidden rounded",
-          isSelected && "opacity-90",
-        )}
-      >
-        <img
-          src={src}
-          alt={`option ${label}`}
-          className="h-full w-full object-cover"
-        />
-      </div>
-      <IntiDinamisText
-        size="12"
-        weight="semibold"
-        className={isSelected ? "text-white" : "text-neutral-500"}
-      >
-        {label}
-      </IntiDinamisText>
-    </button>
-  );
-}
+const OPTION_LABELS: DrAnswer[] = ["A", "B", "C", "D", "E"];
 
 interface Props {
   item: DrItem;
@@ -88,41 +14,75 @@ export function DrQuestionRow({ item }: Props) {
   const selected = answers[item.id];
 
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
-      <div className="mb-4 flex items-center gap-3">
+    <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm space-y-4">
+      {/* Header: Question Number & Instruction */}
+      <div className="flex items-center gap-3">
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-xs font-semibold text-neutral-500">
           {item.id}
         </span>
         <IntiDinamisText size="12" className="text-neutral-400">
-          Pilih gambar yang melengkapi pola urutan
+          Tentukan gambar yang tepat untuk melengkapi deretan pola
         </IntiDinamisText>
       </div>
 
-      {/* Sequence */}
-      <div className="mb-4 flex items-center gap-2">
-        {item.sequence.map((src, idx) => (
-          <SequenceCell key={idx} src={src} />
-        ))}
-      </div>
-
-      {/* Divider */}
-      <div className="mb-4 border-t border-dashed border-neutral-200" />
-
-      {/* Options */}
-      <div className="flex items-center gap-2">
-        {item.options.map((src, idx) => {
-          const label = OPTION_LABELS[idx];
-          return (
-            <OptionCell
-              key={label}
-              src={src}
-              label={label}
-              isSelected={selected === label}
-              disabled={isTimeUp}
-              onClick={() => selectAnswer(item.id, label)}
+      {/* Side-by-side flex/grid row: Problem on Left, Options + Buttons on Right */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        {/* Left: Problem Pattern */}
+        <div className="space-y-1.5">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
+            Soal
+          </span>
+          <div className="w-full aspect-[5/1] overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 p-1.5 flex items-center justify-center">
+            <img
+              src={item.problemImageUrl}
+              alt={`Soal DR ${item.id} pola`}
+              className="h-full w-full object-contain"
+              loading="lazy"
+              decoding="async"
             />
-          );
-        })}
+          </div>
+        </div>
+
+        {/* Right: Options Strip & Selection Buttons */}
+        <div className="space-y-1.5">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
+            Pilihan
+          </span>
+          <div className="space-y-2">
+            <div className="w-full aspect-[5/1] overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 p-1.5 flex items-center justify-center">
+              <img
+                src={item.optionsImageUrl}
+                alt={`Pilihan jawaban DR ${item.id}`}
+                className="h-full w-full object-contain"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+            {/* 5 evenly distributed option buttons aligning with the 5 option slots */}
+            <div className="grid grid-cols-5 gap-1.5">
+              {OPTION_LABELS.map((label) => {
+                const isSelected = selected === label;
+                return (
+                  <button
+                    key={label}
+                    disabled={isTimeUp}
+                    onClick={() => selectAnswer(item.id, label)}
+                    className={cn(
+                      "flex cursor-pointer items-center justify-center rounded-lg border-2 py-1.5 text-xs font-semibold transition-all duration-200",
+                      isSelected
+                        ? "border-emerald-400 bg-emerald-50 text-emerald-700 shadow-sm"
+                        : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 hover:bg-neutral-50",
+                      isTimeUp && "cursor-not-allowed opacity-60",
+                    )}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
