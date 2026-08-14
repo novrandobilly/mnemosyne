@@ -68,5 +68,6 @@ export const da5Data: Da5Item[] = [
   makeItem(50),
 ];
 
-export const DA5_REFERENCE_IMAGE_URL =
-  "https://placehold.co/600x800?text=Reference+Rules+Doc";
+import da5Guide from "@/assets/tests/da5/guide/da5-guide.jpg";
+
+export const DA5_REFERENCE_IMAGE_URL = da5Guide;

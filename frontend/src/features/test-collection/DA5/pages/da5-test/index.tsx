@@ -12,8 +12,9 @@ export function Da5Test() {
         <div className="mx-auto flex max-w-4xl flex-col gap-6">
           <Da5Header />
           <Da5TimeUpBanner />
-          <Da5QuestionView />
+          {/* Rules / Guide accordion positioned directly above QuestionView */}
           <Da5RulesDrawer />
+          <Da5QuestionView />
         </div>
       </Da5Provider>
     </MainWrapper>
