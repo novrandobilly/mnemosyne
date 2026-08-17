@@ -5,7 +5,7 @@ import { da5Data } from "@/data/da5";
 export type Da5AnswerRecord = Record<number, string>;
 type Da5FormValues = Record<string, string>;
 
-const INITIAL_SECONDS = 5 * 60;
+const INITIAL_SECONDS = 50 * 60;
 
 export const useDa5 = () => {
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
@@ -23,7 +23,10 @@ export const useDa5 = () => {
   const totalQuestions = da5Data.length;
   const answers: Da5AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && v !== "")
+      .filter(
+        ([k, v]) =>
+          k.startsWith("q_") && v !== null && v !== undefined && v !== "",
+      )
       .map(([k, v]) => [Number(k.slice(2)), v]),
   );
   const answeredCount = Object.keys(answers).length;
