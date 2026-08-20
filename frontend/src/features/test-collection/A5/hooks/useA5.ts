@@ -28,7 +28,12 @@ export function useA5() {
 
   function selectAnswer(id: number, option: string) {
     if (isTimeUp) return;
-    methods.setValue(`q_${id}`, option);
+    const current = methods.getValues(`q_${id}`);
+    if (current === option) {
+      methods.setValue(`q_${id}`, null as any);
+    } else {
+      methods.setValue(`q_${id}`, option);
+    }
   }
 
   useEffect(() => {

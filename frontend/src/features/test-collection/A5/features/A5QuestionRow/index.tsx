@@ -75,7 +75,7 @@ export function A5QuestionRow({ item }: Props) {
               disabled={isTimeUp}
               onClick={() => selectAnswer(item.id, option)}
               className={cn(
-                "flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm transition-colors",
+                "flex cursor-pointer items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm transition-colors",
                 isSelected
                   ? "border-neutral-900 bg-neutral-900 text-white"
                   : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400 hover:bg-neutral-50",
