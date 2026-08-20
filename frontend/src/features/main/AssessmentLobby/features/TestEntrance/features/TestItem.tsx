@@ -9,6 +9,7 @@ interface TestItemProps {
   status: string;
   orderNum: number;
   onEnter: () => void;
+  isCompleted?: boolean;
 }
 
 export const TestItem: FC<TestItemProps> = ({
@@ -17,11 +18,12 @@ export const TestItem: FC<TestItemProps> = ({
   status,
   orderNum,
   onEnter,
+  isCompleted = false,
 }) => {
   return (
     <div className="w-full group relative overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:shadow-md">
-      <StatusCapsule enabled={true} className="absolute right-3 top-3">
-        {status}
+      <StatusCapsule enabled={!isCompleted} className="absolute right-3 top-3">
+        {isCompleted ? "Completed" : status}
       </StatusCapsule>
 
       <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900 text-base font-bold text-white">
@@ -47,12 +49,21 @@ export const TestItem: FC<TestItemProps> = ({
         </IntiDinamisText>
       </div>
 
+      {isCompleted ? (
+        <div className="mb-4 rounded-lg bg-neutral-50 border border-neutral-150 p-2.5">
+          <IntiDinamisText size="12" className="text-neutral-500 text-center font-medium">
+            Anda telah menyelesaikan tes ini.
+          </IntiDinamisText>
+        </div>
+      ) : null}
+
       <IntiDinamisButton
         variant="secondary"
         className="w-full"
         onClick={onEnter}
+        disabled={isCompleted}
       >
-        Enter Test →
+        {isCompleted ? "Completed" : "Enter Test →"}
       </IntiDinamisButton>
     </div>
   );

@@ -15,7 +15,7 @@ export const Instructions: FC = () => {
         size="12"
         className="uppercase tracking-[0.25em] text-neutral-500"
       >
-        Instructions CNTLO
+        Instructions
       </IntiDinamisText>
       <ul className="mt-4 space-y-3 text-sm text-neutral-600">
         {INSTRUCTIONS.map((instruction, index) => (

@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { eas4Data } from "@/data/eas4";
+import { useTSubmitTestResult } from "@/tanstack/test/useTSubmitTestResult";
+import { useNavigate } from "react-router-dom";
 
 export type Eas4AnswerRecord = Record<number, boolean>;
 type Eas4FormValues = Record<string, boolean>;
@@ -14,6 +16,8 @@ export const useEas4 = () => {
     return saved !== null ? parseInt(saved, 10) : INITIAL_SECONDS;
   });
   const hasAutoSubmitted = useRef(false);
+  const { mutateAsync: submitResult, isPending: isSubmitting } = useTSubmitTestResult();
+  const navigate = useNavigate();
 
   const methods = useForm<Eas4FormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("eas4_progress") || "{}"),
@@ -28,6 +32,20 @@ export const useEas4 = () => {
       .map(([k, v]) => [Number(k.slice(2)), v as boolean]),
   );
   const answeredCount = Object.keys(answers).length;
+
+  const handleFinish = useCallback(async () => {
+    try {
+      await submitResult({
+        testType: "eas4",
+        answers,
+      });
+      sessionStorage.removeItem("eas4_progress");
+      sessionStorage.removeItem("eas4_seconds_left");
+      navigate("/psikotes");
+    } catch (error) {
+      console.error("Failed to submit EAS4 answers", error);
+    }
+  }, [answers, submitResult, navigate]);
 
   // Countdown timer
   useEffect(() => {
@@ -57,8 +75,8 @@ export const useEas4 = () => {
       "EAS4 timer ended. Auto submit triggered.",
       methods.getValues(),
     );
-    // TODO: submit to PocketBase
-  }, [secondsLeft]);
+    handleFinish();
+  }, [secondsLeft, handleFinish]);
 
   // Persist answers across page refresh
   useEffect(() => {
@@ -139,5 +157,7 @@ export const useEas4 = () => {
     selectAnswer,
     setFocusedId,
     formatTime,
+    handleFinish,
+    isSubmitting,
   };
 };

@@ -2,10 +2,12 @@ import type { FC } from "react";
 import { TestItem } from "./features/TestItem";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { useTGetTestBank } from "@/tanstack/test/useTGetTestBank";
+import { useTGetParticipantResults } from "@/tanstack/test/useTGetParticipantResults";
 import { useNavigate } from "react-router-dom";
 
 export const TestEntrance: FC = () => {
   const { data: testBank } = useTGetTestBank();
+  const { data: participantResults } = useTGetParticipantResults();
   const navigate = useNavigate();
 
   return (
@@ -35,6 +37,11 @@ export const TestEntrance: FC = () => {
         {testBank?.map((test, index) => {
           if (!test?.is_active) return null; // Only show active tests
           const { alias, is_active, type, slug } = test;
+          const cleanSlug = slug.replace(/^\//, "");
+          const isCompleted = participantResults?.some(
+            (r) => r.test_type === cleanSlug && r.status === "completed"
+          );
+
           return (
             <TestItem
               key={test.id}
@@ -42,6 +49,7 @@ export const TestEntrance: FC = () => {
               tag={type}
               status={is_active ? "Open" : "Closed"}
               orderNum={index + 1}
+              isCompleted={isCompleted}
               onEnter={() => navigate(`/psikotes/${slug}`)}
             />
           );
