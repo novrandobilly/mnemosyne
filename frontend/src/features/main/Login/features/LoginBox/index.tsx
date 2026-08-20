@@ -3,7 +3,7 @@ import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { EmailInput } from "./features/EmailInput";
 import { PasswordInput } from "./features/PasswordInput";
-import { useTLogin } from "@/tanstack/auth/login";
+import { useTLogin } from "@/api/auth/login";
 
 interface LoginFormValues {
   email: string;

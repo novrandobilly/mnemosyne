@@ -1,4 +1,4 @@
-import { useTGetTestBank } from "@/tanstack/test/useTGetTestBank";
+import { useTGetTestBank } from "@/api/test/useTGetTestBank";
 import type { FC } from "react";
 import { TestItem } from "../testItem";
 import { capitalizeFirstLetter } from "@/utils/tools";

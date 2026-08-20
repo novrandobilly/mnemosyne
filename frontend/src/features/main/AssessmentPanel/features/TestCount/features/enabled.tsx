@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Counter } from "../components/Counter";
-import { useTGetTestBank } from "@/tanstack/test/useTGetTestBank";
+import { useTGetTestBank } from "@/api/test/useTGetTestBank";
 
 const EnabledCount: FC = () => {
   const { data: totalTests } = useTGetTestBank();

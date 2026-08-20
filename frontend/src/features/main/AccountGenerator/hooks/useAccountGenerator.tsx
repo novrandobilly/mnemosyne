@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import {
   useTBulkGenerateAccounts,
   type GeneratedAccount,
-} from "@/tanstack/users/useTBulkGenerateAccounts";
+} from "@/api/users/useTBulkGenerateAccounts";
 import { useModal } from "@/context/ModalContext";
 import { GenerateConfirmModal } from "../features/GenerateConfirmModal";
 import type { BulkGenerateFormValues } from "../types";

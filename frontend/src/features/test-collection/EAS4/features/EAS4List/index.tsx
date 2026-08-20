@@ -1,11 +1,12 @@
-import { eas4Data } from "@/data/eas4";
 import { EAS4Row } from "../EAS4Row";
 import { useEas4Context } from "../../context/Eas4Context";
 import { useEas4FinishConfirmModal } from "../../hooks/useEas4FinishConfirmModal";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
+import { eas4Data } from "@/data/eas4";
 
 export const EAS4List = () => {
-  const { handleFinish, isSubmitting, answeredCount, totalQuestions } = useEas4Context();
+  const { handleFinish, isSubmitting, answeredCount, totalQuestions } =
+    useEas4Context();
   const { handleConfirmFinish } = useEas4FinishConfirmModal();
 
   const handleFinishClick = () => {

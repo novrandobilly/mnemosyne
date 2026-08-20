@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { eas4Data } from "@/data/eas4";
-import { useEas4Scoring } from "./useEas4Scoring";
+import { useTSubmitEas4 } from "@/api/test/eas4/useTSubmitEas4";
 
 export type Eas4AnswerRecord = Record<number, "sama" | "beda">;
 type Eas4FormValues = Record<string, "sama" | "beda">;
@@ -15,25 +15,33 @@ export const useEas4 = () => {
     return saved !== null ? parseInt(saved, 10) : INITIAL_SECONDS;
   });
   const hasAutoSubmitted = useRef(false);
-  const { handleFinish: submitFinish, isSubmitting } = useEas4Scoring();
+  const { mutateAsync: submitResult, isPending: isSubmitting } =
+    useTSubmitEas4();
 
   const methods = useForm<Eas4FormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("eas4_progress") || "{}"),
   });
   const { watch } = methods;
   const values = watch();
+  console.log("values:", values);
 
   const totalQuestions = eas4Data.length;
   const answers: Eas4AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && (v as any) !== "")
+      .filter(
+        ([k, v]) =>
+          k.startsWith("q_") &&
+          v !== null &&
+          v !== undefined &&
+          (v as any) !== "",
+      )
       .map(([k, v]) => [Number(k.slice(2)), v as "sama" | "beda"]),
   );
   const answeredCount = Object.keys(answers).length;
 
   const handleFinish = useCallback(() => {
-    submitFinish(answers);
-  }, [answers, submitFinish]);
+    submitResult({ testType: "eas4", answers });
+  }, [answers, submitResult]);
 
   // Countdown timer
   useEffect(() => {

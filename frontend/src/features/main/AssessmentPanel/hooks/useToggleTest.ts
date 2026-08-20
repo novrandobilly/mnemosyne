@@ -1,5 +1,5 @@
 import { pb } from "@/lib/pocketbase";
-import { useTGetTestBank } from "@/tanstack/test/useTGetTestBank";
+import { useTGetTestBank } from "@/api/test/useTGetTestBank";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/context/ToastContext";
 

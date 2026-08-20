@@ -1,6 +1,6 @@
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
-import type { GeneratedAccount } from "@/tanstack/users/useTBulkGenerateAccounts";
+import type { GeneratedAccount } from "@/api/users/useTBulkGenerateAccounts";
 
 interface CredentialsTableProps {
   accounts: GeneratedAccount[];

@@ -11,15 +11,17 @@ export interface ParticipantTestResult {
 }
 
 export const useTGetParticipantResults = () => {
-  const participantId = pb.authStore.model?.id;
+  const participantId = pb.authStore.record?.id;
 
   return useQuery({
     queryKey: ["participant-results", participantId],
     enabled: !!participantId,
     queryFn: async () => {
-      const records = await pb.collection("test_results").getFullList<ParticipantTestResult>({
-        filter: `participant = "${participantId}"`,
-      });
+      const records = await pb
+        .collection("test_results")
+        .getFullList<ParticipantTestResult>({
+          filter: `participant = "${participantId}"`,
+        });
       return records;
     },
   });

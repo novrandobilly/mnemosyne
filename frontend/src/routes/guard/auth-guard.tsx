@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useTProfile } from "../../tanstack/auth/profile";
+import { useTProfile } from "../../api/auth/profile";
 
 export const AuthGuard = () => {
   const { data, isPending } = useTProfile();

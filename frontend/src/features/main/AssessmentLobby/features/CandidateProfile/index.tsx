@@ -1,7 +1,7 @@
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import type { FC } from "react";
 import { NameCircle } from "./features/NameCircle";
-import { useTProfile } from "@/tanstack/auth/profile";
+import { useTProfile } from "@/api/auth/profile";
 import { formatDate } from "@/utils/tools";
 
 export const CandidateProfile: FC = () => {

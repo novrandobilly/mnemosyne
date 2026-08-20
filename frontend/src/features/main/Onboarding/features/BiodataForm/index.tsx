@@ -2,7 +2,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { TextInput } from "@/components/TextInput";
-import type { OnboardingFormValues } from "@/tanstack/users/useTCompleteOnboarding";
+import type { OnboardingFormValues } from "@/api/users/useTCompleteOnboarding";
 
 interface BiodataFormProps {
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;

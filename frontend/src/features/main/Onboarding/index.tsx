@@ -1,9 +1,9 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { useTProfile } from "@/tanstack/auth/profile";
+import { useTProfile } from "@/api/auth/profile";
 import {
   useTCompleteOnboarding,
   type OnboardingFormValues,
-} from "@/tanstack/users/useTCompleteOnboarding";
+} from "@/api/users/useTCompleteOnboarding";
 import { Navigate } from "react-router-dom";
 import { BiodataForm } from "./features/BiodataForm";
 import { MainWrapper } from "@/components/MainWrapper";

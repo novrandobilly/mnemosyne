@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NavButton } from "../../../components/nav-button";
 import NavigationContainer from "../../../components/nav-container";
-import { useLogout } from "@/tanstack/auth/logout";
+import { useLogout } from "@/api/auth/logout";
 
 const AdminNavbar: FC = () => {
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useTProfile } from "../../tanstack/auth/profile";
+import { useTProfile } from "../../api/auth/profile";
 
 export const RootRedirect = () => {
   const { data: profile, isPending } = useTProfile();

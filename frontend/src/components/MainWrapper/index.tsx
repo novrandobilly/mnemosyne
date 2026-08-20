@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import { useTProfile } from "@/tanstack/auth/profile";
+import { useTProfile } from "@/api/auth/profile";
 import AdminWrapper from "./features/admin-wrapper";
 import ParticipantWrapper from "./features/participant-wrapper";
 import PublicWrapper from "./features/public-wrapper";
