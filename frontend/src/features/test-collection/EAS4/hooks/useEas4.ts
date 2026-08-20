@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { eas4Data } from "@/data/eas4";
-import { useTSubmitTestResult } from "@/tanstack/test/useTSubmitTestResult";
-import { useNavigate } from "react-router-dom";
+import { useEas4Scoring } from "./useEas4Scoring";
 
 export type Eas4AnswerRecord = Record<number, "sama" | "beda">;
 type Eas4FormValues = Record<string, "sama" | "beda">;
@@ -16,8 +15,7 @@ export const useEas4 = () => {
     return saved !== null ? parseInt(saved, 10) : INITIAL_SECONDS;
   });
   const hasAutoSubmitted = useRef(false);
-  const { mutateAsync: submitResult, isPending: isSubmitting } = useTSubmitTestResult();
-  const navigate = useNavigate();
+  const { handleFinish: submitFinish, isSubmitting } = useEas4Scoring();
 
   const methods = useForm<Eas4FormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("eas4_progress") || "{}"),
@@ -33,19 +31,9 @@ export const useEas4 = () => {
   );
   const answeredCount = Object.keys(answers).length;
 
-  const handleFinish = useCallback(async () => {
-    try {
-      await submitResult({
-        testType: "eas4",
-        answers,
-      });
-      sessionStorage.removeItem("eas4_progress");
-      sessionStorage.removeItem("eas4_seconds_left");
-      navigate("/psikotes");
-    } catch (error) {
-      console.error("Failed to submit EAS4 answers", error);
-    }
-  }, [answers, submitResult, navigate]);
+  const handleFinish = useCallback(() => {
+    submitFinish(answers);
+  }, [answers, submitFinish]);
 
   // Countdown timer
   useEffect(() => {
