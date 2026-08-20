@@ -14,7 +14,7 @@ function GridCell({ value }: CellProps) {
   return (
     <div
       className={cn(
-        "flex h-12 w-24 items-center justify-center border border-neutral-300 px-2 text-center",
+        "flex h-12 w-32 items-center justify-center border border-neutral-300 px-2 text-center",
         isEmpty
           ? "border-dashed border-neutral-400 bg-neutral-100"
           : "bg-white",

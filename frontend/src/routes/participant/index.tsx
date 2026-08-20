@@ -12,7 +12,7 @@ import { Eas7Test } from "@/features/test-collection/EAS7/pages/eas7-test";
 import { Eas7Introduction } from "@/features/test-collection/EAS7/pages/eas7-introduction";
 import { Eas10Test } from "@/features/test-collection/EAS10/pages/eas10-test";
 import { Eas10Introduction } from "@/features/test-collection/EAS10/pages/eas10-introduction";
-import { A5Test } from "@/features/test-collection/A5";
+import { A5Test, A5Introduction } from "@/features/test-collection/A5";
 import { DrTest } from "@/features/test-collection/DR/pages/dr-test";
 import { DrIntroduction } from "@/features/test-collection/DR/pages/dr-introduction";
 import { Da5Test } from "@/features/test-collection/DA5/pages/da5-test";
@@ -125,7 +125,20 @@ export const participantRoutes: RouteObject[] = [
       },
       {
         path: "a5",
-        element: <A5Test />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="introduction" replace />,
+          },
+          {
+            path: "introduction",
+            element: <A5Introduction />,
+          },
+          {
+            path: "test-start",
+            element: <A5Test />,
+          },
+        ],
       },
       {
         path: "dr",
