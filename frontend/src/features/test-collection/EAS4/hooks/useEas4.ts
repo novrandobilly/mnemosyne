@@ -4,8 +4,8 @@ import { eas4Data } from "@/data/eas4";
 import { useTSubmitTestResult } from "@/tanstack/test/useTSubmitTestResult";
 import { useNavigate } from "react-router-dom";
 
-export type Eas4AnswerRecord = Record<number, boolean>;
-type Eas4FormValues = Record<string, boolean>;
+export type Eas4AnswerRecord = Record<number, "sama" | "beda">;
+type Eas4FormValues = Record<string, "sama" | "beda">;
 
 const INITIAL_SECONDS = 5 * 60;
 
@@ -29,7 +29,7 @@ export const useEas4 = () => {
   const answers: Eas4AnswerRecord = Object.fromEntries(
     Object.entries(values)
       .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && (v as any) !== "")
-      .map(([k, v]) => [Number(k.slice(2)), v as boolean]),
+      .map(([k, v]) => [Number(k.slice(2)), v as "sama" | "beda"]),
   );
   const answeredCount = Object.keys(answers).length;
 
@@ -94,12 +94,12 @@ export const useEas4 = () => {
   }, []);
 
   const selectAnswer = useCallback(
-    (id: number, isSame: boolean) => {
+    (id: number, type: "sama" | "beda") => {
       const current = methods.getValues(`q_${id}`);
-      if (current === isSame) {
+      if (current === type) {
         methods.setValue(`q_${id}`, null as any);
       } else {
-        methods.setValue(`q_${id}`, isSame);
+        methods.setValue(`q_${id}`, type);
         advanceFocus(id);
       }
     },
@@ -115,10 +115,10 @@ export const useEas4 = () => {
 
       if (e.key === "s" || e.key === "S") {
         e.preventDefault();
-        selectAnswer(focusedId, true);
+        selectAnswer(focusedId, "sama");
       } else if (e.key === "b" || e.key === "B") {
         e.preventDefault();
-        selectAnswer(focusedId, false);
+        selectAnswer(focusedId, "beda");
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
         const prevItem = [...eas4Data]

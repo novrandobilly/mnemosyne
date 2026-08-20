@@ -11,7 +11,7 @@ export interface EAS4RowProps {
 
 export const EAS4Row = ({ id, leftValue, rightValue }: EAS4RowProps) => {
   const { answers, selectAnswer, focusedId, setFocusedId } = useEas4Context();
-  const selectedAnswer = answers[id] as boolean | undefined;
+  const selectedAnswer = answers[id];
   const isFocused = focusedId === id;
   const rowRef = useRef<HTMLDivElement>(null);
 
@@ -21,8 +21,8 @@ export const EAS4Row = ({ id, leftValue, rightValue }: EAS4RowProps) => {
     }
   }, [isFocused]);
 
-  const isSame = selectedAnswer === true;
-  const isDiff = selectedAnswer === false;
+  const isSame = selectedAnswer === "sama";
+  const isDiff = selectedAnswer === "beda";
 
   return (
     <div
@@ -60,7 +60,7 @@ export const EAS4Row = ({ id, leftValue, rightValue }: EAS4RowProps) => {
           type="button"
           onClick={(e) => {
             e.stopPropagation();
-            selectAnswer(id, false);
+            selectAnswer(id, "beda");
           }}
           className={cn(
             "h-7 w-12 rounded-md text-xs font-semibold transition-colors cursor-pointer",
@@ -77,7 +77,7 @@ export const EAS4Row = ({ id, leftValue, rightValue }: EAS4RowProps) => {
           type="button"
           onClick={(e) => {
             e.stopPropagation();
-            selectAnswer(id, true);
+            selectAnswer(id, "sama");
           }}
           className={cn(
             "h-7 w-12 rounded-md text-xs font-semibold transition-colors cursor-pointer",
