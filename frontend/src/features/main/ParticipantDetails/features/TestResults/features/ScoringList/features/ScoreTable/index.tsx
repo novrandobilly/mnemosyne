@@ -4,6 +4,7 @@ import { SCORE_ITEM_CONFIG } from "@/features/main/ParticipantDetails/constants/
 import type { ScoreItem } from "@/features/main/ParticipantDetails/types";
 import { useScoringList } from "../../context/ScoringListContext";
 import ScoreRow from "../../components/ScoreRow";
+import { scoreEas4 } from "@/data/eas4/scoring";
 
 const ScoreTable: FC = () => {
   const { showAll } = useScoringList();
@@ -14,10 +15,22 @@ const ScoreTable: FC = () => {
   const scoreItems: ScoreItem[] = SCORE_ITEM_CONFIG.map(({ id, label }) => {
     const result = testResults.find((r) => r.test_type === id);
     const isCompleted = result?.status === "completed";
+
+    let score = "-";
+    if (isCompleted) {
+      if (result?.data?.score != null) {
+        score = String(result.data.score);
+      } else if (id === "eas4" && result?.data) {
+        const rawAnswers = result.data.raw_answers || result.data;
+        const scoring = scoreEas4(rawAnswers);
+        score = String(scoring.score);
+      }
+    }
+
     return {
       id,
       label,
-      score: result?.data?.score != null ? String(result.data.score) : "-",
+      score,
       status: isCompleted ? "Completed" : "Not Done",
     };
   });
