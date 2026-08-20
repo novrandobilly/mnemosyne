@@ -4,6 +4,7 @@ import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { cn } from "@/lib/tailwind-merge";
 import { Eas5Provider, useEas5Context } from "../../context/Eas5Context";
 import { EAS5QuestionRow } from "./features/EAS5QuestionRow";
+import { useEas5FinishConfirmModal } from "../../hooks/useEas5FinishConfirmModal";
 
 const Eas5TestInner = () => {
   const {
@@ -16,7 +17,11 @@ const Eas5TestInner = () => {
     goToPile,
     formatTime,
     eas5Data,
+    handleFinish,
+    isSubmitting,
   } = useEas5Context();
+
+  const { handleConfirmFinish } = useEas5FinishConfirmModal();
 
   return (
     <MainWrapper pageTitle="EAS5">
@@ -89,6 +94,37 @@ const Eas5TestInner = () => {
                 targetBlock={question.targetBlock}
               />
             ))}
+          </div>
+
+          <div className="flex items-center justify-between mt-4">
+            <div className="flex gap-2">
+              <IntiDinamisButton
+                variant="secondary"
+                onClick={() => goToPile(currentPileId - 1)}
+                disabled={currentPileId === 1}
+              >
+                Sebelumnya
+              </IntiDinamisButton>
+              <IntiDinamisButton
+                variant="secondary"
+                onClick={() => goToPile(currentPileId + 1)}
+                disabled={currentPileId === 10}
+              >
+                Selanjutnya
+              </IntiDinamisButton>
+            </div>
+
+            {currentPileId === 10 && (
+              <IntiDinamisButton
+                variant="primary"
+                onClick={() =>
+                  handleConfirmFinish(handleFinish, answeredCount, totalQuestions)
+                }
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Mengirim..." : "Selesai"}
+              </IntiDinamisButton>
+            )}
           </div>
         </section>
       </div>

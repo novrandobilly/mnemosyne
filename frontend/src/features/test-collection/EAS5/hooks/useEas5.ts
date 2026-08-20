@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { eas5Data } from "@/data/eas5";
+import { useTSubmitEas5 } from "@/api/test/eas5/useTSubmitEas5";
 
 export interface Eas5AnswerRecord {
   [questionId: number]: number;
@@ -16,6 +17,7 @@ export const useEas5 = () => {
     return saved !== null ? parseInt(saved, 10) : INITIAL_SECONDS;
   });
   const hasAutoSubmitted = useRef(false);
+  const { mutateAsync: submitResult, isPending: isSubmitting } = useTSubmitEas5();
 
   const methods = useForm<Eas5FormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("eas5_progress") || "{}"),
@@ -34,6 +36,10 @@ export const useEas5 = () => {
       .map(([k, v]) => [Number(k.slice(2)), v as number]),
   );
   const answeredCount = Object.keys(answers).length;
+
+  const handleFinish = () => {
+    submitResult({ testType: "eas5", answers });
+  };
 
   // Countdown timer
   useEffect(() => {
@@ -63,6 +69,7 @@ export const useEas5 = () => {
       "EAS5 timer ended. Auto submit triggered.",
       methods.getValues(),
     );
+    handleFinish();
   }, [secondsLeft]);
 
   // Persist answers across page refresh
@@ -106,5 +113,7 @@ export const useEas5 = () => {
     goToPile,
     formatTime,
     eas5Data,
+    handleFinish,
+    isSubmitting,
   };
 };
