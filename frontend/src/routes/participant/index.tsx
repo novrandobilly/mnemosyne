@@ -1,26 +1,29 @@
+import { lazy } from "react";
 import { Navigate, type RouteObject } from "react-router-dom";
 import AssessmentLobby from "../../features/main/AssessmentLobby";
-import { PapiKostickTest } from "@/features/test-collection/PapiKostick";
-import { DiscTest } from "@/features/test-collection/DISC";
-import { Eas5Test } from "@/features/test-collection/EAS5/pages/eas5-test";
-import { Eas5Introduction } from "@/features/test-collection/EAS5/pages/eas5-introduction";
-import { Eas4Test } from "@/features/test-collection/EAS4/pages/eas4-test";
-import { Eas4Introduction } from "@/features/test-collection/EAS4/pages/eas4-introduction";
-import { Eas6Test } from "@/features/test-collection/EAS6/pages/eas6-test";
-import { Eas6Introduction } from "@/features/test-collection/EAS6/pages/eas6-introduction";
-import { Eas7Test } from "@/features/test-collection/EAS7/pages/eas7-test";
-import { Eas7Introduction } from "@/features/test-collection/EAS7/pages/eas7-introduction";
-import { Eas10Test } from "@/features/test-collection/EAS10/pages/eas10-test";
-import { Eas10Introduction } from "@/features/test-collection/EAS10/pages/eas10-introduction";
-import { A5Test, A5Introduction } from "@/features/test-collection/A5";
-import { DrTest } from "@/features/test-collection/DR/pages/dr-test";
-import { DrIntroduction } from "@/features/test-collection/DR/pages/dr-introduction";
-import { Da5Test } from "@/features/test-collection/DA5/pages/da5-test";
-import { Da5Introduction } from "@/features/test-collection/DA5/pages/da5-introduction";
-import { St7Test } from "@/features/test-collection/ST7/pages/st7-test";
-import { St7Introduction } from "@/features/test-collection/ST7/pages/st7-introduction";
-import { Intray1Test } from "@/features/test-collection/Intray1";
-import { Intray2Test } from "@/features/test-collection/Intray2";
+
+const PapiKostickTest = lazy(() => import("@/features/test-collection/PapiKostick").then(m => ({ default: m.PapiKostickTest })));
+const DiscTest = lazy(() => import("@/features/test-collection/DISC").then(m => ({ default: m.DiscTest })));
+const Eas5Test = lazy(() => import("@/features/test-collection/EAS5/pages/eas5-test").then(m => ({ default: m.Eas5Test })));
+const Eas5Introduction = lazy(() => import("@/features/test-collection/EAS5/pages/eas5-introduction").then(m => ({ default: m.Eas5Introduction })));
+const Eas4Test = lazy(() => import("@/features/test-collection/EAS4/pages/eas4-test").then(m => ({ default: m.Eas4Test })));
+const Eas4Introduction = lazy(() => import("@/features/test-collection/EAS4/pages/eas4-introduction").then(m => ({ default: m.Eas4Introduction })));
+const Eas6Test = lazy(() => import("@/features/test-collection/EAS6/pages/eas6-test").then(m => ({ default: m.Eas6Test })));
+const Eas6Introduction = lazy(() => import("@/features/test-collection/EAS6/pages/eas6-introduction").then(m => ({ default: m.Eas6Introduction })));
+const Eas7Test = lazy(() => import("@/features/test-collection/EAS7/pages/eas7-test").then(m => ({ default: m.Eas7Test })));
+const Eas7Introduction = lazy(() => import("@/features/test-collection/EAS7/pages/eas7-introduction").then(m => ({ default: m.Eas7Introduction })));
+const Eas10Test = lazy(() => import("@/features/test-collection/EAS10/pages/eas10-test").then(m => ({ default: m.Eas10Test })));
+const Eas10Introduction = lazy(() => import("@/features/test-collection/EAS10/pages/eas10-introduction").then(m => ({ default: m.Eas10Introduction })));
+const A5Test = lazy(() => import("@/features/test-collection/A5").then(m => ({ default: m.A5Test })));
+const A5Introduction = lazy(() => import("@/features/test-collection/A5").then(m => ({ default: m.A5Introduction })));
+const DrTest = lazy(() => import("@/features/test-collection/DR/pages/dr-test").then(m => ({ default: m.DrTest })));
+const DrIntroduction = lazy(() => import("@/features/test-collection/DR/pages/dr-introduction").then(m => ({ default: m.DrIntroduction })));
+const Da5Test = lazy(() => import("@/features/test-collection/DA5/pages/da5-test").then(m => ({ default: m.Da5Test })));
+const Da5Introduction = lazy(() => import("@/features/test-collection/DA5/pages/da5-introduction").then(m => ({ default: m.Da5Introduction })));
+const St7Test = lazy(() => import("@/features/test-collection/ST7/pages/st7-test").then(m => ({ default: m.St7Test })));
+const St7Introduction = lazy(() => import("@/features/test-collection/ST7/pages/st7-introduction").then(m => ({ default: m.St7Introduction })));
+const Intray1Test = lazy(() => import("@/features/test-collection/Intray1").then(m => ({ default: m.Intray1Test })));
+const Intray2Test = lazy(() => import("@/features/test-collection/Intray2").then(m => ({ default: m.Intray2Test })));
 
 export const participantRoutes: RouteObject[] = [
   {

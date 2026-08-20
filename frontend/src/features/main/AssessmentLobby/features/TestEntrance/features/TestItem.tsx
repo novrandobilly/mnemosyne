@@ -50,21 +50,33 @@ export const TestItem: FC<TestItemProps> = ({
       </div>
 
       {isCompleted ? (
-        <div className="mb-4 rounded-lg bg-neutral-50 border border-neutral-150 p-2.5">
-          <IntiDinamisText size="12" className="text-neutral-500 text-center font-medium">
-            Anda telah menyelesaikan tes ini.
+        <div className="flex items-center justify-center gap-2 rounded-xl bg-green-50/50 py-3 border border-green-100 text-green-700">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            className="h-4 w-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m4.5 12.75 6 6 9-13.5"
+            />
+          </svg>
+          <IntiDinamisText size="12" weight="semibold" className="text-green-700">
+            Sudah dikerjakan
           </IntiDinamisText>
         </div>
-      ) : null}
-
-      <IntiDinamisButton
-        variant="secondary"
-        className="w-full"
-        onClick={onEnter}
-        disabled={isCompleted}
-      >
-        {isCompleted ? "Completed" : "Enter Test →"}
-      </IntiDinamisButton>
+      ) : (
+        <IntiDinamisButton
+          variant="secondary"
+          className="w-full"
+          onClick={onEnter}
+        >
+          Enter Test →
+        </IntiDinamisButton>
+      )}
     </div>
   );
 };
