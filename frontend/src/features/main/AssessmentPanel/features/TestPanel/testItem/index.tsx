@@ -8,6 +8,7 @@ interface TestItemProps {
   tag: string;
   enabled: boolean;
   onToggle: () => void;
+  fullyDisabled?: boolean;
 }
 
 export const TestItem = ({
@@ -16,9 +17,14 @@ export const TestItem = ({
   tag,
   enabled,
   onToggle,
+  fullyDisabled = false,
 }: TestItemProps) => {
   return (
-    <div className="flex items-center gap-4 px-5 py-4 transition hover:bg-neutral-50">
+    <div
+      className={`flex items-center gap-4 px-5 py-4 transition ${
+        fullyDisabled ? "opacity-40 cursor-not-allowed" : "hover:bg-neutral-50"
+      }`}
+    >
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neutral-200 bg-neutral-50 text-sm font-semibold text-neutral-700">
         {number}
       </div>
@@ -35,10 +41,19 @@ export const TestItem = ({
           {tag}
         </IntiDinamisText>
       </div>
-      <StatusCapsule enabled={enabled}>
-        {enabled ? "Enabled" : "Disabled"}
-      </StatusCapsule>
-      <SwitchButton enabled={enabled} onToggle={onToggle} />
+      {fullyDisabled ? (
+        <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-400">
+          Unavailable
+        </span>
+      ) : (
+        <>
+          <StatusCapsule enabled={enabled}>
+            {enabled ? "Enabled" : "Disabled"}
+          </StatusCapsule>
+          <SwitchButton enabled={enabled} onToggle={onToggle} />
+        </>
+      )}
     </div>
   );
 };
+
