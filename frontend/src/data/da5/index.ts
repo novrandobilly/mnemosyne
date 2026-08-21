@@ -1,3 +1,5 @@
+export type Da5Answer = "A" | "B" | "C" | "D" | "E";
+
 export interface Da5Item {
   id: number;
   stimulusImageUrl: string;

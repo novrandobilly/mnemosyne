@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { da5Data } from "@/data/da5";
+import { da5Data, type Da5Answer } from "@/data/da5";
+import { useTSubmitDa5 } from "@/api/test/da5/useTSubmitDa5";
 
-export type Da5AnswerRecord = Record<number, string>;
-type Da5FormValues = Record<string, string>;
+export type Da5AnswerRecord = Record<number, Da5Answer>;
+type Da5FormValues = Record<string, Da5Answer>;
 
 const INITIAL_SECONDS = 50 * 60;
 
@@ -13,6 +14,7 @@ export const useDa5 = () => {
   const [isRulesOpen, setIsRulesOpen] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const hasAutoSubmitted = useRef(false);
+  const { mutateAsync: submitResult, isPending: isSubmitting } = useTSubmitDa5();
 
   const methods = useForm<Da5FormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("da5_progress") || "{}"),
@@ -25,11 +27,15 @@ export const useDa5 = () => {
     Object.entries(values)
       .filter(
         ([k, v]) =>
-          k.startsWith("q_") && v !== null && v !== undefined && v !== "",
+          k.startsWith("q_") && v !== null && v !== undefined,
       )
-      .map(([k, v]) => [Number(k.slice(2)), v]),
+      .map(([k, v]) => [Number(k.slice(2)), v as Da5Answer]),
   );
   const answeredCount = Object.keys(answers).length;
+
+  const handleFinish = () => {
+    submitResult({ testType: "da5", answers });
+  };
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -44,7 +50,7 @@ export const useDa5 = () => {
     hasAutoSubmitted.current = true;
     setIsTimeUp(true);
     console.log("DA5 timer ended. Auto submit triggered.", methods.getValues());
-    // TODO: submit to PocketBase
+    handleFinish();
   }, [secondsLeft]);
 
   // Persist answers across page refresh
@@ -55,7 +61,7 @@ export const useDa5 = () => {
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  const selectAnswer = (id: number, option: string) => {
+  const selectAnswer = (id: number, option: Da5Answer) => {
     if (isTimeUp) return;
     const current = methods.getValues(`q_${id}`);
     if (current === option) {
@@ -95,5 +101,7 @@ export const useDa5 = () => {
     goPrev,
     toggleRules,
     formatTime,
+    handleFinish,
+    isSubmitting,
   };
 };
