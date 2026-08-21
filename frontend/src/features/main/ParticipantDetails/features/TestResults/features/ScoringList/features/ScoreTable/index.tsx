@@ -10,6 +10,7 @@ import { scoreEas6 } from "@/data/eas6/scoring";
 import { scoreEas7 } from "@/data/eas7/scoring";
 import { scoreEas10 } from "@/data/eas10/scoring";
 import { scoreDa5 } from "@/data/da5/scoring";
+import { scoreSt7 } from "@/data/st7/scoring";
 
 const ScoreTable: FC = () => {
   const { showAll } = useScoringList();
@@ -48,6 +49,10 @@ const ScoreTable: FC = () => {
       } else if (id === "da5" && result?.data) {
         const rawAnswers = result.data.raw_answers || result.data;
         const scoring = scoreDa5(rawAnswers);
+        score = String(scoring.score);
+      } else if (id === "st7" && result?.data) {
+        const rawAnswers = result.data.raw_answers || result.data;
+        const scoring = scoreSt7(rawAnswers);
         score = String(scoring.score);
       }
     }
