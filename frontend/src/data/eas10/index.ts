@@ -1,4 +1,4 @@
-export type Eas10Answer = "Benar" | "Salah" | "Unknown";
+export type Eas10Answer = "benar" | "salah" | "belum-pasti";
 
 export interface Eas10Item {
   id: number;

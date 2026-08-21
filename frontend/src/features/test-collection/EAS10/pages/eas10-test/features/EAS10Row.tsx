@@ -3,9 +3,9 @@ import type { Eas10Answer } from "@/data/eas10";
 import { useEas10Context } from "../../../context/Eas10Context";
 
 const CHOICES: { value: Eas10Answer; label: string; title: string }[] = [
-  { value: "Benar", label: "B", title: "Benar" },
-  { value: "Salah", label: "S", title: "Salah" },
-  { value: "Unknown", label: "?", title: "Tidak Tahu" },
+  { value: "benar", label: "B", title: "Benar" },
+  { value: "salah", label: "S", title: "Salah" },
+  { value: "belum-pasti", label: "?", title: "Belum Pasti" },
 ];
 
 interface EAS10RowProps {

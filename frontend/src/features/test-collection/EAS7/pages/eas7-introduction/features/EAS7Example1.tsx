@@ -24,22 +24,22 @@ const PREMISES = [
 ];
 
 const STATIC_ROWS: StaticRow[] = [
-  { id: 1, statement: "Ella adalah seorang Wanita.", selected: "True" },
-  { id: 2, statement: "Anak laki-laki Ella sakit.", selected: "False" },
+  { id: 1, statement: "Ella adalah seorang Wanita.", selected: "benar" },
+  { id: 2, statement: "Anak laki-laki Ella sakit.", selected: "salah" },
 ];
 
 const INTERACTIVE_ROWS: InteractiveRow[] = [
-  { id: 3, statement: "Ella bekerja pada perusahaan C", correctAnswer: "Unknown" },
-  { id: 4, statement: "Ella belum pernah menikah", correctAnswer: "False" },
-  { id: 5, statement: "Ella memeriksa busi", correctAnswer: "Unknown" },
-  { id: 6, statement: "Yeni adalah adik kandung Ella", correctAnswer: "Unknown" },
-  { id: 7, statement: "Perusahaan Yeni menghasilkan busi", correctAnswer: "Unknown" },
+  { id: 3, statement: "Ella bekerja pada perusahaan C", correctAnswer: "belum-pasti" },
+  { id: 4, statement: "Ella belum pernah menikah", correctAnswer: "salah" },
+  { id: 5, statement: "Ella memeriksa busi", correctAnswer: "belum-pasti" },
+  { id: 6, statement: "Yeni adalah adik kandung Ella", correctAnswer: "belum-pasti" },
+  { id: 7, statement: "Perusahaan Yeni menghasilkan busi", correctAnswer: "belum-pasti" },
 ];
 
 const CHOICES: { value: Eas7Answer; label: string; title: string }[] = [
-  { value: "True", label: "B", title: "Benar" },
-  { value: "False", label: "S", title: "Salah" },
-  { value: "Unknown", label: "?", title: "Tidak Tahu" },
+  { value: "benar", label: "B", title: "Benar" },
+  { value: "salah", label: "S", title: "Salah" },
+  { value: "belum-pasti", label: "?", title: "Belum Pasti" },
 ];
 
 export const EAS7Example1 = () => {

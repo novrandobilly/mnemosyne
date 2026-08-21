@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { eas10Data, type Eas10Answer } from "@/data/eas10";
+import { useTSubmitEas10 } from "@/api/test/eas10/useTSubmitEas10";
 
 export type Eas10AnswerRecord = Record<number, Eas10Answer>;
 type Eas10FormValues = Record<string, Eas10Answer>;
@@ -10,6 +11,7 @@ const INITIAL_SECONDS = 5 * 60;
 export const useEas10 = () => {
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
   const hasAutoSubmitted = useRef(false);
+  const { mutateAsync: submitResult, isPending: isSubmitting } = useTSubmitEas10();
 
   const methods = useForm<Eas10FormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("eas10_progress") || "{}"),
@@ -19,11 +21,15 @@ export const useEas10 = () => {
 
   const answers: Eas10AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && (v as any) !== "")
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined)
       .map(([k, v]) => [Number(k.slice(2)), v as Eas10Answer]),
   );
   const answeredCount = Object.keys(answers).length;
   const totalQuestions = eas10Data.length;
+
+  const handleFinish = () => {
+    submitResult({ testType: "eas10", answers });
+  };
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -40,7 +46,7 @@ export const useEas10 = () => {
       "EAS10 timer ended. Auto submit triggered.",
       methods.getValues(),
     );
-    // TODO: submit to PocketBase
+    handleFinish();
   }, [secondsLeft]);
 
   // Persist answers across page refresh
@@ -75,5 +81,7 @@ export const useEas10 = () => {
     isTimeUp: secondsLeft === 0,
     selectAnswer,
     formatTime,
+    handleFinish,
+    isSubmitting,
   };
 };

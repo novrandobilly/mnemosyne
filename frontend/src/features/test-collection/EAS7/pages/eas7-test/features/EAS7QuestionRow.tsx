@@ -4,9 +4,9 @@ import type { Eas7Answer } from "@/data/eas7";
 import { useEas7Context } from "../../../context/Eas7Context";
 
 const CHOICES: { value: Eas7Answer; label: string; title: string }[] = [
-  { value: "True", label: "B", title: "Benar" },
-  { value: "False", label: "S", title: "Salah" },
-  { value: "Unknown", label: "?", title: "Tidak Tahu" },
+  { value: "benar", label: "B", title: "Benar" },
+  { value: "salah", label: "S", title: "Salah" },
+  { value: "belum-pasti", label: "?", title: "Belum Pasti" },
 ];
 
 interface EAS7QuestionRowProps {

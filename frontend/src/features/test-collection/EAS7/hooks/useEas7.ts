@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { eas7Data, type Eas7Answer } from "@/data/eas7";
+import { useTSubmitEas7 } from "@/api/test/eas7/useTSubmitEas7";
 
 export type Eas7AnswerRecord = Record<number, Eas7Answer>;
 type Eas7FormValues = Record<string, Eas7Answer>;
@@ -15,6 +16,7 @@ export const useEas7 = () => {
   const [currentGroupId, setCurrentGroupId] = useState(1);
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
   const hasAutoSubmitted = useRef(false);
+  const { mutateAsync: submitResult, isPending: isSubmitting } = useTSubmitEas7();
 
   const methods = useForm<Eas7FormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("eas7_progress") || "{}"),
@@ -27,10 +29,14 @@ export const useEas7 = () => {
 
   const answers: Eas7AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && (v as any) !== "")
-      .map(([k, v]) => [Number(k.slice(2)), v as Eas7Answer]),
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined)
+      .map(([k, v]) => [Number(k.slice(2)), v as Eas7Answer])
   );
   const answeredCount = Object.keys(answers).length;
+
+  const handleFinish = () => {
+    submitResult({ testType: "eas7", answers });
+  };
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -49,7 +55,7 @@ export const useEas7 = () => {
       "EAS7 timer ended. Auto submit triggered.",
       methods.getValues(),
     );
-    // TODO: submit to PocketBase
+    handleFinish();
   }, [secondsLeft]);
 
   // Persist answers across page refresh
@@ -92,5 +98,7 @@ export const useEas7 = () => {
     selectAnswer,
     goToGroup,
     formatTime,
+    handleFinish,
+    isSubmitting,
   };
 };

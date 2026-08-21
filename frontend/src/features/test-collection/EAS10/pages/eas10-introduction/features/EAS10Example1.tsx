@@ -18,21 +18,21 @@ interface InteractiveRow {
 }
 
 const STATIC_ROWS: StaticRow[] = [
-  { id: 1, expression: "X = Y = Z", conclusion: "X = Z", selected: "Benar" },
+  { id: 1, expression: "X = Y = Z", conclusion: "X = Z", selected: "benar" },
 ];
 
 const INTERACTIVE_ROWS: InteractiveRow[] = [
-  { id: 2, expression: "X > Y > Z", conclusion: "X = Z", correctAnswer: "Salah" },
-  { id: 3, expression: "X ≠ Y ≠ Z", conclusion: "X ≤ Z", correctAnswer: "Unknown" },
-  { id: 4, expression: "X < Y < Z", conclusion: "X < Z", correctAnswer: "Benar" },
-  { id: 5, expression: "X = Y > Z", conclusion: "X = Z", correctAnswer: "Salah" },
-  { id: 6, expression: "X ≠ Y ≠ Z", conclusion: "X > Z", correctAnswer: "Unknown" },
+  { id: 2, expression: "X > Y > Z", conclusion: "X = Z", correctAnswer: "salah" },
+  { id: 3, expression: "X ≠ Y ≠ Z", conclusion: "X ≤ Z", correctAnswer: "belum-pasti" },
+  { id: 4, expression: "X < Y < Z", conclusion: "X < Z", correctAnswer: "benar" },
+  { id: 5, expression: "X = Y > Z", conclusion: "X = Z", correctAnswer: "salah" },
+  { id: 6, expression: "X ≠ Y ≠ Z", conclusion: "X > Z", correctAnswer: "belum-pasti" },
 ];
 
 const CHOICES: { value: Eas10Answer; label: string; title: string }[] = [
-  { value: "Benar", label: "B", title: "Benar" },
-  { value: "Salah", label: "S", title: "Salah" },
-  { value: "Unknown", label: "?", title: "Tidak Tahu" },
+  { value: "benar", label: "B", title: "Benar" },
+  { value: "salah", label: "S", title: "Salah" },
+  { value: "belum-pasti", label: "?", title: "Belum Pasti" },
 ];
 
 export const EAS10Example1 = () => {

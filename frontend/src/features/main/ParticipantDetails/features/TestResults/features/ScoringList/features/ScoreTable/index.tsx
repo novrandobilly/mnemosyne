@@ -7,6 +7,8 @@ import ScoreRow from "../../components/ScoreRow";
 import { scoreEas4 } from "@/data/eas4/scoring";
 import { scoreEas5 } from "@/data/eas5/scoring";
 import { scoreEas6 } from "@/data/eas6/scoring";
+import { scoreEas7 } from "@/data/eas7/scoring";
+import { scoreEas10 } from "@/data/eas10/scoring";
 
 const ScoreTable: FC = () => {
   const { showAll } = useScoringList();
@@ -33,6 +35,14 @@ const ScoreTable: FC = () => {
       } else if (id === "eas6" && result?.data) {
         const rawAnswers = result.data.raw_answers || result.data;
         const scoring = scoreEas6(rawAnswers);
+        score = String(scoring.score);
+      } else if (id === "eas7" && result?.data) {
+        const rawAnswers = result.data.raw_answers || result.data;
+        const scoring = scoreEas7(rawAnswers);
+        score = String(scoring.score);
+      } else if (id === "eas10" && result?.data) {
+        const rawAnswers = result.data.raw_answers || result.data;
+        const scoring = scoreEas10(rawAnswers);
         score = String(scoring.score);
       }
     }

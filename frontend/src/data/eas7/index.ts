@@ -1,4 +1,4 @@
-export type Eas7Answer = "True" | "False" | "Unknown";
+export type Eas7Answer = "benar" | "salah" | "belum-pasti";
 
 export interface Eas7Question {
   id: number;
