@@ -32,14 +32,16 @@ export const EAS6Card = ({ id, question, options }: EAS6CardProps) => {
 
         {/* Right Side: Options buttons */}
         <div className="flex flex-nowrap gap-2 overflow-x-auto md:overflow-x-visible">
-          {options.map((option) => {
-            const isSelected = selectedAnswer === option;
+          {options.map((option, idx) => {
+            const letters = ["A", "B", "C", "D", "E"] as const;
+            const letter = letters[idx];
+            const isSelected = selectedAnswer === letter;
 
             return (
               <button
                 key={option}
                 type="button"
-                onClick={() => selectAnswer(id, option)}
+                onClick={() => selectAnswer(id, letter)}
                 className={cn(
                   "flex min-w-12 sm:min-w-14 items-center justify-center rounded-xl border-2 px-3 py-1.5 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 cursor-pointer",
                   isSelected

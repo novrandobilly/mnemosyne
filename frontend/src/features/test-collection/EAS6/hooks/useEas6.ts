@@ -1,15 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { eas6Data } from "@/data/eas6";
+import { useTSubmitEas6 } from "@/api/test/eas6/useTSubmitEas6";
+import { type Eas6Choice } from "@/data/eas6/solution";
 
-export type Eas6AnswerRecord = Record<number, string>;
-type Eas6FormValues = Record<string, string>;
+export type Eas6AnswerRecord = Record<number, Eas6Choice>;
+type Eas6FormValues = Record<string, Eas6Choice>;
 
-const INITIAL_SECONDS = 50 * 60;
+const INITIAL_SECONDS = 5 * 60;
 
 export const useEas6 = () => {
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
   const hasAutoSubmitted = useRef(false);
+  const { mutateAsync: submitResult, isPending: isSubmitting } =
+    useTSubmitEas6();
 
   const methods = useForm<Eas6FormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("eas6_progress") || "{}"),
@@ -19,11 +23,15 @@ export const useEas6 = () => {
 
   const answers: Eas6AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && v !== "")
-      .map(([k, v]) => [Number(k.slice(2)), v]),
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined)
+      .map(([k, v]) => [Number(k.slice(2)), v as Eas6Choice]),
   );
   const answeredCount = Object.keys(answers).length;
   const totalQuestions = eas6Data.length;
+
+  const handleFinish = () => {
+    submitResult({ testType: "eas6", answers });
+  };
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -42,7 +50,7 @@ export const useEas6 = () => {
       "EAS6 timer ended. Auto submit triggered.",
       methods.getValues(),
     );
-    // TODO: submit to PocketBase
+    handleFinish();
   }, [secondsLeft]);
 
   // Persist answers across page refresh
@@ -53,12 +61,12 @@ export const useEas6 = () => {
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  const selectAnswer = (id: number, option: string) => {
+  const selectAnswer = (id: number, optionLetter: Eas6Choice) => {
     const current = methods.getValues(`q_${id}`);
-    if (current === option) {
+    if (current === optionLetter) {
       methods.setValue(`q_${id}`, null as any);
     } else {
-      methods.setValue(`q_${id}`, option);
+      methods.setValue(`q_${id}`, optionLetter);
     }
   };
 
@@ -78,5 +86,7 @@ export const useEas6 = () => {
     selectAnswer,
     formatTime,
     eas6Data,
+    handleFinish,
+    isSubmitting,
   };
 };

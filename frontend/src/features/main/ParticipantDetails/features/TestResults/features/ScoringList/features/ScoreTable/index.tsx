@@ -6,6 +6,7 @@ import { useScoringList } from "../../context/ScoringListContext";
 import ScoreRow from "../../components/ScoreRow";
 import { scoreEas4 } from "@/data/eas4/scoring";
 import { scoreEas5 } from "@/data/eas5/scoring";
+import { scoreEas6 } from "@/data/eas6/scoring";
 
 const ScoreTable: FC = () => {
   const { showAll } = useScoringList();
@@ -28,6 +29,10 @@ const ScoreTable: FC = () => {
       } else if (id === "eas5" && result?.data) {
         const rawAnswers = result.data.raw_answers || result.data;
         const scoring = scoreEas5(rawAnswers);
+        score = String(scoring.score);
+      } else if (id === "eas6" && result?.data) {
+        const rawAnswers = result.data.raw_answers || result.data;
+        const scoring = scoreEas6(rawAnswers);
         score = String(scoring.score);
       }
     }
