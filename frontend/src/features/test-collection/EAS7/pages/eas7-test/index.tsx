@@ -8,9 +8,17 @@ import { EAS7QuestionList } from "./features/EAS7QuestionList";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { useEas7FinishConfirmModal } from "../../hooks/useEas7FinishConfirmModal";
 
+import { eas7Data } from "@/data/eas7";
+
 const Eas7TestInner = () => {
-  const { handleFinish, isSubmitting, answeredCount, totalQuestions } =
-    useEas7Context();
+  const {
+    handleFinish,
+    isSubmitting,
+    answeredCount,
+    totalQuestions,
+    currentGroupId,
+    goToGroup,
+  } = useEas7Context();
   const { handleConfirmFinish } = useEas7FinishConfirmModal();
 
   return (
@@ -22,16 +30,35 @@ const Eas7TestInner = () => {
         <EAS7Premises />
         <EAS7QuestionList />
 
-        <div className="flex justify-end mt-4 mb-8">
-          <IntiDinamisButton
-            variant="primary"
-            onClick={() =>
-              handleConfirmFinish(handleFinish, answeredCount, totalQuestions)
-            }
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Mengirim..." : "Selesai"}
-          </IntiDinamisButton>
+        <div className="flex items-center justify-between mt-4 mb-8">
+          <div className="flex gap-2">
+            <IntiDinamisButton
+              variant="secondary"
+              onClick={() => goToGroup(currentGroupId - 1)}
+              disabled={currentGroupId === 1}
+            >
+              Sebelumnya
+            </IntiDinamisButton>
+            <IntiDinamisButton
+              variant="secondary"
+              onClick={() => goToGroup(currentGroupId + 1)}
+              disabled={currentGroupId === eas7Data.length}
+            >
+              Selanjutnya
+            </IntiDinamisButton>
+          </div>
+
+          {currentGroupId === eas7Data.length && (
+            <IntiDinamisButton
+              variant="primary"
+              onClick={() =>
+                handleConfirmFinish(handleFinish, answeredCount, totalQuestions)
+              }
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Mengirim..." : "Selesai"}
+            </IntiDinamisButton>
+          )}
         </div>
       </div>
     </MainWrapper>

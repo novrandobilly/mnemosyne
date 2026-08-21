@@ -9,8 +9,13 @@ import { useDa5FinishConfirmModal } from "../../hooks/useDa5FinishConfirmModal";
 import { Da5Provider, useDa5Context } from "../../context/Da5Context";
 
 function Da5TestInner() {
-  const { handleFinish, isSubmitting, answeredCount, totalQuestions } =
-    useDa5Context();
+  const {
+    handleFinish,
+    isSubmitting,
+    answeredCount,
+    totalQuestions,
+    currentIndex,
+  } = useDa5Context();
   const { handleConfirmFinish } = useDa5FinishConfirmModal();
 
   return (
@@ -22,15 +27,17 @@ function Da5TestInner() {
       <Da5QuestionView />
 
       <div className="flex justify-end mt-4 mb-8">
-        <IntiDinamisButton
-          variant="primary"
-          onClick={() =>
-            handleConfirmFinish(handleFinish, answeredCount, totalQuestions)
-          }
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Mengirim..." : "Selesai"}
-        </IntiDinamisButton>
+        {currentIndex === totalQuestions - 1 && (
+          <IntiDinamisButton
+            variant="primary"
+            onClick={() =>
+              handleConfirmFinish(handleFinish, answeredCount, totalQuestions)
+            }
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Mengirim..." : "Selesai"}
+          </IntiDinamisButton>
+        )}
       </div>
     </div>
   );
