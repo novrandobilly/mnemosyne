@@ -1,9 +1,9 @@
-import { type A5Item } from "@/data/a5";
+import { type A5Item, type A5Answer } from "@/data/a5/index";
 import { useA5Context } from "../../context/A5Context";
 import { cn } from "@/lib/tailwind-merge";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 
-const OPTION_LABELS = ["A", "B", "C", "D", "E"] as const;
+const OPTION_LABELS: A5Answer[] = ["A", "B", "C", "D", "E"];
 
 interface CellProps {
   value: string | null;
@@ -68,12 +68,12 @@ export function A5QuestionRow({ item }: Props) {
       <div className="grid grid-cols-3 gap-2">
         {item.options.map((option, idx) => {
           const label = OPTION_LABELS[idx];
-          const isSelected = selected === option;
+          const isSelected = selected === label;
           return (
             <button
               key={label}
               disabled={isTimeUp}
-              onClick={() => selectAnswer(item.id, option)}
+              onClick={() => selectAnswer(item.id, label)}
               className={cn(
                 "flex cursor-pointer items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm transition-colors",
                 isSelected

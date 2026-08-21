@@ -1,3 +1,5 @@
+export type A5Answer = "A" | "B" | "C" | "D" | "E";
+
 export interface A5Grid {
   topLeft: string | null;
   topRight: string | null;

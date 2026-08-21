@@ -1,4 +1,4 @@
-import { a5Data } from "@/data/a5";
+import { a5Data } from "@/data/a5/index";
 import { A5QuestionRow } from "../A5QuestionRow";
 
 export function A5List() {

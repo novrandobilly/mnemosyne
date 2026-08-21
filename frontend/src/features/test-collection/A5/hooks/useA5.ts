@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { a5Data } from "@/data/a5";
+import { a5Data, type A5Answer } from "@/data/a5/index";
+import { useTSubmitA5 } from "@/api/test/a5/useTSubmitA5";
 
-export type A5AnswerRecord = Record<number, string>;
-type A5FormValues = Record<string, string>;
+export type A5AnswerRecord = Record<number, A5Answer>;
+type A5FormValues = Record<string, A5Answer>;
 
 const INITIAL_SECONDS = 5 * 60;
 
-export function useA5() {
+export const useA5 = () => {
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const hasAutoSubmitted = useRef(false);
+  const { mutateAsync: submitResult, isPending: isSubmitting } = useTSubmitA5();
 
   const methods = useForm<A5FormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("a5_progress") || "{}"),
@@ -21,12 +23,16 @@ export function useA5() {
   const totalQuestions = a5Data.length;
   const answers: A5AnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k]) => k.startsWith("q_"))
-      .map(([k, v]) => [Number(k.slice(2)), v]),
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined)
+      .map(([k, v]) => [Number(k.slice(2)), v as A5Answer]),
   );
   const answeredCount = Object.keys(answers).length;
 
-  function selectAnswer(id: number, option: string) {
+  const handleFinish = () => {
+    submitResult({ testType: "a5", answers });
+  };
+
+  function selectAnswer(id: number, option: A5Answer) {
     if (isTimeUp) return;
     const current = methods.getValues(`q_${id}`);
     if (current === option) {
@@ -42,7 +48,7 @@ export function useA5() {
         hasAutoSubmitted.current = true;
         setIsTimeUp(true);
         console.log("A5 time is up! Final answers:", answers);
-        // TODO: submit to PocketBase
+        handleFinish();
       }
       return;
     }
@@ -71,5 +77,7 @@ export function useA5() {
     timeDisplay,
     totalQuestions,
     answeredCount,
+    handleFinish,
+    isSubmitting,
   };
-}
+};

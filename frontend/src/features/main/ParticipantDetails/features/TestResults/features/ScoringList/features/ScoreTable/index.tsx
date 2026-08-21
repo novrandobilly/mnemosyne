@@ -12,6 +12,7 @@ import { scoreEas10 } from "@/data/eas10/scoring";
 import { scoreDa5 } from "@/data/da5/scoring";
 import { scoreSt7 } from "@/data/st7/scoring";
 import { scoreDr } from "@/data/dr/scoring";
+import { scoreA5 } from "@/data/a5/scoring";
 
 const ScoreTable: FC = () => {
   const { showAll } = useScoringList();
@@ -58,6 +59,10 @@ const ScoreTable: FC = () => {
       } else if (id === "dr" && result?.data) {
         const rawAnswers = result.data.raw_answers || result.data;
         const scoring = scoreDr(rawAnswers);
+        score = String(scoring.score);
+      } else if (id === "a5" && result?.data) {
+        const rawAnswers = result.data.raw_answers || result.data;
+        const scoring = scoreA5(rawAnswers);
         score = String(scoring.score);
       }
     }
