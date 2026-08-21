@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { drData } from "@/data/dr";
+import { drData, type DrAnswer } from "@/data/dr/index";
+import { useTSubmitDr } from "@/api/test/dr/useTSubmitDr";
 
-export type DrAnswerRecord = Record<number, string>;
-type DrFormValues = Record<string, string>;
+export type DrAnswerRecord = Record<number, DrAnswer>;
+type DrFormValues = Record<string, DrAnswer>;
 
 const INITIAL_SECONDS = 20 * 60; // 20 minutes
 
@@ -11,6 +12,7 @@ export function useDr() {
   const [secondsLeft, setSecondsLeft] = useState(INITIAL_SECONDS);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const hasAutoSubmitted = useRef(false);
+  const { mutateAsync: submitResult, isPending: isSubmitting } = useTSubmitDr();
 
   const methods = useForm<DrFormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("dr_progress") || "{}"),
@@ -21,16 +23,20 @@ export function useDr() {
   const totalQuestions = drData.length;
   const answers: DrAnswerRecord = Object.fromEntries(
     Object.entries(values)
-      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined && v !== "")
-      .map(([k, v]) => [Number(k.slice(2)), v]),
+      .filter(([k, v]) => k.startsWith("q_") && v !== null && v !== undefined)
+      .map(([k, v]) => [Number(k.slice(2)), v as DrAnswer]),
   );
   const answeredCount = Object.keys(answers).length;
 
-  function selectAnswer(id: number, option: string) {
+  const handleFinish = () => {
+    submitResult({ testType: "dr", answers });
+  };
+
+  function selectAnswer(id: number, option: DrAnswer) {
     if (isTimeUp) return;
     const current = methods.getValues(`q_${id}`);
     if (current === option) {
-      methods.setValue(`q_${id}`, "" as any);
+      methods.setValue(`q_${id}`, null as any);
     } else {
       methods.setValue(`q_${id}`, option);
     }
@@ -42,7 +48,7 @@ export function useDr() {
         hasAutoSubmitted.current = true;
         setIsTimeUp(true);
         console.log("DR time is up! Final answers:", answers);
-        // TODO: submit to PocketBase
+        handleFinish();
       }
       return;
     }
@@ -71,5 +77,7 @@ export function useDr() {
     timeDisplay,
     totalQuestions,
     answeredCount,
+    handleFinish,
+    isSubmitting,
   };
 }

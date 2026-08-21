@@ -1,4 +1,4 @@
-import { drData } from "@/data/dr";
+import { drData } from "@/data/dr/index";
 import { DrQuestionRow } from "../DrQuestionRow";
 
 export function DrList() {

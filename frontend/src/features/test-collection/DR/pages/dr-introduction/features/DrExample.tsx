@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { cn } from "@/lib/tailwind-merge";
-import { type DrAnswer } from "@/data/dr";
+import { type DrAnswer } from "@/data/dr/index";
 
 // Example Image Assets
 import drExQ1 from "@/assets/tests/dr/examples/dr_ex_q1.jpg";

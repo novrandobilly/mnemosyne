@@ -1,4 +1,4 @@
-import { type DrItem, type DrAnswer } from "@/data/dr";
+import { type DrItem, type DrAnswer } from "@/data/dr/index";
 import { useDrContext } from "../../../../context/DrContext";
 import { cn } from "@/lib/tailwind-merge";
 
