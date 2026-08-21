@@ -1,5 +1,5 @@
 import { cn } from "@/lib/tailwind-merge";
-import type { Eas10Answer } from "@/data/eas10";
+import type { Eas10Answer } from "@/data/eas10/index";
 import { useEas10Context } from "../../../context/Eas10Context";
 
 const CHOICES: { value: Eas10Answer; label: string; title: string }[] = [

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/tailwind-merge";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
-import type { Eas10Answer } from "@/data/eas10";
+import type { Eas10Answer } from "@/data/eas10/index";
 
 interface StaticRow {
   id: number;

@@ -1,4 +1,4 @@
-import { eas10Data } from "@/data/eas10";
+import { eas10Data } from "@/data/eas10/index";
 import { EAS10Row } from "./EAS10Row";
 
 export const EAS10List = () => {

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { eas10Data, type Eas10Answer } from "@/data/eas10";
+import { eas10Data, type Eas10Answer } from "@/data/eas10/index";
 import { useTSubmitEas10 } from "@/api/test/eas10/useTSubmitEas10";
 
 export type Eas10AnswerRecord = Record<number, Eas10Answer>;
