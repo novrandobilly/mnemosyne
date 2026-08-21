@@ -3,7 +3,7 @@ import {
   type St7Answer,
   ST7_NONE_OPTION_TEXT,
   ST7_NONE_OPTION_LABEL,
-} from "@/data/st7";
+} from "@/data/st7/index";
 import { useSt7Context } from "../../context/St7Context";
 import { cn } from "@/lib/tailwind-merge";
 import { IntiDinamisText } from "@/components/IntiDinamisText";

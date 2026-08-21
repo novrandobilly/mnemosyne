@@ -1,5 +1,5 @@
 import { useDa5Context } from "../../context/Da5Context";
-import { DA5_REFERENCE_IMAGE_URL } from "@/data/da5";
+import { DA5_REFERENCE_IMAGE_URL } from "@/data/da5/index";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { cn } from "@/lib/tailwind-merge";
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { da5Data, type Da5Answer } from "@/data/da5";
+import { da5Data, type Da5Answer } from "@/data/da5/index";
 import { useTSubmitDa5 } from "@/api/test/da5/useTSubmitDa5";
 
 export type Da5AnswerRecord = Record<number, Da5Answer>;

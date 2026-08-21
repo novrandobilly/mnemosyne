@@ -1,4 +1,4 @@
-import { type St7Phase } from "@/data/st7";
+import { type St7Phase } from "@/data/st7/index";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { St7QuestionRow } from "../St7QuestionRow";
 

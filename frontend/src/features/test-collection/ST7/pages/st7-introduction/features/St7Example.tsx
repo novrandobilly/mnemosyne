@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { cn } from "@/lib/tailwind-merge";
-import { ST7_NONE_OPTION_TEXT } from "@/data/st7";
+import { ST7_NONE_OPTION_TEXT } from "@/data/st7/index";
 
 // Import example reference and option assets
 import st7ExRef from "@/assets/tests/st7/examples/st7_ex_ref.jpg";

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { ST7_TOTAL_QUESTIONS, type St7Answer } from "@/data/st7";
+import { ST7_TOTAL_QUESTIONS, type St7Answer } from "@/data/st7/index";
 import { useTSubmitSt7 } from "@/api/test/st7/useTSubmitSt7";
 
 export type St7AnswerRecord = Record<number, St7Answer>;

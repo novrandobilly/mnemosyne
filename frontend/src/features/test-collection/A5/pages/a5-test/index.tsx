@@ -13,7 +13,7 @@ function A5TestInner() {
   const { handleConfirmFinish } = useA5FinishConfirmModal();
 
   return (
-    <div className="flex flex-col max-w-4xl px-4 py-8 gap-6 w-full">
+    <div className="flex flex-col max-w-4xl px-4 gap-6 w-full">
       <A5Header />
       <A5TimeUpBanner />
       <A5List />
@@ -37,7 +37,7 @@ export function A5Test() {
   return (
     <MainWrapper pageTitle="A5">
       <A5Provider>
-        <div className="min-h-screen bg-neutral-50 flex justify-center">
+        <div className="min-h-screen flex justify-center">
           <A5TestInner />
         </div>
       </A5Provider>

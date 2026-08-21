@@ -1,5 +1,5 @@
 import { MainWrapper } from "@/components/MainWrapper";
-import { st7Data } from "@/data/st7";
+import { st7Data } from "@/data/st7/index";
 import { St7Provider } from "./context/St7Context";
 import { St7Header } from "./features/St7Header";
 import { St7TimeUpBanner } from "./features/St7TimeUpBanner";

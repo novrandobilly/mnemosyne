@@ -1,4 +1,4 @@
-import { da5Data } from "@/data/da5";
+import { da5Data } from "@/data/da5/index";
 import { useDa5Context } from "../../context/Da5Context";
 import { cn } from "@/lib/tailwind-merge";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
