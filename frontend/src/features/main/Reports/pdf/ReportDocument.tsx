@@ -8,6 +8,8 @@ import { DiscModule } from "./DiscModule";
 import { IntrayModule } from "./IntrayModule";
 import { CompetenceModule } from "./CompetenceModule";
 import type { ReportModuleId, ReportParticipant } from "../types";
+import { scorePapiKostick } from "@/data/papikostick/scoring";
+import { scoreDisc } from "@/data/disc/scoring";
 
 import type { DiscGraphUrls } from "../types";
 
@@ -36,10 +38,17 @@ export const ReportDocument = ({
   const intray1Result = findResult("intray1");
   const intray2Result = findResult("intray2");
 
-  const papiScores = papiResult?.data?.processed_scores as
-    | PapiResults
-    | undefined;
-  const discData = discResult?.data as DiscResult | undefined;
+  const papiScores: PapiResults | undefined = papiResult?.data
+    ? ((papiResult.data.processed_scores as PapiResults) ??
+      scorePapiKostick(papiResult.data.raw_answers ?? papiResult.data))
+    : undefined;
+
+  const discData: DiscResult | undefined = discResult?.data
+    ? discResult.data.processedResults
+      ? (discResult.data as DiscResult)
+      : scoreDisc(discResult.data.rawAnswers ?? discResult.data)
+    : undefined;
+
   const discScores: DiscScores | undefined = discData?.processedResults
     ? {
         MOST: discData.processedResults.most,

@@ -9,6 +9,7 @@ export const NavigationControls = () => {
     isFirstPage,
     isLastPage,
     isCompleted,
+    isSubmitting,
     goPrev,
     goNext,
     goToPage,
@@ -50,7 +51,8 @@ export const NavigationControls = () => {
         {isLastPage ? (
           <IntiDinamisButton
             variant="primary"
-            disabled={!isCompleted}
+            disabled={!isCompleted || isSubmitting}
+            isLoading={isSubmitting}
             onClick={handleSubmit}
           >
             Selesai

@@ -53,6 +53,7 @@ export interface Metadata {
 }
 
 export type DiscCategory = "D" | "I" | "S" | "C" | "Star";
+export type DiscDimension = "D" | "I" | "S" | "C";
 
 export interface DiscScores {
   MOST: Record<DiscCategory, number>;

@@ -5,13 +5,18 @@ import { useGetParticipantTestResult } from "@/features/global/components/Partic
 import { Link } from "react-router-dom";
 import DiscResultSection from "./features/DiscResultSection";
 import type { DiscResult, DiscScores } from "./types";
+import { scoreDisc } from "@/data/disc/scoring";
 
 const DISCResult = () => {
   const { data: participantDetails } = useGetParticipantDetails();
   const { id } = participantDetails || {};
   const { result: discResult } = useGetParticipantTestResult("disc");
 
-  const discData = discResult?.data as DiscResult | undefined;
+  const discData: DiscResult | undefined = discResult?.data
+    ? discResult.data.processedResults
+      ? (discResult.data as DiscResult)
+      : scoreDisc(discResult.data.rawAnswers ?? discResult.data)
+    : undefined;
   const scores: DiscScores | undefined = discData?.processedResults
     ? {
         MOST: discData.processedResults.most,

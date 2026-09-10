@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import type { PapiResults, PapiScoreKey } from "../../types";
 import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
+import { scorePapiKostick } from "@/data/papikostick/scoring";
 
 const CATEGORIES: { label: string; factors: PapiScoreKey[] }[] = [
   { label: "Work Direction", factors: ["N", "G", "A"] },
@@ -18,11 +19,14 @@ const ScoreSummaryCards: FC = () => {
 
   const papiResults = (function () {
     if (!results) return null;
-    const foundResults: PapiResults = results.find(
-      (r) => r.test_type === "papikostick",
-    )?.data?.processed_scores;
-    if (!foundResults) return null;
-    return foundResults;
+    const testResult = results.find(
+      (r) => r.test_type === "papikostick" && r.status === "completed",
+    );
+    if (!testResult?.data) return null;
+    return (
+      (testResult.data.processed_scores as PapiResults) ??
+      scorePapiKostick(testResult.data.raw_answers ?? testResult.data)
+    );
   })();
 
   return (

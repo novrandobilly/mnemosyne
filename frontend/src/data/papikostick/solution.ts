@@ -1,0 +1,111 @@
+import type { PapiScoreKey } from "@/features/main/PKResult/types";
+
+export interface PapiFactorPair {
+  a: PapiScoreKey;
+  b: PapiScoreKey;
+}
+
+/**
+ * Mapping table for PAPI Kostick 90 forced-choice pairs.
+ * Each choice 'a' and 'b' corresponds to one of the 20 personality aspect factors.
+ */
+export const PAPI_SOLUTION_KEY: Record<number, PapiFactorPair> = {
+  1: { a: "G", b: "E" },
+  2: { a: "A", b: "N" },
+  3: { a: "P", b: "A" },
+  4: { a: "X", b: "P" },
+  5: { a: "B", b: "X" },
+  6: { a: "O", b: "B" },
+  7: { a: "Z", b: "O" },
+  8: { a: "K", b: "Z" },
+  9: { a: "F", b: "K" },
+  10: { a: "W", b: "F" },
+
+  11: { a: "G", b: "C" },
+  12: { a: "L", b: "G" },
+  13: { a: "P", b: "L" },
+  14: { a: "X", b: "I" },
+  15: { a: "B", b: "T" },
+  16: { a: "O", b: "V" },
+  17: { a: "Z", b: "S" },
+  18: { a: "K", b: "R" },
+  19: { a: "F", b: "D" },
+  20: { a: "W", b: "C" },
+
+  21: { a: "G", b: "D" },
+  22: { a: "L", b: "C" },
+  23: { a: "I", b: "G" },
+  24: { a: "X", b: "L" },
+  25: { a: "B", b: "I" },
+  26: { a: "O", b: "T" },
+  27: { a: "Z", b: "V" },
+  28: { a: "K", b: "S" },
+  29: { a: "F", b: "R" },
+  30: { a: "W", b: "D" },
+
+  31: { a: "G", b: "R" },
+  32: { a: "L", b: "D" },
+  33: { a: "I", b: "C" },
+  34: { a: "T", b: "G" },
+  35: { a: "B", b: "L" },
+  36: { a: "O", b: "I" },
+  37: { a: "Z", b: "T" },
+  38: { a: "K", b: "V" },
+  39: { a: "F", b: "S" },
+  40: { a: "W", b: "R" },
+
+  41: { a: "G", b: "S" },
+  42: { a: "L", b: "R" },
+  43: { a: "I", b: "D" },
+  44: { a: "T", b: "C" },
+  45: { a: "V", b: "G" },
+  46: { a: "O", b: "L" },
+  47: { a: "Z", b: "I" },
+  48: { a: "K", b: "T" },
+  49: { a: "F", b: "V" },
+  50: { a: "W", b: "S" },
+
+  51: { a: "G", b: "V" },
+  52: { a: "L", b: "S" },
+  53: { a: "I", b: "R" },
+  54: { a: "T", b: "D" },
+  55: { a: "V", b: "C" },
+  56: { a: "S", b: "G" },
+  57: { a: "Z", b: "L" },
+  58: { a: "K", b: "I" },
+  59: { a: "F", b: "T" },
+  60: { a: "W", b: "V" },
+
+  61: { a: "G", b: "T" },
+  62: { a: "L", b: "V" },
+  63: { a: "I", b: "S" },
+  64: { a: "T", b: "R" },
+  65: { a: "V", b: "D" },
+  66: { a: "S", b: "C" },
+  67: { a: "R", b: "G" },
+  68: { a: "K", b: "L" },
+  69: { a: "F", b: "I" },
+  70: { a: "W", b: "T" },
+
+  71: { a: "G", b: "I" },
+  72: { a: "L", b: "T" },
+  73: { a: "I", b: "V" },
+  74: { a: "T", b: "S" },
+  75: { a: "V", b: "R" },
+  76: { a: "S", b: "D" },
+  77: { a: "R", b: "C" },
+  78: { a: "D", b: "G" },
+  79: { a: "F", b: "L" },
+  80: { a: "W", b: "I" },
+
+  81: { a: "G", b: "L" },
+  82: { a: "L", b: "I" },
+  83: { a: "I", b: "T" },
+  84: { a: "T", b: "V" },
+  85: { a: "V", b: "S" },
+  86: { a: "S", b: "R" },
+  87: { a: "R", b: "D" },
+  88: { a: "D", b: "C" },
+  89: { a: "C", b: "G" },
+  90: { a: "W", b: "L" },
+};

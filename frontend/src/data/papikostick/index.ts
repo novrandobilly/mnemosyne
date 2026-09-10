@@ -1,4 +1,4 @@
-interface PapiQuestion {
+export interface PapiQuestion {
   id: number;
   a: string;
   b: string;

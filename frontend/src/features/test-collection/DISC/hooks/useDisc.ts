@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { DISC_QUESTIONS } from "@/data/disc";
+import { useTSubmitDisc } from "@/api/test/disc/useTSubmitDisc";
 
 export const DISC_QUESTIONS_PER_PAGE = 7;
 
@@ -24,6 +25,9 @@ const isAnswerComplete = (answer: DiscAnswer | undefined): boolean =>
 
 export const useDisc = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const { mutateAsync: submitResult, isPending: isSubmitting } =
+    useTSubmitDisc();
+
   const methods = useForm<DiscFormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("disc_progress") || "{}"),
   });
@@ -87,8 +91,12 @@ export const useDisc = () => {
     if (page >= 0 && page < totalPages) setCurrentPage(page);
   };
 
-  const handleSubmit = methods.handleSubmit((data) => {
-    console.log("Submitted DISC answers:", data);
+  const handleSubmit = methods.handleSubmit(async (data) => {
+    try {
+      await submitResult({ answers: data });
+    } catch (err) {
+      console.error("Failed to submit DISC:", err);
+    }
   });
 
   // Persist answers across page refresh
@@ -112,6 +120,7 @@ export const useDisc = () => {
     isLastPage: currentPage === totalPages - 1,
     isCompleted: completedCount === total,
     incompleteIds,
+    isSubmitting,
     selectMost,
     selectLeast,
     goNext,

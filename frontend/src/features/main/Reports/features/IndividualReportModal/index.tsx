@@ -16,6 +16,8 @@ import { useDiscGraphsCapture } from "../../hooks/useDiscGraphsCapture";
 import type { PapiResults } from "@/features/main/PKResult/types";
 import type { DiscResult, DiscScores } from "@/features/main/DISCResult/types";
 import { triggerDownload } from "../BulkReportPanel/utils";
+import { scorePapiKostick } from "@/data/papikostick/scoring";
+import { scoreDisc } from "@/data/disc/scoring";
 
 interface IndividualReportModalProps {
   participant: ReportParticipant;
@@ -49,9 +51,10 @@ export const IndividualReportModal = ({
   const papiResult = testResults.find(
     (r) => r.test_type === "papikostick" && r.status === "completed",
   );
-  const papiScores = papiResult?.data?.processed_scores as
-    | PapiResults
-    | undefined;
+  const papiScores: PapiResults | undefined = papiResult?.data
+    ? ((papiResult.data.processed_scores as PapiResults) ??
+      scorePapiKostick(papiResult.data.raw_answers ?? papiResult.data))
+    : undefined;
   const papiSelected = selected.includes("papi");
 
   const {
@@ -63,7 +66,11 @@ export const IndividualReportModal = ({
   const discResult = testResults.find(
     (r) => r.test_type === "disc" && r.status === "completed",
   );
-  const discData = discResult?.data as DiscResult | undefined;
+  const discData: DiscResult | undefined = discResult?.data
+    ? discResult.data.processedResults
+      ? (discResult.data as DiscResult)
+      : scoreDisc(discResult.data.rawAnswers ?? discResult.data)
+    : undefined;
   const discScores: DiscScores | undefined = discData?.processedResults
     ? {
         MOST: discData.processedResults.most,

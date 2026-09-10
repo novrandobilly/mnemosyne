@@ -11,6 +11,7 @@ import NeedScoringGrid from "./features/NeedScoringGrid";
 import RoleScoringGrid from "./features/RoleScoringGrid";
 import ScoreSummaryCards from "./features/ScoreSummaryCards";
 import type { PapiResults } from "./types";
+import { scorePapiKostick } from "@/data/papikostick/scoring";
 
 type Tab = "result" | "interpretation";
 
@@ -24,8 +25,10 @@ const PKResult = () => {
   const { id, first_name, last_name } = participantDetails || {};
   const { result: pkResult } = useGetParticipantTestResult("papikostick");
 
-  const results: PapiResults | null =
-    (pkResult?.data?.processed_scores as PapiResults) ?? null;
+  const results: PapiResults | null = pkResult?.data
+    ? ((pkResult.data.processed_scores as PapiResults) ??
+      scorePapiKostick(pkResult.data.raw_answers ?? pkResult.data))
+    : null;
 
   const [activeTab, setActiveTab] = useState<Tab>("result");
 

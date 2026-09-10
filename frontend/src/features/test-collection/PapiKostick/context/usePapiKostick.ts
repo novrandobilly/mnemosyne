@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { PAPI_QUESTIONS } from "@/data/papikostick";
+import { useTSubmitPapiKostick } from "@/api/test/papikostick/useTSubmitPapiKostick";
 
 export const QUESTIONS_PER_PAGE = 10;
 
@@ -13,6 +14,8 @@ export const getPageForQuestion = (questionId: number): number =>
 
 export const usePapiKostick = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const { mutateAsync: submitResult, isPending: isSubmitting } =
+    useTSubmitPapiKostick();
 
   const methods = useForm<PapiFormValues>({
     defaultValues: JSON.parse(sessionStorage.getItem("papi_progress") || "{}"),
@@ -50,9 +53,12 @@ export const usePapiKostick = () => {
     if (page >= 0 && page < totalPages) setCurrentPage(page);
   };
 
-  const handleSubmit = rhfHandleSubmit((data) => {
-    // TODO: wire up submission logic (e.g. save to PocketBase)
-    console.log("Submitted answers:", data);
+  const handleSubmit = rhfHandleSubmit(async (data) => {
+    try {
+      await submitResult({ answers: data });
+    } catch (err) {
+      console.error("Failed to submit PAPI Kostick:", err);
+    }
   });
 
   //handle refresh on progress
@@ -75,6 +81,7 @@ export const usePapiKostick = () => {
     isLastPage: currentPage === totalPages - 1,
     isCompleted: answeredCount === total,
     unansweredIds,
+    isSubmitting,
     goNext,
     goPrev,
     goToPage,

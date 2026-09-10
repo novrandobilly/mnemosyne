@@ -9,6 +9,7 @@ export const DiscNavigationControls = () => {
     isFirstPage,
     isLastPage,
     isCompleted,
+    isSubmitting,
     goPrev: onPrev,
     goNext: onNext,
     goToPage: onGoToPage,
@@ -27,8 +28,8 @@ export const DiscNavigationControls = () => {
             className={cn(
               "rounded-lg transition-all duration-150",
               i === currentPage
-                ? "bg-neutral-900 text-white"
-                : "border-transparent bg-neutral-100 text-neutral-600 hover:bg-neutral-200",
+                 ? "bg-neutral-900 text-white"
+                 : "border-transparent bg-neutral-100 text-neutral-600 hover:bg-neutral-200",
             )}
           >
             {i + 1}
@@ -49,7 +50,8 @@ export const DiscNavigationControls = () => {
         {isLastPage ? (
           <IntiDinamisButton
             variant="primary"
-            disabled={!isCompleted}
+            disabled={!isCompleted || isSubmitting}
+            isLoading={isSubmitting}
             onClick={onSubmit}
           >
             Selesai

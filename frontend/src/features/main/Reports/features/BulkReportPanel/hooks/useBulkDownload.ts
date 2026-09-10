@@ -15,6 +15,8 @@ import {
 } from "../utils";
 import type { PapiResults } from "@/features/main/PKResult/types";
 import type { DiscResult, DiscScores } from "@/features/main/DISCResult/types";
+import { scorePapiKostick } from "@/data/papikostick/scoring";
+import { scoreDisc } from "@/data/disc/scoring";
 
 export const useBulkDownload = (
   selectedParticipants: ReportParticipant[],
@@ -39,9 +41,10 @@ export const useBulkDownload = (
           const papiResult = (
             p.expand?.test_results_via_participant ?? []
           ).find((r) => r.test_type === "papikostick" && r.status === "completed");
-          const scores = papiResult?.data?.processed_scores as
-            | PapiResults
-            | undefined;
+          const scores: PapiResults | undefined = papiResult?.data
+            ? ((papiResult.data.processed_scores as PapiResults) ??
+              scorePapiKostick(papiResult.data.raw_answers ?? papiResult.data))
+            : undefined;
           if (scores) {
             wheelImageUrl = await captureParticipantWheel(scores).catch(
               () => undefined,
@@ -54,7 +57,11 @@ export const useBulkDownload = (
           const discResult = (
             p.expand?.test_results_via_participant ?? []
           ).find((r) => r.test_type === "disc" && r.status === "completed");
-          const discData = discResult?.data as DiscResult | undefined;
+          const discData: DiscResult | undefined = discResult?.data
+            ? discResult.data.processedResults
+              ? (discResult.data as DiscResult)
+              : scoreDisc(discResult.data.rawAnswers ?? discResult.data)
+            : undefined;
           const discScores: DiscScores | undefined = discData?.processedResults
             ? {
                 MOST: discData.processedResults.most,
