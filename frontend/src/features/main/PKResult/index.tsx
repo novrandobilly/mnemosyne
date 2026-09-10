@@ -5,7 +5,7 @@ import ParticipantBiodata from "@/features/global/components/ParticipantBiodata"
 import { useGetParticipantDetails } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
 import { useGetParticipantTestResult } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantTestResult";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import InterpretationReport from "./features/InterpretationReport";
 import NeedScoringGrid from "./features/NeedScoringGrid";
 import RoleScoringGrid from "./features/RoleScoringGrid";
@@ -20,7 +20,6 @@ const TABS: { key: Tab; label: string }[] = [
 ];
 
 const PKResult = () => {
-  const navigate = useNavigate();
   const { data: participantDetails } = useGetParticipantDetails();
   const { id, first_name, last_name } = participantDetails || {};
   const { result: pkResult } = useGetParticipantTestResult("papikostick");
@@ -42,13 +41,12 @@ const PKResult = () => {
   return (
     <MainWrapper>
       <div className="flex flex-col gap-6">
-        <button
-          type="button"
-          onClick={() => navigate(`/admin/participants/${id}`)}
+        <Link
+          to={`/admin/participants/${id}`}
           className="flex w-fit cursor-pointer items-center gap-2 text-sm font-semibold text-neutral-500 transition hover:text-neutral-900"
         >
           ← Back to participant
-        </button>
+        </Link>
 
         <section className="grid gap-4 lg:grid-cols-[1.5fr_0.5fr]">
           <ParticipantBiodata />

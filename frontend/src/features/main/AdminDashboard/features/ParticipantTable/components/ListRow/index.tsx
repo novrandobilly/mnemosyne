@@ -1,8 +1,7 @@
 import type { FC } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import FlagBadge from "../../../FlagBadge";
-import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { formatDate } from "@/utils/tools";
 import { useModal } from "@/context/ModalContext";
 import { useDeleteParticipant } from "../../hooks/useDeleteParticipant";
@@ -26,7 +25,6 @@ const ListRow: FC<ListRowProps> = ({
   flags,
   index,
 }) => {
-  const navigate = useNavigate();
   const { showModal } = useModal();
   const { mutate: deleteParticipant, isPending: isDeleting } =
     useDeleteParticipant();
@@ -44,38 +42,54 @@ const ListRow: FC<ListRowProps> = ({
     });
   };
 
+  const participantUrl = `/admin/participants/${id}`;
+
   return (
-    <tr
-      className="cursor-pointer hover:bg-neutral-50"
-      onClick={() => navigate(`/admin/participants/${id}`)}
-    >
-      <td className="px-5 py-4 text-neutral-500">
-        {String(index + 1).padStart(2, "0")}
+    <tr className="transition-colors hover:bg-neutral-50">
+      <td className="p-0">
+        <Link to={participantUrl} className="block px-5 py-4 text-neutral-500">
+          {String(index + 1).padStart(2, "0")}
+        </Link>
       </td>
 
-      <td className="px-5 py-4">
-        <IntiDinamisText className="font-semibold text-neutral-900">
+      <td className="p-0">
+        <Link
+          to={participantUrl}
+          className="block px-5 py-4 font-semibold text-neutral-900"
+        >
           {name}
-        </IntiDinamisText>
-        {/* <div className="text-xs text-neutral-500">{id}</div> */}
+        </Link>
       </td>
 
-      <td className="px-5 py-4 text-neutral-700">{testNumber}</td>
-
-      <td className="px-5 py-4 text-neutral-700">
-        {formatDate({ isoDate: date })}
+      <td className="p-0">
+        <Link to={participantUrl} className="block px-5 py-4 text-neutral-700">
+          {testNumber}
+        </Link>
       </td>
 
-      <td className="px-5 py-4">
-        <div className="flex max-w-125 flex-wrap gap-2">
-          {FLAG_LABELS.map(({ label, value }) => {
-            const isDone = flags.includes(value);
-            return (
-              <FlagBadge key={`${id}-${label}`} label={label} isDone={isDone} />
-            );
-          })}
-        </div>
+      <td className="p-0">
+        <Link to={participantUrl} className="block px-5 py-4 text-neutral-700">
+          {formatDate({ isoDate: date })}
+        </Link>
       </td>
+
+      <td className="p-0">
+        <Link to={participantUrl} className="block px-5 py-4">
+          <div className="flex max-w-125 flex-wrap gap-2">
+            {FLAG_LABELS.map(({ label, value }) => {
+              const isDone = flags.includes(value);
+              return (
+                <FlagBadge
+                  key={`${id}-${label}`}
+                  label={label}
+                  isDone={isDone}
+                />
+              );
+            })}
+          </div>
+        </Link>
+      </td>
+
       <td className="px-5 py-4 text-right">
         <IntiDinamisButton
           type="button"
@@ -110,3 +124,4 @@ const ListRow: FC<ListRowProps> = ({
 };
 
 export default ListRow;
+

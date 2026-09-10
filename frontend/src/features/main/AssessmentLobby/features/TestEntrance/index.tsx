@@ -3,12 +3,10 @@ import { TestItem } from "./features/TestItem";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { useTGetTestBank } from "@/api/test/useTGetTestBank";
 import { useTGetParticipantResults } from "@/api/test/useTGetParticipantResults";
-import { useNavigate } from "react-router-dom";
 
 export const TestEntrance: FC = () => {
   const { data: testBank } = useTGetTestBank();
   const { data: participantResults } = useTGetParticipantResults();
-  const navigate = useNavigate();
 
   return (
     <section className="flex flex-col gap-6">
@@ -50,7 +48,7 @@ export const TestEntrance: FC = () => {
               status={is_active ? "Open" : "Closed"}
               orderNum={index + 1}
               isCompleted={isCompleted}
-              onEnter={() => navigate(`/psikotes/${slug}`)}
+              to={`/psikotes/${cleanSlug}`}
             />
           );
         })}

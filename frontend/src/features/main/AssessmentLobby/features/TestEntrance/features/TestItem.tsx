@@ -1,4 +1,4 @@
-import IntiDinamisButton from "@/components/IntiDinamisButton";
+import { Link } from "react-router-dom";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import { StatusCapsule } from "@/components/StatusCapsule";
 import type { FC } from "react";
@@ -8,7 +8,7 @@ interface TestItemProps {
   tag: string;
   status: string;
   orderNum: number;
-  onEnter: () => void;
+  to: string;
   isCompleted?: boolean;
 }
 
@@ -17,7 +17,7 @@ export const TestItem: FC<TestItemProps> = ({
   tag,
   status,
   orderNum,
-  onEnter,
+  to,
   isCompleted = false,
 }) => {
   return (
@@ -69,14 +69,18 @@ export const TestItem: FC<TestItemProps> = ({
           </IntiDinamisText>
         </div>
       ) : (
-        <IntiDinamisButton
-          variant="secondary"
-          className="w-full"
-          onClick={onEnter}
+        <Link
+          to={to}
+          className="relative inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none active:scale-[0.98] cursor-pointer min-w-[100px] rounded-[8px] px-4 py-2.5 bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900/10 w-full"
         >
-          Enter Test →
-        </IntiDinamisButton>
+          <span className="flex items-center justify-center gap-2 w-full">
+            <IntiDinamisText size="14" weight="semibold">
+              Enter Test →
+            </IntiDinamisText>
+          </span>
+        </Link>
       )}
     </div>
   );
 };
+

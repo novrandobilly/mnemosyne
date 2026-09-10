@@ -1,9 +1,12 @@
-import type { ButtonHTMLAttributes, FC } from "react";
+import type { FC } from "react";
+import { Link } from "react-router-dom";
 
-interface ReportCardProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ReportCardProps {
+  to?: string;
   label: string;
   isCompleted: boolean;
   completedAt?: string;
+  className?: string;
 }
 
 const statusClass = ({ isCompleted }: { isCompleted: boolean }) => {
@@ -12,10 +15,11 @@ const statusClass = ({ isCompleted }: { isCompleted: boolean }) => {
 };
 
 const ReportCard: FC<ReportCardProps> = ({
+  to,
   label,
   isCompleted,
   completedAt,
-  ...props
+  className,
 }) => {
   const formattedDate = completedAt
     ? new Date(completedAt).toLocaleDateString("en-GB", {
@@ -25,17 +29,8 @@ const ReportCard: FC<ReportCardProps> = ({
       })
     : null;
 
-  return (
-    <button
-      disabled={!isCompleted}
-      type="button"
-      className={`group flex w-full items-center justify-between rounded-2xl border border-neutral-200 bg-white px-5 py-3.5 shadow-sm transition ${
-        isCompleted
-          ? "cursor-pointer hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow"
-          : "opacity-40"
-      }`}
-      {...props}
-    >
+  const cardContent = (
+    <>
       <div className="text-sm font-semibold text-neutral-900">{label}</div>
       <div className="flex items-center gap-3">
         {formattedDate && (
@@ -50,8 +45,29 @@ const ReportCard: FC<ReportCardProps> = ({
           →
         </span>
       </div>
-    </button>
+    </>
+  );
+
+  const baseStyles =
+    "group flex w-full items-center justify-between rounded-2xl border border-neutral-200 bg-white px-5 py-3.5 shadow-sm transition";
+
+  if (isCompleted && to) {
+    return (
+      <Link
+        to={to}
+        className={`${baseStyles} cursor-pointer hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow ${className ?? ""}`}
+      >
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <div className={`${baseStyles} opacity-40 select-none ${className ?? ""}`}>
+      {cardContent}
+    </div>
   );
 };
 
 export default ReportCard;
+
