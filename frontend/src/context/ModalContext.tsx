@@ -8,8 +8,12 @@ import {
   type ReactNode,
 } from "react";
 
+import { cn } from "@/lib/tailwind-merge";
+
 interface ModalOptions {
   content: ReactNode;
+  maxWidth?: string;
+  className?: string;
 }
 
 interface ModalContextType {
@@ -20,7 +24,7 @@ interface ModalContextType {
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [content, setContent] = useState<ReactNode | null>(null);
+  const [modalOptions, setModalOptions] = useState<ModalOptions | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
 
@@ -30,13 +34,13 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setIsLeaving(true);
     setIsVisible(false);
     setTimeout(() => {
-      setContent(null);
+      setModalOptions(null);
       setIsLeaving(false);
     }, TRANSITION_MS);
   }, []);
 
-  const showModal = useCallback(({ content }: ModalOptions) => {
-    setContent(content);
+  const showModal = useCallback((options: ModalOptions) => {
+    setModalOptions(options);
     setIsLeaving(false);
     requestAnimationFrame(() => {
       setIsVisible(true);
@@ -45,27 +49,27 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   // Close on Escape key
   useEffect(() => {
-    if (!content) return;
+    if (!modalOptions?.content) return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeModal();
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [content, closeModal]);
+  }, [modalOptions?.content, closeModal]);
 
   // Lock body scroll while open
   useEffect(() => {
-    document.body.style.overflow = content ? "hidden" : "";
+    document.body.style.overflow = modalOptions?.content ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [content]);
+  }, [modalOptions?.content]);
 
   return (
     <ModalContext.Provider value={{ showModal, closeModal }}>
       {children}
 
-      {content && (
+      {modalOptions?.content && (
         <div
           className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all ease-out
             ${isVisible && !isLeaving ? "opacity-100" : "opacity-0"}`}
@@ -80,8 +84,14 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
           {/* Modal card */}
           <div
-            className={`relative z-10 w-full max-w-lg transition-all ease-out
-              ${isVisible && !isLeaving ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
+            className={cn(
+              "relative z-10 w-full transition-all ease-out",
+              modalOptions.maxWidth || "max-w-lg",
+              modalOptions.className,
+              isVisible && !isLeaving
+                ? "scale-100 opacity-100"
+                : "scale-95 opacity-0",
+            )}
             style={{ transitionDuration: `${TRANSITION_MS}ms` }}
             role="dialog"
             aria-modal="true"
@@ -89,7 +99,7 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
             {/* Close button */}
             <button
               onClick={closeModal}
-              className="absolute right-4 top-4 z-10 rounded-lg border border-neutral-200 bg-white p-1.5 text-neutral-500 transition hover:bg-neutral-100 hover:text-neutral-900"
+              className="absolute right-4 top-4 z-20 rounded-lg border border-neutral-200 bg-white p-1.5 text-neutral-500 transition hover:bg-neutral-100 hover:text-neutral-900"
               aria-label="Close modal"
             >
               <svg
@@ -108,7 +118,7 @@ export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
               </svg>
             </button>
 
-            {content}
+            {modalOptions.content}
           </div>
         </div>
       )}

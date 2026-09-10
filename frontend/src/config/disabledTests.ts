@@ -32,8 +32,8 @@ type TestSlug =
 const FULLY_DISABLED_TEST_SLUGS: TestSlug[] = [
   "/intray1",
   "/intray2",
-  "/papikostick",
-  "/disc",
+  // "/papikostick",
+  // "/disc",
   "/inventori3",
   "/inventori4",
 ];

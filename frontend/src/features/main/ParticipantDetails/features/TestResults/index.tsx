@@ -14,6 +14,7 @@ const TestResults: FC = () => {
   const handleExport = () => {
     if (!participant) return;
     showModal({
+      maxWidth: "max-w-6xl",
       content: (
         <IndividualReportModal
           participant={

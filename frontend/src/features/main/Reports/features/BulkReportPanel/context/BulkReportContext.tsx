@@ -108,7 +108,10 @@ export const BulkReportProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const handleIndividualReport = (participant: ReportParticipant) => {
-    showModal({ content: <IndividualReportModal participant={participant} /> });
+    showModal({
+      maxWidth: "max-w-6xl",
+      content: <IndividualReportModal participant={participant} />,
+    });
   };
 
   return (
