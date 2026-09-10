@@ -6,6 +6,7 @@ import { useModal } from "@/context/ModalContext";
 import {
   REPORT_MODULES,
   isModuleAvailable,
+  getCompletedCompetenceTests,
   type ReportModuleId,
   type ReportParticipant,
 } from "../../types";
@@ -42,7 +43,9 @@ export const IndividualReportModal = ({
     );
   };
 
-  const papiResult = testResults.find((r) => r.test_type === "papikostick");
+  const papiResult = testResults.find(
+    (r) => r.test_type === "papikostick" && r.status === "completed",
+  );
   const papiScores = papiResult?.data?.processed_scores as
     | PapiResults
     | undefined;
@@ -54,7 +57,9 @@ export const IndividualReportModal = ({
     portal,
   } = usePapiWheelCapture(papiScores, papiSelected);
 
-  const discResult = testResults.find((r) => r.test_type === "disc");
+  const discResult = testResults.find(
+    (r) => r.test_type === "disc" && r.status === "completed",
+  );
   const discData = discResult?.data as DiscResult | undefined;
   const discScores: DiscScores | undefined = discData?.processedResults
     ? {
@@ -158,9 +163,18 @@ export const IndividualReportModal = ({
                   disabled={!available}
                   className="h-4 w-4 accent-emerald-600"
                 />
-                <IntiDinamisText size="14" className="text-neutral-800">
-                  {mod.label}
-                </IntiDinamisText>
+                <div>
+                  <IntiDinamisText size="14" className="text-neutral-800">
+                    {mod.label}
+                  </IntiDinamisText>
+                  {mod.id === "competence" && available && (
+                    <span className="block text-xs text-neutral-500">
+                      {getCompletedCompetenceTests(testResults)
+                        .map((t) => t.toUpperCase())
+                        .join(", ")}
+                    </span>
+                  )}
+                </div>
               </div>
               {!available && (
                 <span className="text-xs text-neutral-400">Not completed</span>

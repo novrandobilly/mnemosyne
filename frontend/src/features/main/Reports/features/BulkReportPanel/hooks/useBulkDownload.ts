@@ -38,7 +38,7 @@ export const useBulkDownload = (
         if (selectedModules.includes("papi")) {
           const papiResult = (
             p.expand?.test_results_via_participant ?? []
-          ).find((r) => r.test_type === "papikostick");
+          ).find((r) => r.test_type === "papikostick" && r.status === "completed");
           const scores = papiResult?.data?.processed_scores as
             | PapiResults
             | undefined;
@@ -53,7 +53,7 @@ export const useBulkDownload = (
         if (selectedModules.includes("disc")) {
           const discResult = (
             p.expand?.test_results_via_participant ?? []
-          ).find((r) => r.test_type === "disc");
+          ).find((r) => r.test_type === "disc" && r.status === "completed");
           const discData = discResult?.data as DiscResult | undefined;
           const discScores: DiscScores | undefined = discData?.processedResults
             ? {

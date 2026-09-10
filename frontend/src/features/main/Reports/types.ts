@@ -43,7 +43,17 @@ export function isModuleAvailable(
   const mod = REPORT_MODULES.find((m) => m.id === moduleId);
   if (!mod) return false;
   return mod.testTypes.some((tt) =>
-    testResults.some((r) => r.test_type === tt),
+    testResults.some((r) => r.test_type === tt && r.status === "completed"),
+  );
+}
+
+export function getCompletedCompetenceTests(
+  testResults: TestResult[],
+): string[] {
+  const compMod = REPORT_MODULES.find((m) => m.id === "competence");
+  if (!compMod) return [];
+  return compMod.testTypes.filter((tt) =>
+    testResults.some((r) => r.test_type === tt && r.status === "completed"),
   );
 }
 

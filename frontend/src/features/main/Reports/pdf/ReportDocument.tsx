@@ -29,7 +29,7 @@ export const ReportDocument = ({
   const testResults = participant.expand?.test_results_via_participant ?? [];
 
   const findResult = (type: string) =>
-    testResults.find((r) => r.test_type === type) ?? null;
+    testResults.find((r) => r.test_type === type && r.status === "completed") ?? null;
 
   const papiResult = findResult("papikostick");
   const discResult = findResult("disc");

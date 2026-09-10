@@ -4,6 +4,7 @@ import { useModal } from "@/context/ModalContext";
 import {
   REPORT_MODULES,
   isModuleAvailable,
+  getCompletedCompetenceTests,
   type ReportModuleId,
   type ReportParticipant,
 } from "../../types";
@@ -124,6 +125,22 @@ export const BulkDownloadConfirmModal = ({
                   <div className="flex flex-wrap justify-end gap-1">
                     {includedModules.map((id) => {
                       const mod = REPORT_MODULES.find((m) => m.id === id)!;
+                      if (id === "competence") {
+                        const compTests =
+                          getCompletedCompetenceTests(testResults);
+                        return (
+                          <span
+                            key={id}
+                            className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700"
+                          >
+                            Competence (
+                            {compTests
+                              .map((t) => t.toUpperCase())
+                              .join(", ")}
+                            )
+                          </span>
+                        );
+                      }
                       return (
                         <span
                           key={id}

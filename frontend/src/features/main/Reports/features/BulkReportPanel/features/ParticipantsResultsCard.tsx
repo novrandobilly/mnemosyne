@@ -1,6 +1,10 @@
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
-import { REPORT_MODULES, isModuleAvailable } from "../../../types";
+import {
+  REPORT_MODULES,
+  isModuleAvailable,
+  getCompletedCompetenceTests,
+} from "../../../types";
 import { useBulkReport } from "../context/BulkReportContext";
 
 export const ParticipantsResultsCard = () => {
@@ -125,14 +129,32 @@ export const ParticipantsResultsCard = () => {
                         {completedModules.length === 0 ? (
                           <span className="text-xs text-neutral-400">None</span>
                         ) : (
-                          completedModules.map((m) => (
-                            <span
-                              key={m.id}
-                              className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700"
-                            >
-                              {m.label}
-                            </span>
-                          ))
+                          completedModules.map((m) => {
+                            if (m.id === "competence") {
+                              const compTests =
+                                getCompletedCompetenceTests(testResults);
+                              return (
+                                <span
+                                  key={m.id}
+                                  className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700"
+                                >
+                                  Competence (
+                                  {compTests
+                                    .map((t) => t.toUpperCase())
+                                    .join(", ")}
+                                  )
+                                </span>
+                              );
+                            }
+                            return (
+                              <span
+                                key={m.id}
+                                className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700"
+                              >
+                                {m.label}
+                              </span>
+                            );
+                          })
                         )}
                       </div>
                     </td>

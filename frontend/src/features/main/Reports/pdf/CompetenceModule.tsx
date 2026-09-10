@@ -1,10 +1,9 @@
 import { Page, View, Text } from "@react-pdf/renderer";
 import type { TestResult } from "@/features/global/components/ParticipantBiodata/hooks/useGetParticipantDetails";
 import { SCORE_ITEM_CONFIG } from "@/features/main/ParticipantDetails/constants/scoreItems";
+import { getCompetenceTestScore } from "@/utils/competenceScoring";
 import { pdfStyles, PDF_COLORS } from "./styles";
 import type { ReportParticipant } from "../types";
-
-const MAX_COMPETENCE_SCORE = 100;
 
 interface CompetenceModuleProps {
   testResults: TestResult[];
@@ -19,13 +18,12 @@ export const CompetenceModule = ({
 
   const scoreRows = SCORE_ITEM_CONFIG.map(({ id, label }) => {
     const result = testResults.find((r) => r.test_type === id);
-    const score =
-      result?.data?.score != null ? Number(result.data.score) : null;
-    return { id, label, score };
+    const { score, isCompleted, maxScore } = getCompetenceTestScore(id, result);
+    return { id, label, score, isDone: isCompleted, maxScore };
   });
 
   const completedScores = scoreRows
-    .filter((r) => r.score !== null)
+    .filter((r) => r.isDone && r.score !== null)
     .map((r) => r.score as number);
 
   const averageScore = completedScores.length
@@ -67,10 +65,11 @@ export const CompetenceModule = ({
       </View>
 
       {/* Score rows */}
-      {scoreRows.map(({ id, label, score }, idx) => {
+      {scoreRows.map(({ id, label, score, isDone, maxScore }, idx) => {
         const barWidth =
-          score !== null ? (score / MAX_COMPETENCE_SCORE) * 100 : 0;
-        const isDone = score !== null;
+          isDone && score !== null
+            ? Math.min(100, Math.max(0, (score / maxScore) * 100))
+            : 0;
         return (
           <View
             key={id}
