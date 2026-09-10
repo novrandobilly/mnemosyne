@@ -25,13 +25,17 @@ type TestSlug =
   | "/da5"
   | "/st7"
   | "/intray1"
-  | "/intray2";
+  | "/intray2"
+  | "/inventori3"
+  | "/inventori4";
 
 const FULLY_DISABLED_TEST_SLUGS: TestSlug[] = [
   "/intray1",
   "/intray2",
   "/papikostick",
   "/disc",
+  "/inventori3",
+  "/inventori4",
 ];
 
 /** Use this Set for type-safe lookups against plain `string` slugs from the API. */
