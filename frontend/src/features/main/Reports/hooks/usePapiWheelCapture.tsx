@@ -20,12 +20,30 @@ export const usePapiWheelCapture = (
   enabled = true,
 ): UsePapiWheelCaptureResult => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const scoresRef = useRef(scores);
+  scoresRef.current = scores;
+
   const [wheelImageUrl, setWheelImageUrl] = useState<string | undefined>();
   const [isCapturing, setIsCapturing] = useState(false);
   const [portal, setPortal] = useState<React.ReactPortal | null>(null);
 
+  // Stable string key based on the score contents so we never re-trigger on new object references
+  const scoresKey = enabled && scores
+    ? Object.keys(scores)
+        .sort()
+        .map((k) => `${k}:${scores[k as keyof PapiResults]}`)
+        .join(",")
+    : null;
+
   useEffect(() => {
-    if (!scores || !enabled) return;
+    if (!scoresKey || !scoresRef.current) {
+      setWheelImageUrl(undefined);
+      setIsCapturing(false);
+      setPortal(null);
+      return;
+    }
+
+    const currentScores = scoresRef.current;
 
     // Create a fixed, invisible container mounted directly on document.body
     const container = document.createElement("div");
@@ -37,7 +55,7 @@ export const usePapiWheelCapture = (
     setIsCapturing(true);
 
     // Render PapiWheel into the container
-    const wheelEl = createElement(PapiWheel, { data: scores });
+    const wheelEl = createElement(PapiWheel, { data: currentScores });
     setPortal(createPortal(wheelEl, container));
 
     // Give the browser a paint cycle to fully render the SVG before capturing
@@ -50,7 +68,9 @@ export const usePapiWheelCapture = (
         .finally(() => {
           setIsCapturing(false);
           setPortal(null);
-          document.body.removeChild(container);
+          if (container.parentNode) {
+            container.parentNode.removeChild(container);
+          }
           containerRef.current = null;
         });
     }, 300);
@@ -58,15 +78,12 @@ export const usePapiWheelCapture = (
     return () => {
       clearTimeout(timer);
       setPortal(null);
-      if (
-        containerRef.current &&
-        document.body.contains(containerRef.current)
-      ) {
-        document.body.removeChild(containerRef.current);
-        containerRef.current = null;
+      if (container.parentNode) {
+        container.parentNode.removeChild(container);
       }
+      containerRef.current = null;
     };
-  }, [scores, enabled]);
+  }, [scoresKey]);
 
   return { wheelImageUrl, isCapturing, portal };
 };

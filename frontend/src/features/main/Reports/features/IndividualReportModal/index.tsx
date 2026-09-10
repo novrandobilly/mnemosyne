@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { pdf } from "@react-pdf/renderer";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
@@ -51,10 +51,13 @@ export const IndividualReportModal = ({
   const papiResult = testResults.find(
     (r) => r.test_type === "papikostick" && r.status === "completed",
   );
-  const papiScores: PapiResults | undefined = papiResult?.data
-    ? ((papiResult.data.processed_scores as PapiResults) ??
-      scorePapiKostick(papiResult.data.raw_answers ?? papiResult.data))
-    : undefined;
+  const papiScores = useMemo<PapiResults | undefined>(() => {
+    if (!papiResult?.data) return undefined;
+    return (
+      (papiResult.data.processed_scores as PapiResults) ??
+      scorePapiKostick(papiResult.data.raw_answers ?? papiResult.data)
+    );
+  }, [papiResult?.data]);
   const papiSelected = selected.includes("papi");
 
   const {
@@ -66,18 +69,19 @@ export const IndividualReportModal = ({
   const discResult = testResults.find(
     (r) => r.test_type === "disc" && r.status === "completed",
   );
-  const discData: DiscResult | undefined = discResult?.data
-    ? discResult.data.processedResults
+  const discScores = useMemo<DiscScores | undefined>(() => {
+    if (!discResult?.data) return undefined;
+    const discData: DiscResult | undefined = discResult.data.processedResults
       ? (discResult.data as DiscResult)
-      : scoreDisc(discResult.data.rawAnswers ?? discResult.data)
-    : undefined;
-  const discScores: DiscScores | undefined = discData?.processedResults
-    ? {
-        MOST: discData.processedResults.most,
-        LEAST: discData.processedResults.least,
-        CHANGE: discData.processedResults.change,
-      }
-    : undefined;
+      : scoreDisc(discResult.data.rawAnswers ?? discResult.data);
+    return discData?.processedResults
+      ? {
+          MOST: discData.processedResults.most,
+          LEAST: discData.processedResults.least,
+          CHANGE: discData.processedResults.change,
+        }
+      : undefined;
+  }, [discResult?.data]);
   const discSelected = selected.includes("disc");
 
   const {
@@ -91,11 +95,15 @@ export const IndividualReportModal = ({
   const isReady = isPapiReady && isDiscReady;
   const isCapturing = isPapiCapturing || isDiscCapturing;
 
-  const generatedAt = new Date().toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const generatedAt = useMemo(
+    () =>
+      new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+    [],
+  );
 
   const fileName =
     `${participant.first_name}_${participant.last_name}_mnemosyne_report.pdf`
@@ -160,7 +168,9 @@ export const IndividualReportModal = ({
     selected,
     isReady,
     wheelImageUrl,
-    discGraphUrls,
+    discGraphUrls.most,
+    discGraphUrls.least,
+    discGraphUrls.change,
     participant,
     generatedAt,
   ]);

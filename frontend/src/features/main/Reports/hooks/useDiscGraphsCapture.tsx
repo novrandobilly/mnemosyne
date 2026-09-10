@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo, createElement } from "react";
+import { useEffect, useRef, useState, createElement } from "react";
 import { createPortal } from "react-dom";
 import type { DiscScores } from "@/features/main/DISCResult/types";
 import DiscMostGraph from "@/features/main/DISCResult/features/MostTable";
@@ -31,6 +31,9 @@ export const useDiscGraphsCapture = (
   enabled = true,
 ): UseDiscGraphsCaptureResult => {
   const containersRef = useRef<HTMLDivElement[]>([]);
+  const scoresRef = useRef(scores);
+  scoresRef.current = scores;
+
   const [graphUrls, setGraphUrls] = useState<DiscGraphUrls>({
     most: undefined,
     least: undefined,
@@ -39,52 +42,41 @@ export const useDiscGraphsCapture = (
   const [isCapturing, setIsCapturing] = useState(false);
   const [portals, setPortals] = useState<React.ReactPortal[]>([]);
 
-  // A stable string key — only changes when actual values change, not on every
-  // render where discScores is reconstructed as a new object. Using this as the
-  // sole effect dependency prevents the cleanup from killing the capture timer.
-  const scoresKey = useMemo(() => {
-    if (!scores || !enabled) return null;
-    return [
-      scores.MOST.D,
-      scores.MOST.I,
-      scores.MOST.S,
-      scores.MOST.C,
-      scores.LEAST.D,
-      scores.LEAST.I,
-      scores.LEAST.S,
-      scores.LEAST.C,
-      scores.CHANGE.D,
-      scores.CHANGE.I,
-      scores.CHANGE.S,
-      scores.CHANGE.C,
-    ].join(",");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    enabled,
-    scores?.MOST.D,
-    scores?.MOST.I,
-    scores?.MOST.S,
-    scores?.MOST.C,
-    scores?.LEAST.D,
-    scores?.LEAST.I,
-    scores?.LEAST.S,
-    scores?.LEAST.C,
-    scores?.CHANGE.D,
-    scores?.CHANGE.I,
-    scores?.CHANGE.S,
-    scores?.CHANGE.C,
-  ]);
+  // A stable string key — only changes when actual values change
+  const scoresKey = enabled && scores
+    ? [
+        scores.MOST.D,
+        scores.MOST.I,
+        scores.MOST.S,
+        scores.MOST.C,
+        scores.LEAST.D,
+        scores.LEAST.I,
+        scores.LEAST.S,
+        scores.LEAST.C,
+        scores.CHANGE.D,
+        scores.CHANGE.I,
+        scores.CHANGE.S,
+        scores.CHANGE.C,
+      ].join(",")
+    : null;
 
   useEffect(() => {
-    if (!scoresKey || !scores) return;
+    if (!scoresKey || !scoresRef.current) {
+      setGraphUrls({ most: undefined, least: undefined, change: undefined });
+      setIsCapturing(false);
+      setPortals([]);
+      return;
+    }
+
+    const currentScores = scoresRef.current;
 
     const configs: Array<{
       Component: React.ComponentType<{ scores: GraphScores }>;
       graphScores: GraphScores;
     }> = [
-      { Component: DiscMostGraph, graphScores: toGraphScores(scores.MOST) },
-      { Component: DiscLeastGraph, graphScores: toGraphScores(scores.LEAST) },
-      { Component: DiscChangeGraph, graphScores: toGraphScores(scores.CHANGE) },
+      { Component: DiscMostGraph, graphScores: toGraphScores(currentScores.MOST) },
+      { Component: DiscLeastGraph, graphScores: toGraphScores(currentScores.LEAST) },
+      { Component: DiscChangeGraph, graphScores: toGraphScores(currentScores.CHANGE) },
     ];
 
     const containers = configs.map(() => {
@@ -107,7 +99,7 @@ export const useDiscGraphsCapture = (
 
     const cleanup = () => {
       containers.forEach((c) => {
-        if (document.body.contains(c)) document.body.removeChild(c);
+        if (c.parentNode) c.parentNode.removeChild(c);
       });
       containersRef.current = [];
     };
@@ -130,8 +122,6 @@ export const useDiscGraphsCapture = (
       setPortals([]);
       cleanup();
     };
-    // scores is intentionally excluded — scoresKey is the stable proxy for it
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scoresKey]);
 
   return { graphUrls, isCapturing, portals };
