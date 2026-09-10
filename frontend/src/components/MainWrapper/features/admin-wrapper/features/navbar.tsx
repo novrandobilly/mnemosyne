@@ -21,9 +21,13 @@ const AdminNavbar: FC = () => {
           {label}
         </NavButton>
       ))}
-      <NavButton className="text-intidinamis-ff3b30" onClick={logout}>
+      <button
+        type="button"
+        onClick={logout}
+        className="cursor-pointer rounded-full px-3 py-1.5 font-semibold text-intidinamis-ff3b30 transition hover:bg-neutral-100"
+      >
         Logout
-      </NavButton>
+      </button>
     </NavigationContainer>
   );
 };
