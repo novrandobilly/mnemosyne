@@ -29,30 +29,16 @@ const TestResults: FC = () => {
   return (
     <section className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <IntiDinamisText
-            size="12"
-            className="uppercase tracking-[0.3em] text-neutral-500"
-          >
-            Test Results
-          </IntiDinamisText>
-          <IntiDinamisText
-            as="h2"
-            size="20"
-            weight="semibold"
-            className="mt-2 text-neutral-900"
-          >
-            Reports and scoring overview
-          </IntiDinamisText>
-          <IntiDinamisText size="14" className="mt-2 text-neutral-600">
-            Detailed reports are available for core tests. Single-score
-            assessments are listed in the scoring table.
-          </IntiDinamisText>
-        </div>
+        <IntiDinamisText
+          as="h2"
+          className="text-xl font-bold tracking-tight text-neutral-900"
+        >
+          Test Results & Scoring
+        </IntiDinamisText>
         <IntiDinamisButton
           type="button"
-          variant="secondary"
-          className="min-w-0 rounded-full px-4 py-2 text-xs"
+          variant="emerald"
+          className="min-w-0 rounded-full px-4 py-2 text-xs font-semibold"
           onClick={handleExport}
           disabled={!participant}
         >
