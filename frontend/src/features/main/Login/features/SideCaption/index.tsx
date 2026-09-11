@@ -10,13 +10,10 @@ const SideCaption: FC = () => {
       </div>
       <IntiDinamisText
         as="h1"
-        className="text-4xl font-bold leading-tight text-neutral-900 sm:text-5xl"
+        className="text-3xl font-bold leading-tight text-neutral-900"
       >
-        Selamat Datang di
-        <span className="block mt-1 tracking-tight">
-          <span className="text-[#7c007d]">Inti</span>{" "}
-          <span className="text-[#fe0100]">Dinamis</span>
-        </span>
+        Selamat datang di
+        <span className="block mt-1">Inti Dinamis - Assessment Portal</span>
       </IntiDinamisText>
     </div>
   );
