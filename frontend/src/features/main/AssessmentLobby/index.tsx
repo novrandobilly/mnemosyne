@@ -1,7 +1,7 @@
 import { MainWrapper } from "@/components/MainWrapper";
-import { CandidateProfile } from "./features/CandidateProfile";
 import { Instructions } from "./features/Instructions";
 import { TestEntrance } from "./features/TestEntrance";
+import { UserProfile } from "./features/UserProfile";
 
 const AssessmentLobby = () => {
   return (
@@ -9,7 +9,7 @@ const AssessmentLobby = () => {
       <MainWrapper pageTitle="Assessment Lobby">
         <div className="flex flex-col gap-4 md:flex-row">
           <Instructions />
-          <CandidateProfile />
+          <UserProfile />
         </div>
 
         <TestEntrance />
