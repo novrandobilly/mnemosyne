@@ -1,5 +1,4 @@
 import { Fragment, type FC, type ReactNode } from "react";
-import PageTitle from "../../components/page-title";
 import Logo from "./features/logo";
 import AdminNavbar from "./features/navbar";
 import SideButtons from "./features/side-buttons";
@@ -9,10 +8,7 @@ interface AdminWrapperProps {
   pageTitle?: string;
 }
 
-const AdminWrapper: FC<AdminWrapperProps> = ({
-  children,
-  pageTitle = "Admin",
-}) => {
+const AdminWrapper: FC<AdminWrapperProps> = ({ children }) => {
   return (
     <Fragment>
       <div className="pointer-events-none absolute inset-0">
@@ -25,7 +21,6 @@ const AdminWrapper: FC<AdminWrapperProps> = ({
         <header className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Logo />
-            <PageTitle text={pageTitle} />
             <SideButtons />
           </div>
           <AdminNavbar />

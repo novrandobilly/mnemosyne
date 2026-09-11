@@ -45,9 +45,9 @@ const ListRow: FC<ListRowProps> = ({
   const participantUrl = `/admin/participants/${id}`;
 
   return (
-    <tr className="transition-colors hover:bg-neutral-50">
+    <tr className="transition-colors hover:bg-emerald-50/20">
       <td className="p-0">
-        <Link to={participantUrl} className="block px-5 py-4 text-neutral-500">
+        <Link to={participantUrl} className="block px-5 py-4 font-medium text-neutral-500">
           {String(index + 1).padStart(2, "0")}
         </Link>
       </td>
@@ -55,7 +55,7 @@ const ListRow: FC<ListRowProps> = ({
       <td className="p-0">
         <Link
           to={participantUrl}
-          className="block px-5 py-4 font-semibold text-neutral-900"
+          className="block px-5 py-4 font-semibold text-neutral-900 transition-colors hover:text-emerald-700"
         >
           {name}
         </Link>
@@ -91,33 +91,56 @@ const ListRow: FC<ListRowProps> = ({
       </td>
 
       <td className="px-5 py-4 text-right">
-        <IntiDinamisButton
-          type="button"
-          variant="secondary"
-          size="icon"
-          wrapChildrenWithText={false}
-          className="h-8 w-8 min-w-0 rounded-lg border border-neutral-200 text-neutral-400 hover:text-rose-600 hover:bg-rose-50 hover:border-rose-200 transition-colors"
-          onClick={handleDeleteClick}
-          disabled={isDeleting}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="15"
-            height="15"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        <div className="flex items-center justify-end gap-2">
+          <IntiDinamisButton
+            type="button"
+            variant="secondary"
+            size="icon"
+            wrapChildrenWithText={false}
+            className="h-8 w-8 min-w-0 rounded-lg border border-neutral-200 text-neutral-400 hover:text-rose-600 hover:bg-rose-50 hover:border-rose-200 transition-colors"
+            onClick={handleDeleteClick}
+            disabled={isDeleting}
+            title="Delete participant"
           >
-            <path d="M3 6h18" />
-            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-            <line x1="10" x2="10" y1="11" y2="17" />
-            <line x1="14" x2="14" y1="11" y2="17" />
-          </svg>
-        </IntiDinamisButton>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M3 6h18" />
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+              <line x1="10" x2="10" y1="11" y2="17" />
+              <line x1="14" x2="14" y1="11" y2="17" />
+            </svg>
+          </IntiDinamisButton>
+
+          <Link
+            to={participantUrl}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-emerald-700"
+            title="View details"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </Link>
+        </div>
       </td>
     </tr>
   );

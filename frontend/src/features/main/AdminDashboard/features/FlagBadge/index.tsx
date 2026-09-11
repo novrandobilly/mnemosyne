@@ -8,12 +8,13 @@ interface FlagBadgeProps {
 const FlagBadge: FC<FlagBadgeProps> = ({ label, isDone }) => (
   <div
     title={`${label}: ${isDone ? "Done" : "Not done"}`}
-    className={`flex items-center justify-center px-2 border rounded-md text-xxs font-semibold ${
+    className={`inline-flex items-center justify-center px-2 py-0.5 border rounded-md text-[11px] font-semibold transition-colors ${
       isDone
-        ? "bg-green-100 text-green-700 border-green-300"
-        : "bg-neutral-100 text-neutral-400 border-neutral-300"
+        ? "bg-emerald-50 text-emerald-700 border-emerald-300"
+        : "bg-neutral-50 text-neutral-400 border-neutral-200"
     }`}
   >
+    {isDone && <span className="mr-1 font-bold text-emerald-600">✓</span>}
     {label}
   </div>
 );

@@ -21,7 +21,7 @@ export const NavButton: FC<NavButtonProps> = ({
   const baseStyles =
     "cursor-pointer rounded-full px-3 py-1.5 font-semibold transition inline-flex items-center justify-center";
   const inactiveStyles = "text-neutral-600 hover:bg-neutral-100";
-  const activeStyles = "bg-neutral-900 text-white";
+  const activeStyles = "bg-emerald-600 text-white shadow-sm hover:bg-emerald-700";
 
   return (
     <NavLink

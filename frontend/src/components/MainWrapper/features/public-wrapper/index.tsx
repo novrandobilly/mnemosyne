@@ -1,5 +1,4 @@
 import { Fragment, type FC, type ReactNode } from "react";
-import PageTitle from "../../components/page-title";
 import Logo from "./features/logo";
 import PublicNavbar from "./features/navbar";
 
@@ -8,10 +7,7 @@ interface PublicWrapperProps {
   pageTitle?: string;
 }
 
-const PublicWrapper: FC<PublicWrapperProps> = ({
-  children,
-  pageTitle = "Mnemosyne",
-}) => {
+const PublicWrapper: FC<PublicWrapperProps> = ({ children }) => {
   return (
     <Fragment>
       <div className="pointer-events-none absolute inset-0">
@@ -23,7 +19,6 @@ const PublicWrapper: FC<PublicWrapperProps> = ({
         <header className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Logo />
-            <PageTitle text={pageTitle} />
           </div>
           <PublicNavbar />
         </header>
