@@ -27,18 +27,10 @@ export const LoginBox = () => {
   return (
     <FormProvider {...methods}>
       <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm sm:p-10">
-        <div className="flex items-center justify-between">
-          <div>
-            <IntiDinamisText className="text-lg uppercase tracking-[4px]">
-              Sign In
-            </IntiDinamisText>
-            <IntiDinamisText className="text-sm text-neutral-500">
-              Enter to access assessment environment.
-            </IntiDinamisText>
-          </div>
-          <div className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs text-neutral-600 min-w-fit text-center">
-            Internal Use
-          </div>
+        <div>
+          <IntiDinamisText className="text-xl font-bold tracking-tight text-neutral-900 sm:text-2xl">
+            User Login
+          </IntiDinamisText>
         </div>
 
         <div className="mt-8 space-y-5">
@@ -55,15 +47,16 @@ export const LoginBox = () => {
           />
 
           <IntiDinamisButton
-            className="w-full"
+            variant="emerald"
+            className="w-full py-3 text-base font-semibold"
             onClick={handleSubmit(onSubmit)}
           >
-            Sign In
+            Submit
           </IntiDinamisButton>
         </div>
 
-        <div className="mt-6 text-xs text-neutral-500">
-          Having trouble? Contact your assessment administrator.
+        <div className="mt-6 text-xs text-neutral-400">
+          Butuh bantuan? Hubungi administrator tes Anda.
         </div>
       </div>
     </FormProvider>

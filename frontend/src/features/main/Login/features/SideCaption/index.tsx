@@ -3,29 +3,21 @@ import type { FC } from "react";
 
 const SideCaption: FC = () => {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
+      <div className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1 text-xs font-semibold text-emerald-700">
+        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+        Psikotes & Asesmen Online
+      </div>
       <IntiDinamisText
         as="h1"
-        className="text-4xl font-semibold leading-tight text-neutral-900 sm:text-5xl"
+        className="text-4xl font-bold leading-tight text-neutral-900 sm:text-5xl"
       >
-        Welcome to
-        <span className="block text-neutral-500">Inti Dinamis</span>
-        <span className="block text-neutral-500">Assessment Platform</span>
+        Selamat Datang di
+        <span className="block mt-1 tracking-tight">
+          <span className="text-[#7c007d]">Inti</span>{" "}
+          <span className="text-[#fe0100]">Dinamis</span>
+        </span>
       </IntiDinamisText>
-      <IntiDinamisText className="max-w-xl text-base text-neutral-600">
-        Access your test environment with a secure, single-login flow. Your
-        progress and results remain private and protected.
-      </IntiDinamisText>
-      <div className="flex flex-wrap gap-4 text-sm text-neutral-600">
-        <div className="flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 shadow-sm">
-          <span className="h-2 w-2 rounded-full bg-emerald-600" />
-          <IntiDinamisText>Secure session</IntiDinamisText>
-        </div>
-        <div className="flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 shadow-sm">
-          <span className="h-2 w-2 rounded-full bg-neutral-400" />
-          <IntiDinamisText>Private and protected</IntiDinamisText>
-        </div>
-      </div>
     </div>
   );
 };

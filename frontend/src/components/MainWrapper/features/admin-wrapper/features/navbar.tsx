@@ -4,9 +4,9 @@ import NavigationContainer from "../../../components/nav-container";
 import { useLogout } from "@/api/auth/logout";
 
 const ADMIN_NAV_ITEMS = [
-  { label: "Dashboard", path: "/admin", end: true },
   { label: "Assessment Lobby", path: "/psikotes" },
   { label: "Panel", path: "/admin/panel" },
+  { label: "Dashboard", path: "/admin", end: true },
   { label: "Account Generator", path: "/admin/id-generator" },
   { label: "Reports", path: "/admin/reports" },
 ];
@@ -32,4 +32,3 @@ const AdminNavbar: FC = () => {
   );
 };
 export default AdminNavbar;
-

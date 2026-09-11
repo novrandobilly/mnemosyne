@@ -16,10 +16,10 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
       control={control}
       name="password"
       rules={{
-        required: "Password is required",
+        required: "Password wajib diisi",
         minLength: {
           value: 8,
-          message: "Password must be at least 8 characters",
+          message: "Password minimal 8 karakter",
         },
       }}
       render={({
@@ -30,7 +30,7 @@ export const PasswordInput: FC<PasswordInputProps> = (props) => {
           <div className="flex flex-col gap-1.5">
             <TextInput
               label="Password"
-              placeholder="Enter your password"
+              placeholder="Masukkan password Anda"
               type={isVisible ? "text" : "password"}
               rightIcon={
                 <img

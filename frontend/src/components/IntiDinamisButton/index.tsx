@@ -4,7 +4,7 @@ import { IntiDinamisText } from "../IntiDinamisText";
 import { Spinner } from "./spinner";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "emerald";
   size?: "md" | "sm" | "xs" | "icon";
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
@@ -48,6 +48,8 @@ const IntiDinamisButton = forwardRef<HTMLButtonElement, ButtonProps>(
         "disabled:bg-neutral-900 disabled:border-neutral-900 disabled:opacity-100 cursor-wait",
       secondary:
         "disabled:bg-[#FFFFFF] disabled:border-neutral-900 disabled:opacity-100 cursor-wait hover:bg-[#FFFFF]",
+      emerald:
+        "disabled:bg-emerald-600 disabled:border-emerald-600 disabled:opacity-100 cursor-wait",
     };
 
     const variants = {
@@ -55,6 +57,8 @@ const IntiDinamisButton = forwardRef<HTMLButtonElement, ButtonProps>(
         "bg-neutral-900 border border-neutral-900 text-white hover:bg-neutral-700",
       secondary:
         "bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900/10",
+      emerald:
+        "bg-emerald-600 border border-emerald-600 text-white hover:bg-emerald-700 shadow-sm",
     };
 
     const contentWidth = size === "md" || size === "sm" ? "w-full" : "w-auto";
@@ -79,7 +83,9 @@ const IntiDinamisButton = forwardRef<HTMLButtonElement, ButtonProps>(
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <Spinner
               className={cn(
-                variant == "primary" ? "text-white" : "text-[#DA649F]",
+                variant === "primary" || variant === "emerald"
+                  ? "text-white"
+                  : "text-[#DA649F]",
               )}
             />
           </div>

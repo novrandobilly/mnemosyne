@@ -11,11 +11,7 @@ export const EmailInput: FC = () => {
       control={control}
       name="email"
       rules={{
-        required: "Username is required",
-        // pattern: {
-        //   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        //   message: "Invalid email address",
-        // },
+        required: "User ID wajib diisi",
       }}
       render={({
         field: { onChange, onBlur, value },
@@ -24,8 +20,8 @@ export const EmailInput: FC = () => {
         return (
           <div className="flex flex-col gap-1.5">
             <TextInput
-              label="Email/Username"
-              placeholder="Enter your email or username"
+              label="User ID"
+              placeholder="Masukkan User ID atau Email"
               type="text"
               onChange={onChange}
               onBlur={onBlur}
