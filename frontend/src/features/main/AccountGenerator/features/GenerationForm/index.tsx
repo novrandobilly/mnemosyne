@@ -1,6 +1,5 @@
 import { Controller } from "react-hook-form";
 import type { UseFormReturn } from "react-hook-form";
-import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
 import { TextInput } from "@/components/TextInput";
 import type { BulkGenerateFormValues } from "../../types";
@@ -19,30 +18,22 @@ export const GenerationForm = ({
   const { control, handleSubmit } = formMethods;
 
   return (
-    <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-      <IntiDinamisText
-        size="12"
-        className="uppercase tracking-[0.3em] text-neutral-500"
-      >
-        Bulk Generation
-      </IntiDinamisText>
-      <IntiDinamisText
-        as="h1"
-        size="24"
-        weight="semibold"
-        className="mt-3 text-neutral-900"
-      >
-        Create participant accounts
-      </IntiDinamisText>
-      <IntiDinamisText size="14" className="mt-2 text-neutral-600">
-        Auto-generate usernames and temporary passwords. Each account is
-        initialized with{" "}
-        <span className="font-medium text-neutral-800">role: participant</span>{" "}
-        and pending onboarding.
-      </IntiDinamisText>
+    <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-xs">
+      {/* Header with Title and ADMIN ONLY badge */}
+      <div className="flex items-center gap-2.5 border-b border-neutral-100 pb-3">
+        <h1 className="text-lg font-bold tracking-tight text-neutral-900">
+          ID Generator
+        </h1>
+        <span className="inline-flex items-center rounded-md border border-rose-200 bg-rose-50 px-2 py-0.5 text-xs font-semibold text-rose-700">
+          ADMIN ONLY
+        </span>
+      </div>
 
-      <form className="mt-6 grid gap-4" onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid gap-4 sm:grid-cols-2">
+      <form
+        className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="flex-1">
           <Controller
             control={control}
             name="prefix"
@@ -54,21 +45,23 @@ export const GenerationForm = ({
               },
             }}
             render={({ field, fieldState: { error } }) => (
-              <div className="flex flex-col gap-1.5">
+              <div className="flex flex-col gap-1">
                 <TextInput
                   label="Username prefix"
                   placeholder="e.g. MNM"
                   {...field}
                 />
                 {error && (
-                  <IntiDinamisText size="12" className="text-red-500">
+                  <span className="text-xs font-medium text-rose-600">
                     {error.message}
-                  </IntiDinamisText>
+                  </span>
                 )}
               </div>
             )}
           />
+        </div>
 
+        <div className="w-full sm:w-48">
           <Controller
             control={control}
             name="count"
@@ -78,7 +71,7 @@ export const GenerationForm = ({
               max: { value: 50, message: "Maximum 50 per batch" },
             }}
             render={({ field, fieldState: { error } }) => (
-              <div className="flex flex-col gap-1.5">
+              <div className="flex flex-col gap-1">
                 <TextInput
                   label="Number of accounts"
                   placeholder="e.g. 10"
@@ -89,38 +82,37 @@ export const GenerationForm = ({
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 />
                 {error && (
-                  <IntiDinamisText size="12" className="text-red-500">
+                  <span className="text-xs font-medium text-rose-600">
                     {error.message}
-                  </IntiDinamisText>
+                  </span>
                 )}
               </div>
             )}
           />
         </div>
 
-        <div className="rounded-2xl border border-neutral-100 bg-neutral-50 px-4 py-3">
-          <IntiDinamisText size="12" className="text-neutral-500">
-            Usernames follow the pattern:{" "}
-            <span className="font-mono font-semibold text-neutral-700">
-              PREFIX_XXXXXXXX
-            </span>
-            . Passwords:{" "}
-            <span className="font-mono font-semibold text-neutral-700">
-              PREFIX-XXXX-XXXX
-            </span>
-            . Credentials are shown once — export immediately.
-          </IntiDinamisText>
+        <div className="w-full sm:w-auto sm:pt-[22px]">
+          <IntiDinamisButton
+            type="submit"
+            variant="emerald"
+            size="md"
+            className="w-full sm:w-auto h-[46px] rounded-xl px-6 cursor-pointer shrink-0"
+            isLoading={isPending}
+            disabled={isPending}
+          >
+            {isPending ? "Generating…" : "Generate Accounts"}
+          </IntiDinamisButton>
         </div>
-
-        <IntiDinamisButton
-          type="submit"
-          className="w-full"
-          isLoading={isPending}
-          disabled={isPending}
-        >
-          {isPending ? "Generating…" : "Generate Accounts"}
-        </IntiDinamisButton>
       </form>
+
+      <div className="mt-3 text-xs text-neutral-500">
+        Passwords:{" "}
+        <span className="font-mono font-semibold text-neutral-800">
+          intidinamis2005
+        </span>
+      </div>
     </div>
   );
 };
+
+export default GenerationForm;

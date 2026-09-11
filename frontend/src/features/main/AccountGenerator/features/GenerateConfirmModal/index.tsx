@@ -58,6 +58,7 @@ export const GenerateConfirmModal = ({
         </IntiDinamisButton>
         <IntiDinamisButton
           type="button"
+          variant="emerald"
           onClick={handleConfirm}
           isLoading={isPending}
           disabled={isPending}
