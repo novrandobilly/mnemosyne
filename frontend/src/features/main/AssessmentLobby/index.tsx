@@ -7,7 +7,7 @@ const AssessmentLobby = () => {
   return (
     <div className="min-h-screen bg-white text-neutral-900">
       <MainWrapper pageTitle="Assessment Lobby">
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4 md:flex-row">
           <Instructions />
           <CandidateProfile />
         </div>

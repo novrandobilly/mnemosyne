@@ -208,9 +208,9 @@ export const IndividualReportModal = ({
   };
 
   return (
-    <div className="flex h-[88vh] max-h-[920px] w-full flex-col gap-6 overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 shadow-xl lg:flex-row lg:p-8">
+    <div className="flex h-[88vh] max-h-230 w-full flex-col gap-6 overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 shadow-xl lg:flex-row lg:p-8">
       {/* ── Left Column: Config & Actions ── */}
-      <div className="flex w-full shrink-0 flex-col justify-between overflow-y-auto pr-1 lg:w-[360px]">
+      <div className="flex w-full shrink-0 flex-col justify-between overflow-y-auto pr-1 lg:w-90">
         <div>
           <IntiDinamisText
             size="12"
@@ -276,7 +276,9 @@ export const IndividualReportModal = ({
                     </div>
                   </div>
                   {!available && (
-                    <span className="text-xs text-neutral-400">Not completed</span>
+                    <span className="text-xs text-neutral-400">
+                      Not completed
+                    </span>
                   )}
                 </label>
               );
@@ -341,9 +343,10 @@ export const IndividualReportModal = ({
         <div className="relative flex min-h-0 flex-1 items-center justify-center p-3">
           {selected.length === 0 ? (
             <div className="text-center p-8 text-sm text-neutral-400">
-              No modules selected. Select at least one module on the left to preview the report.
+              No modules selected. Select at least one module on the left to
+              preview the report.
             </div>
-          ) : (isCapturing || (isPreviewLoading && !previewUrl)) ? (
+          ) : isCapturing || (isPreviewLoading && !previewUrl) ? (
             <div className="flex flex-col items-center gap-2 text-sm text-neutral-400">
               <div className="h-6 w-6 animate-spin rounded-full border-2 border-neutral-300 border-t-emerald-600" />
               <span>Generating document preview…</span>
