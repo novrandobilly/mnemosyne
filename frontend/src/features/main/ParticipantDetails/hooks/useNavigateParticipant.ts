@@ -6,14 +6,20 @@ export const useNavigateParticipant = () => {
   const navigate = useNavigate();
   const { data: participants, isLoading } = useGetParticipant();
 
-  const currentIndex = participants ? participants.findIndex((p) => p.id === id) : -1;
-  const total = participants ? participants.length : 0;
+  const sortedParticipants = participants
+    ? [...participants].sort(
+        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime(),
+      )
+    : [];
+
+  const currentIndex = id ? sortedParticipants.findIndex((p) => p.id === id) : -1;
+  const total = sortedParticipants.length;
 
   const prevParticipant =
-    currentIndex > 0 && participants ? participants[currentIndex - 1] : null;
+    currentIndex > 0 ? sortedParticipants[currentIndex - 1] : null;
   const nextParticipant =
-    currentIndex >= 0 && currentIndex < total - 1 && participants
-      ? participants[currentIndex + 1]
+    currentIndex >= 0 && currentIndex < total - 1
+      ? sortedParticipants[currentIndex + 1]
       : null;
 
   const goToPrev = () => {

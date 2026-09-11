@@ -47,7 +47,10 @@ const ListRow: FC<ListRowProps> = ({
   return (
     <tr className="transition-colors hover:bg-emerald-50/20">
       <td className="p-0">
-        <Link to={participantUrl} className="block px-5 py-4 font-medium text-neutral-500">
+        <Link
+          to={participantUrl}
+          className="block cursor-pointer px-5 py-4 font-medium text-neutral-500"
+        >
           {String(index + 1).padStart(2, "0")}
         </Link>
       </td>
@@ -55,26 +58,35 @@ const ListRow: FC<ListRowProps> = ({
       <td className="p-0">
         <Link
           to={participantUrl}
-          className="block px-5 py-4 font-semibold text-neutral-900 transition-colors hover:text-emerald-700"
+          className="block cursor-pointer px-5 py-4 font-semibold text-neutral-900 transition-colors hover:text-emerald-700"
         >
           {name}
         </Link>
       </td>
 
       <td className="p-0">
-        <Link to={participantUrl} className="block px-5 py-4 text-neutral-700">
+        <Link
+          to={participantUrl}
+          className="block cursor-pointer px-5 py-4 text-neutral-700"
+        >
           {testNumber}
         </Link>
       </td>
 
       <td className="p-0">
-        <Link to={participantUrl} className="block px-5 py-4 text-neutral-700">
+        <Link
+          to={participantUrl}
+          className="block cursor-pointer px-5 py-4 text-neutral-700"
+        >
           {formatDate({ isoDate: date })}
         </Link>
       </td>
 
       <td className="p-0">
-        <Link to={participantUrl} className="block px-5 py-4">
+        <Link
+          to={participantUrl}
+          className="block cursor-pointer px-5 py-4"
+        >
           <div className="flex max-w-125 flex-wrap gap-2">
             {FLAG_LABELS.map(({ label, value }) => {
               const isDone = flags.includes(value);
@@ -97,7 +109,7 @@ const ListRow: FC<ListRowProps> = ({
             variant="secondary"
             size="icon"
             wrapChildrenWithText={false}
-            className="h-8 w-8 min-w-0 rounded-lg border border-neutral-200 text-neutral-400 hover:text-rose-600 hover:bg-rose-50 hover:border-rose-200 transition-colors"
+            className="h-8 w-8 min-w-0 cursor-pointer rounded-lg border border-neutral-200 text-neutral-400 transition-colors hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600"
             onClick={handleDeleteClick}
             disabled={isDeleting}
             title="Delete participant"
@@ -123,7 +135,7 @@ const ListRow: FC<ListRowProps> = ({
 
           <Link
             to={participantUrl}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-emerald-700"
+            className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-emerald-700"
             title="View details"
           >
             <svg

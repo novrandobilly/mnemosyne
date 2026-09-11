@@ -1,7 +1,7 @@
 import { pb } from "@/lib/pocketbase";
 import { useQuery } from "@tanstack/react-query";
 
-export interface ParticipantsResponse<T = { [key: string]: any }> {
+export interface ParticipantsResponse<T = Record<string, unknown>> {
   id: string;
   collectionId: string;
   collectionName: string;
@@ -27,6 +27,7 @@ export const useGetParticipant = () => {
         .collection("users")
         .getFullList({
           filter: 'role="participant"',
+          sort: "-created",
           expand: "test_results_via_participant",
         });
       return response;
