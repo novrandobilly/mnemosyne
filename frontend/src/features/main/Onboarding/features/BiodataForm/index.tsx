@@ -26,7 +26,7 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
             weight="semibold"
             className="text-neutral-900"
           >
-            Welcome to Mnemosyne
+            Welcome to Inti Dinamis
           </IntiDinamisText>
           <IntiDinamisText size="14" className="mt-2 text-neutral-500">
             Please fill in your biodata before accessing the assessment

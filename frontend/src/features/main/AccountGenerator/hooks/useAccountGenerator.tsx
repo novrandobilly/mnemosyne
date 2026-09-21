@@ -62,7 +62,7 @@ export const useAccountGenerator = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "mnemosyne-accounts.csv";
+    a.download = "intidinamis-accounts.csv";
     a.click();
     URL.revokeObjectURL(url);
   };

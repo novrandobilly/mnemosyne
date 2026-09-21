@@ -106,7 +106,7 @@ export const IndividualReportModal = ({
   );
 
   const fileName =
-    `${participant.first_name}_${participant.last_name}_mnemosyne_report.pdf`
+    `${participant.first_name}_${participant.last_name}_intidinamis_report.pdf`
       .toLowerCase()
       .replace(/\s+/g, "_");
 

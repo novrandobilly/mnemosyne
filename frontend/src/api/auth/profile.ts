@@ -14,7 +14,7 @@ interface User extends Record<string, any> {
   updated: string; // ISO date string
   avatar: string;
 
-  // Custom Fields for Mnemosyne
+  // Custom Fields for Inti Dinamis
   first_name: string;
   last_name: string;
   date_of_birth: string;

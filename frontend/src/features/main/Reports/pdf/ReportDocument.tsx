@@ -31,7 +31,8 @@ export const ReportDocument = ({
   const testResults = participant.expand?.test_results_via_participant ?? [];
 
   const findResult = (type: string) =>
-    testResults.find((r) => r.test_type === type && r.status === "completed") ?? null;
+    testResults.find((r) => r.test_type === type && r.status === "completed") ??
+    null;
 
   const papiResult = findResult("papikostick");
   const discResult = findResult("disc");
@@ -62,8 +63,8 @@ export const ReportDocument = ({
 
   return (
     <Document
-      title={`${participant.first_name} ${participant.last_name} — Mnemosyne Report`}
-      author="Mnemosyne"
+      title={`${participant.first_name} ${participant.last_name} — Inti Dinamis Report`}
+      author="Inti Dinamis"
       subject="Assessment Report"
     >
       <CoverPage

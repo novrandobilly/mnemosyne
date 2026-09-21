@@ -152,7 +152,7 @@ export const CompetenceModule = ({
       {/* Footer */}
       <View style={pdfStyles.footer} fixed>
         <Text style={pdfStyles.footerText}>
-          MNEMOSYNE © 2026 — Confidential
+          Inti Dinamis © 2026 — Confidential
         </Text>
         <Text
           style={pdfStyles.footerText}

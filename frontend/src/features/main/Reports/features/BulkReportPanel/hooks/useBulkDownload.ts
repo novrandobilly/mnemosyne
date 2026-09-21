@@ -40,7 +40,9 @@ export const useBulkDownload = (
         if (selectedModules.includes("papi")) {
           const papiResult = (
             p.expand?.test_results_via_participant ?? []
-          ).find((r) => r.test_type === "papikostick" && r.status === "completed");
+          ).find(
+            (r) => r.test_type === "papikostick" && r.status === "completed",
+          );
           const scores: PapiResults | undefined = papiResult?.data
             ? ((papiResult.data.processed_scores as PapiResults) ??
               scorePapiKostick(papiResult.data.raw_answers ?? papiResult.data))
@@ -93,7 +95,7 @@ export const useBulkDownload = (
         zip.file(filename, blob);
       }
       const zipBlob = await zip.generateAsync({ type: "blob" });
-      triggerDownload(zipBlob, `mnemosyne_reports_${dateTag}.zip`);
+      triggerDownload(zipBlob, `intidinamis_reports_${dateTag}.zip`);
     } else {
       for (const { blob, filename } of valid) {
         triggerDownload(blob, filename);

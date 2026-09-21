@@ -49,7 +49,7 @@ export const useTCompleteOnboarding = () => {
         .authWithPassword(username, new_password);
     },
     onSuccess: () => {
-      showToast({ message: "Setup complete! Welcome to Mnemosyne." });
+      showToast({ message: "Setup complete! Welcome to Inti Dinamis." });
       queryClient.invalidateQueries({ queryKey: ["auth"] });
       navigate("/psikotes", { replace: true });
     },
