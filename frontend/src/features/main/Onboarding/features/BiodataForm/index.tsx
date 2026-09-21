@@ -60,12 +60,19 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
               <Controller
                 control={control}
                 name="first_name"
-                rules={{ required: "First name is required" }}
+                rules={{
+                  required: "First name is required",
+                  maxLength: {
+                    value: 60,
+                    message: "First name cannot exceed 60 characters",
+                  },
+                }}
                 render={({ field, fieldState: { error } }) => (
                   <div className="flex flex-col gap-1.5">
                     <TextInput
                       label="First name"
                       placeholder="e.g. Alea"
+                      maxLength={60}
                       {...field}
                     />
                     {error && (
@@ -80,12 +87,19 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
               <Controller
                 control={control}
                 name="last_name"
-                rules={{ required: "Last name is required" }}
+                rules={{
+                  required: "Last name is required",
+                  maxLength: {
+                    value: 60,
+                    message: "Last name cannot exceed 60 characters",
+                  },
+                }}
                 render={({ field, fieldState: { error } }) => (
                   <div className="flex flex-col gap-1.5">
                     <TextInput
                       label="Last name"
                       placeholder="e.g. Thorne"
+                      maxLength={60}
                       {...field}
                     />
                     {error && (
@@ -157,13 +171,20 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
             <Controller
               control={control}
               name="phone_number"
-              rules={{ required: "Phone number is required" }}
+              rules={{
+                required: "Phone number is required",
+                maxLength: {
+                  value: 60,
+                  message: "Phone number cannot exceed 60 characters",
+                },
+              }}
               render={({ field, fieldState: { error } }) => (
                 <div className="flex flex-col gap-1.5">
                   <TextInput
                     label="Phone number"
                     type="tel"
                     placeholder="e.g. +62 812 3456 7890"
+                    maxLength={60}
                     {...field}
                   />
                   {error && (
@@ -189,12 +210,19 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
               <Controller
                 control={control}
                 name="company"
-                rules={{ required: "Company is required" }}
+                rules={{
+                  required: "Company is required",
+                  maxLength: {
+                    value: 60,
+                    message: "Company name cannot exceed 60 characters",
+                  },
+                }}
                 render={({ field, fieldState: { error } }) => (
                   <div className="flex flex-col gap-1.5">
                     <TextInput
                       label="Company / Organization"
                       placeholder="e.g. PT Intidinamis"
+                      maxLength={60}
                       {...field}
                     />
                     {error && (
@@ -209,12 +237,19 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
               <Controller
                 control={control}
                 name="department"
-                rules={{ required: "Department is required" }}
+                rules={{
+                  required: "Department is required",
+                  maxLength: {
+                    value: 60,
+                    message: "Department name cannot exceed 60 characters",
+                  },
+                }}
                 render={({ field, fieldState: { error } }) => (
                   <div className="flex flex-col gap-1.5">
                     <TextInput
                       label="Department"
                       placeholder="e.g. Engineering"
+                      maxLength={60}
                       {...field}
                     />
                     {error && (
