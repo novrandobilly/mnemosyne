@@ -23,7 +23,7 @@ export const TestItem: FC<TestItemProps> = ({
   return (
     <div className="w-full group relative overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:shadow-md">
       <StatusCapsule enabled={!isCompleted} className="absolute right-3 top-3">
-        {isCompleted ? "Completed" : status}
+        {isCompleted ? "Selesai" : status}
       </StatusCapsule>
 
       <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900 text-base font-bold text-white">
@@ -75,7 +75,7 @@ export const TestItem: FC<TestItemProps> = ({
         >
           <span className="flex items-center justify-center gap-2 w-full">
             <IntiDinamisText size="14" weight="semibold">
-              Enter Test →
+              Masuk Tes →
             </IntiDinamisText>
           </span>
         </Link>

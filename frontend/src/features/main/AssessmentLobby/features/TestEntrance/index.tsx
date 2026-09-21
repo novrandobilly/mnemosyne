@@ -16,18 +16,14 @@ export const TestEntrance: FC = () => {
           as="h3"
           className="uppercase tracking-[0.3em] text-neutral-500"
         >
-          Available Tests
+          Tes yang Tersedia
         </IntiDinamisText>
         <IntiDinamisText
           as="h2"
           size="24"
-          className="mt-2  font-semibold text-neutral-900"
+          className="mt-2 font-semibold text-neutral-900"
         >
-          Choose a test to enter
-        </IntiDinamisText>
-        <IntiDinamisText size="14" className="mt-2 text-neutral-600">
-          All assessments are single-attempt unless reopened by an
-          administrator.
+          Pilih tes untuk memulai
         </IntiDinamisText>
       </div>
 
@@ -45,7 +41,7 @@ export const TestEntrance: FC = () => {
               key={test.id}
               title={alias}
               tag={type}
-              status={is_active ? "Open" : "Closed"}
+              status={is_active ? "Dibuka" : "Ditutup"}
               orderNum={index + 1}
               isCompleted={isCompleted}
               to={`/psikotes/${cleanSlug}`}
@@ -77,11 +73,11 @@ export const TestEntrance: FC = () => {
               weight="semibold"
               className="text-neutral-700"
             >
-              No tests available right now
+              Belum ada tes yang tersedia saat ini
             </IntiDinamisText>
             <IntiDinamisText size="12" className="max-w-xs text-neutral-400">
-              Your administrator hasn't opened any assessments yet. Check back
-              soon or contact your coordinator.
+              Administrator belum membuka tes asesmen saat ini. Silakan periksa
+              kembali nanti atau hubungi administrator.
             </IntiDinamisText>
           </div>
         </div>
