@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { IntiDinamisText } from "@/components/IntiDinamisText";
 import IntiDinamisButton from "@/components/IntiDinamisButton";
@@ -5,12 +6,22 @@ import { TextInput } from "@/components/TextInput";
 import type { OnboardingFormValues } from "@/api/users/useTCompleteOnboarding";
 
 interface BiodataFormProps {
-  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void> | void;
   isSubmitting: boolean;
 }
 
 export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
   const { control, getValues } = useFormContext<OnboardingFormValues>();
+  const [emailReadOnly, setEmailReadOnly] = useState(true);
+  const [emailAutoComplete, setEmailAutoComplete] = useState("off");
+
+  const enableEmailAutofill = (
+    e: React.SyntheticEvent<HTMLInputElement>,
+  ) => {
+    e.currentTarget.readOnly = false;
+    setEmailReadOnly(false);
+    setEmailAutoComplete("email");
+  };
 
   return (
     <div className="relative flex min-h-screen items-start justify-center px-4 sm:px-6">
@@ -43,7 +54,7 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
             Personal Information
           </IntiDinamisText>
 
-          <form className="mt-6 grid gap-5" onSubmit={onSubmit}>
+          <div className="mt-6 grid gap-5">
             {/* Name row */}
             <div className="grid gap-4 sm:grid-cols-2">
               <Controller
@@ -95,7 +106,11 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
                 rules={{ required: "Date of birth is required" }}
                 render={({ field, fieldState: { error } }) => (
                   <div className="flex flex-col gap-1.5">
-                    <TextInput label="Date of birth" type="date" {...field} />
+                    <TextInput
+                      label="Date of birth"
+                      type="date"
+                      {...field}
+                    />
                     {error && (
                       <IntiDinamisText size="12" className="text-red-500">
                         {error.message}
@@ -118,10 +133,15 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
                 render={({ field, fieldState: { error } }) => (
                   <div className="flex flex-col gap-1.5">
                     <TextInput
+                      {...field}
                       label="Email address"
                       type="email"
                       placeholder="you@example.com"
-                      {...field}
+                      autoComplete={emailAutoComplete}
+                      readOnly={emailReadOnly}
+                      onFocus={enableEmailAutofill}
+                      onMouseDown={enableEmailAutofill}
+                      onTouchStart={enableEmailAutofill}
                     />
                     {error && (
                       <IntiDinamisText size="12" className="text-red-500">
@@ -273,14 +293,15 @@ export const BiodataForm = ({ onSubmit, isSubmitting }: BiodataFormProps) => {
             </div>
 
             <IntiDinamisButton
-              type="submit"
+              type="button"
+              onClick={onSubmit}
               className="mt-2 w-full"
               isLoading={isSubmitting}
               disabled={isSubmitting}
             >
               {isSubmitting ? "Saving…" : "Complete Setup"}
             </IntiDinamisButton>
-          </form>
+          </div>
         </div>
       </div>
     </div>
