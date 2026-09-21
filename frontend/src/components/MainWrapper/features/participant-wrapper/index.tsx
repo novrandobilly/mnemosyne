@@ -11,7 +11,7 @@ interface ParticipantWrapperProps {
 const ParticipantWrapper: FC<ParticipantWrapperProps> = ({ children }) => {
   return (
     <Fragment>
-      <div className="pointer-events-none absolute inset-0">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-sky-200/40 blur-[110px]" />
         <div className="absolute right-10 top-10 h-48 w-48 rounded-full bg-neutral-200/70 blur-[90px]" />
         <div className="absolute bottom-12 right-1/3 h-40 w-40 rounded-full bg-violet-100/70 blur-[80px]" />
